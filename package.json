@@ -1,0 +1,70 @@
+{
+  "name": "kuprint",
+  "version": "2.5.4",
+  "description": "A JavaScript print template designer. Design print layouts with drag-and-drop in the browser.",
+  "homepage": "https://github.com/kuprint/kuprint#readme",
+  "bugs": {
+    "url": "https://github.com/kuprint/kuprint/issues"
+  },
+  "license": "LGPL-3.0",
+  "author": "kuprint",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kuprint/kuprint.git"
+  },
+  "keywords": [
+    "print",
+    "printing",
+    "template",
+    "designer",
+    "browser",
+    "drag-and-drop",
+    "label",
+    "invoice",
+    "jquery-plugin"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/kuprint.umd.js",
+  "module": "./dist/kuprint.esm.js",
+  "types": "./dist/kuprint.d.ts",
+  "unpkg": "./dist/kuprint.min.js",
+  "jsdelivr": "./dist/kuprint.min.js",
+  "exports": {
+    ".": {
+      "types": "./dist/kuprint.d.ts",
+      "import": "./dist/kuprint.esm.js",
+      "require": "./dist/kuprint.umd.js",
+      "default": "./dist/kuprint.min.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/build.mjs --watch",
+    "test": "vp test",
+    "check": "vp check",
+    "prepublishOnly": "npm run build",
+    "prepare": "vp config"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "@typescript/native-preview": "7.0.0-dev.20260509.2",
+    "bumpp": "^11.1.0",
+    "esbuild": "^0.28.1",
+    "jsdom": "^29.1.1",
+    "typescript": "^6.0.3",
+    "vite-plus": "^0.1.20"
+  },
+  "packageManager": "pnpm@11.7.0",
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+      "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    }
+  }
+}
