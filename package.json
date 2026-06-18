@@ -1,6 +1,6 @@
 {
   "name": "kuprint",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "A JavaScript print template designer. Design print layouts with drag-and-drop in the browser.",
   "keywords": [
     "browser",
@@ -53,11 +53,11 @@
     "check": "vp check",
     "prepublishOnly": "npm run build",
     "prepare": "vp config",
-    "release": "bumpp -y -x \"npm run check\" -x \"npm publish\" -c \"release: v%s\" -t \"v%s\" -p",
-    "release:patch": "npm run release patch",
-    "release:minor": "npm run release minor",
-    "release:major": "npm run release major",
-    "release:beta": "npm run release prerelease -- --preid beta"
+    "release": "bumpp -y -c \"release: v%s\" -t \"v%s\" -p --no-push",
+    "release:patch": "npm run release patch && npm run check && npm publish && git push --follow-tags",
+    "release:minor": "npm run release minor && npm run check && npm publish && git push --follow-tags",
+    "release:major": "npm run release major && npm run check && npm publish && git push --follow-tags",
+    "release:beta": "npm run release prerelease -- --preid beta && npm run check && npm publish --tag beta && git push --follow-tags"
   },
   "devDependencies": {
     "@types/jquery": "^4.0.1",
