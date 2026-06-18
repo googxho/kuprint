@@ -6,7 +6,7 @@
 // ============================================================
 
 import { execSync } from "child_process";
-import { copyFileSync } from "fs";
+import { copyFileSync, rmSync, existsSync } from "fs";
 import { resolve } from "path";
 
 const root = new URL("..", import.meta.url).pathname;
@@ -26,6 +26,12 @@ if (!watch) {
   // 复制类型声明文件
   copyFileSync(resolve(root, "src", "kuprint.d.ts"), resolve(dist, "kuprint.d.ts"));
   console.log("  ✔ kuprint.d.ts");
+
+  // 清理 sourcemap（不发布）
+  ["kuprint.umd.js.map", "kuprint.esm.js.map"].forEach((f) => {
+    const p = resolve(dist, f);
+    if (existsSync(p)) rmSync(p);
+  });
 
   console.log("✅ Build complete!\n");
 }
