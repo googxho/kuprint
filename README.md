@@ -165,6 +165,9 @@ npm run release:minor
 # 大改 → 自动 2.5.4 → 3.0.0
 npm run release:major
 
+# 带 2FA 验证码（npm 要求双因素认证）
+npm run release:patch -- --otp 123456
+
 # 测试版
 npm run release:beta
 ```
