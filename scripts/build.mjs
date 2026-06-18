@@ -22,5 +22,10 @@ execSync(args.join(" "), { stdio: "inherit", cwd: root });
 if (!watch) {
   copyFileSync(resolve(dist, "kuprint.umd.js"), resolve(dist, "kuprint.min.js"));
   console.log("  ✔ kuprint.min.js  (= kuprint.umd.js)");
+
+  // 复制类型声明文件
+  copyFileSync(resolve(root, "src", "kuprint.d.ts"), resolve(dist, "kuprint.d.ts"));
+  console.log("  ✔ kuprint.d.ts");
+
   console.log("✅ Build complete!\n");
 }

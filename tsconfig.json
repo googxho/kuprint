@@ -18,5 +18,5 @@
     "verbatimModuleSyntax": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.js", "scripts/**/*.js"]
+  "include": ["src/**/*.js", "src/**/*.d.ts", "scripts/**/*.js"]
 }
