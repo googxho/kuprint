@@ -11,7 +11,31 @@ import PrintElementOptionItemManager from "../options/manager.js";
 // ============================================================
 // Module 1: KuPrintConfig - Configuration
 // ============================================================
-function KuPrintConfig() {
+interface KuPrintConfigStatic {
+  new (): KuPrintConfigInstance;
+  instance: KuPrintConfigInstance;
+  _instance?: KuPrintConfigInstance;
+}
+interface KuPrintConfigInstance {
+  providers: any[];
+  movingDistance: number;
+  paperHeightTrim: number;
+  text: any;
+  image: any;
+  longText: any;
+  table: any;
+  tableCustom: any;
+  hline: any;
+  vline: any;
+  rect: any;
+  oval: any;
+  html: any;
+  tableColumn: any;
+  init(cfg?: Record<string, any>): void;
+  [key: string]: any;
+}
+
+var KuPrintConfig = function (this: KuPrintConfigInstance) {
   this.providers = [];
   this.movingDistance = 1.5;
   this.paperHeightTrim = 1;
@@ -284,30 +308,32 @@ function KuPrintConfig() {
     ],
     default: { height: 90, width: 90 },
   };
-}
+};
 
-KuPrintConfig.prototype.init = function (cfg) {
+KuPrintConfig.prototype.init = function (this: KuPrintConfigInstance, cfg: Record<string, any>) {
   if (cfg) $.extend(this, cfg);
 };
 
 Object.defineProperty(KuPrintConfig, "instance", {
   get: function () {
-    if (!KuPrintConfig._instance) {
-      KuPrintConfig._instance = new KuPrintConfig();
-      if (window.KUPRINT_CONFIG) $.extend(KuPrintConfig._instance, KUPRINT_CONFIG);
-      if (KuPrintConfig._instance.optionItems) {
-        KuPrintConfig._instance.optionItems.forEach(function (item) {
+    var self = KuPrintConfig as any as KuPrintConfigStatic;
+    if (!self._instance) {
+      self._instance = new (KuPrintConfig as any)();
+      if ((window as any).KUPRINT_CONFIG) $.extend(self._instance, (window as any).KUPRINT_CONFIG);
+      if (self._instance.optionItems) {
+        self._instance.optionItems.forEach(function (item: any) {
           PrintElementOptionItemManager.registerItem(item);
         });
       }
     }
-    return KuPrintConfig._instance;
+    return self._instance;
   },
   enumerable: true,
   configurable: true,
 });
 
 export { KuPrintConfig };
+export type { KuPrintConfigStatic, KuPrintConfigInstance };
 
 // ============================================================
 // Module 2: KuPrintlib - Core library

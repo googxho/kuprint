@@ -1044,4 +1044,8 @@ interface Window {
     saveLocalData(key: string, value: string): void;
   };
   JsBarcode?: any;
+  QRCode?: any;
+  jsPDF?: any;
+  html2canvas?: any;
+  canvg?: any;
 }

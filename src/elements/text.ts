@@ -8,24 +8,71 @@ import { KuPrintConfig } from "../core/config.js";
 import { BasePrintElement } from "../core/base-print-element.js";
 import { TextPrintElementOption } from "./text-option.js";
 
+const _BasePE = BasePrintElement as any;
+const KCFG = KuPrintConfig as any;
+
+// ============================================================
+// Types
+// ============================================================
+interface TTextPrintElement {
+  printElementType: { title?: string; getText(forProxy?: boolean): string; getData(): any };
+  options: {
+    title?: string;
+    field?: string;
+    testData?: string;
+    format?: string;
+    dataType?: string;
+    color?: string;
+    hideTitle?: boolean;
+    textType?: string;
+    barcodeMode?: string;
+    getHideTitle(): boolean;
+    getTextType(): string;
+    getFontSize(): number;
+    getBarcodeMode(): string;
+    getHeight(): number;
+    getWidth(): number;
+    [key: string]: any;
+  };
+  id: string;
+  templateId: string;
+  designTarget: JQuery | undefined;
+  designPaper: any;
+  _currenttemplateData: any;
+
+  getField(): string | undefined;
+  getTitle(): string;
+  getData(data?: Record<string, any>): any;
+  getFormatter(): ((...args: any[]) => any) | undefined;
+  getConfigOptions(): any;
+  getHtml(paper: any, data?: Record<string, any>, n?: number): any[];
+  getHtml2(paper: any, data?: Record<string, any>, n?: number): any[];
+  createTarget(title: string, data: any, n?: number): JQuery;
+  updateTargetText($el: JQuery, title: string, data: any, n?: number): void;
+  updateTargetSize($el: JQuery): void;
+  css($el: JQuery, data?: any): void;
+  SetProxyTargetOption(override: any): void;
+  updateDesignViewFromOptions(): void;
+}
+
 // ============================================================
 // Concrete Print Element classes
 // ============================================================
 
 // --- TextPrintElement ---
-function TextPrintElement(pte, opts) {
-  var self = BasePrintElement.call(this, pte) || this;
-  self.options = new TextPrintElementOption(opts);
+function TextPrintElement(this: TTextPrintElement, pte: any, opts: any) {
+  var self = _BasePE.call(this, pte) || this;
+  self.options = new (TextPrintElementOption as any)(opts);
   self.options.setDefault(
-    new TextPrintElementOption(KuPrintConfig.instance.text.default).getPrintElementOptionEntity(),
+    new (TextPrintElementOption as any)(KCFG.instance.text.default).getPrintElementOptionEntity(),
   );
   return self;
 }
 __extends(TextPrintElement, BasePrintElement);
-TextPrintElement.prototype.getDesignTarget = function (paper) {
+TextPrintElement.prototype.getDesignTarget = function (this: TTextPrintElement, paper: any) {
   return BasePrintElement.prototype.getDesignTarget.call(this, paper);
 };
-TextPrintElement.prototype.getProxyTarget = function (override) {
+TextPrintElement.prototype.getProxyTarget = function (this: TTextPrintElement, override?: any) {
   if (override) this.SetProxyTargetOption(override);
   var data = this.getData();
   var target = this.createTarget(this.printElementType.getText(true), data);
@@ -33,24 +80,27 @@ TextPrintElement.prototype.getProxyTarget = function (override) {
   this.css(target, data);
   return target;
 };
-TextPrintElement.prototype.updateDesignViewFromOptions = function () {
+TextPrintElement.prototype.updateDesignViewFromOptions = function (this: TTextPrintElement) {
   if (this.designTarget) {
     var data = this.getData();
     this.css(this.designTarget, data);
     this.updateTargetText(this.designTarget, this.getTitle(), data);
   }
 };
-TextPrintElement.prototype.getConfigOptions = function () {
-  return KuPrintConfig.instance.text;
+TextPrintElement.prototype.getConfigOptions = function (this: TTextPrintElement) {
+  return KCFG.instance.text;
 };
-TextPrintElement.prototype.getTitle = function () {
+TextPrintElement.prototype.getTitle = function (this: TTextPrintElement) {
   var t = this.options.title || this.printElementType.title || "";
   if (t) t = TextHelper.replaceEnterAndNewlineAndTab(t, "");
   return t;
 };
-TextPrintElement.prototype.getData = function (data) {
-  var val = data
-    ? data[this.getField()] || ""
+TextPrintElement.prototype.getData = function (
+  this: TTextPrintElement,
+  data?: Record<string, any>,
+) {
+  var val: any = data
+    ? data[this.getField()!] || ""
     : this.options.testData || this.printElementType.getData() || "";
   if (this.options.format) {
     if (this.options.dataType === "datetime") return hinnn.dateFormat(val, this.options.format);
@@ -61,7 +111,13 @@ TextPrintElement.prototype.getData = function (data) {
   }
   return val;
 };
-TextPrintElement.prototype.updateTargetText = function ($el, title, data, n) {
+TextPrintElement.prototype.updateTargetText = function (
+  this: TTextPrintElement,
+  $el: JQuery,
+  title: string,
+  data: any,
+  n?: number,
+) {
   var formatter = this.getFormatter();
   var content = $el.find(".kuprint-printElement-text-content");
   var text = "";
@@ -76,14 +132,14 @@ TextPrintElement.prototype.updateTargetText = function ($el, title, data, n) {
   }
   var textType = this.options.getTextType();
   if (textType === "text") {
-    content.html(text);
+    content.html(text as string);
   } else if (textType === "barcode") {
     content.html(
       '<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg><div class="hibarcode_displayValue"></div>',
     );
     try {
       if (data) {
-        JsBarcode(content.find(".hibarcode_imgcode")[0], data, {
+        (window as any).JsBarcode(content.find(".hibarcode_imgcode")[0], data, {
           format: this.options.getBarcodeMode(),
           width: 1,
           textMargin: -1,
@@ -107,12 +163,14 @@ TextPrintElement.prototype.updateTargetText = function ($el, title, data, n) {
       if (data) {
         var w = parseInt(hinnn.pt.toPx(this.options.getWidth() || 20));
         var h = parseInt(hinnn.pt.toPx(this.options.getHeight() || 20));
-        new QRCode(content[0], {
-          width: w,
-          height: h,
-          colorDark: this.options.color || "#000000",
-          useSVG: true,
-        }).makeCode(data);
+        (window as any)
+          .QRCode(content[0], {
+            width: w,
+            height: h,
+            colorDark: this.options.color || "#000000",
+            useSVG: true,
+          })
+          .makeCode(data);
       }
     } catch (e) {
       console.log(e);
@@ -120,13 +178,25 @@ TextPrintElement.prototype.updateTargetText = function ($el, title, data, n) {
     }
   }
 };
-TextPrintElement.prototype.onResize = function (e, h, w, t, l) {
+TextPrintElement.prototype.onResize = function (
+  this: TTextPrintElement,
+  e: any,
+  h: number,
+  w: number,
+  t: number,
+  l: number,
+) {
   BasePrintElement.prototype.onResize.call(this, e, h, w, t, l);
   if (this.options.getTextType() === "barcode" || this.options.getTextType() === "qrcode") {
-    this.updateTargetText(this.designTarget, this.getTitle(), this.getData());
+    this.updateTargetText(this.designTarget!, this.getTitle(), this.getData());
   }
 };
-TextPrintElement.prototype.createTarget = function (title, data, n) {
+TextPrintElement.prototype.createTarget = function (
+  this: TTextPrintElement,
+  title: string,
+  data: any,
+  n?: number,
+) {
   var $el = $(
     '<div tabindex="1" class="kuprint-printElement kuprint-printElement-text" style="position:absolute;">' +
       '<div class="kuprint-printElement-text-content kuprint-printElement-content" style="height:100%;width:100%"></div></div>',
@@ -134,7 +204,12 @@ TextPrintElement.prototype.createTarget = function (title, data, n) {
   this.updateTargetText($el, title, data, n);
   return $el;
 };
-TextPrintElement.prototype.getHtml = function (paper, data, n) {
+TextPrintElement.prototype.getHtml = function (
+  this: TTextPrintElement,
+  paper: any,
+  data?: Record<string, any>,
+  n?: number,
+) {
   return this.getHtml2(paper, data, n);
 };
 

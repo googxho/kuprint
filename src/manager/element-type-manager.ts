@@ -19,6 +19,9 @@ import {
 import { TablePrintElement } from "../table/table-element.js";
 import { TableCustomPrintElement } from "../table/table-custom.js";
 
+const KLIB = KuPrintlib as any;
+const KCFG = KuPrintConfig as any;
+
 // ============================================================
 // PrintElementFactory
 // ============================================================
@@ -26,23 +29,23 @@ var PrintElementFactory = {
   createPrintElement: function (pte, opts) {
     switch (pte.type) {
       case "text":
-        return new TextPrintElement(pte, opts);
+        return new (TextPrintElement as any)(pte, opts);
       case "image":
-        return new ImagePrintElement(pte, opts);
+        return new (ImagePrintElement as any)(pte, opts);
       case "longText":
-        return new LongTextPrintElement(pte, opts);
+        return new (LongTextPrintElement as any)(pte, opts);
       case "table":
-        return new TablePrintElement(pte, opts);
+        return new (TablePrintElement as any)(pte, opts);
       case "html":
-        return new HtmlPrintElement(pte, opts);
+        return new (HtmlPrintElement as any)(pte, opts);
       case "vline":
-        return new VlinePrintElement(pte, opts);
+        return new (VlinePrintElement as any)(pte, opts);
       case "hline":
-        return new HlinePrintElement(pte, opts);
+        return new (HlinePrintElement as any)(pte, opts);
       case "rect":
-        return new RectPrintElement(pte, opts);
+        return new (RectPrintElement as any)(pte, opts);
       case "oval":
-        return new OvalPrintElement(pte, opts);
+        return new (OvalPrintElement as any)(pte, opts);
       default:
         return undefined;
     }
@@ -92,7 +95,7 @@ var TableCustomPrintElementType = (function (_super) {
     return _super.call(this, opts) || this;
   }
   TableCustomPrintElementType.prototype.createPrintElement = function (opts) {
-    return new TableCustomPrintElement(this, opts);
+    return new (TableCustomPrintElement as any)(this, opts);
   };
   return TableCustomPrintElementType;
 })(TablePrintElementType);
@@ -116,10 +119,10 @@ var SimplePrintElementType = (function (_super) {
 var PrintElementTypeCreator = {
   createPrintElementType: function (opts) {
     opts.type = opts.type || "text";
-    if (opts.type === "text") return new SimplePrintElementType(opts);
-    if (opts.type === "table") return new TablePrintElementType(opts);
-    if (opts.type === "tableCustom") return new TableCustomPrintElementType(opts);
-    return new BasePrintElementType(opts);
+    if (opts.type === "text") return new (SimplePrintElementType as any)(opts);
+    if (opts.type === "table") return new (TablePrintElementType as any)(opts);
+    if (opts.type === "tableCustom") return new (TableCustomPrintElementType as any)(opts);
+    return new (BasePrintElementType as any)(opts);
   },
 };
 
@@ -132,8 +135,9 @@ var ElementTypeManager = (function () {
   }
   Object.defineProperty(ElementTypeManager, "instance", {
     get: function () {
-      if (!ElementTypeManager._instance) ElementTypeManager._instance = new ElementTypeManager();
-      return ElementTypeManager._instance;
+      if (!(ElementTypeManager as any)._instance)
+        (ElementTypeManager as any)._instance = new ElementTypeManager();
+      return (ElementTypeManager as any)._instance;
     },
     enumerable: true,
     configurable: true,
@@ -179,10 +183,10 @@ var PrintElementTypeGroup = function (name, types) {
 function PrintElementTypeManager() {}
 PrintElementTypeManager.getElementTypeGroups = function (moduleKey) {
   var key = PrintElementTypeManager.formatterModule(moduleKey);
-  return ElementTypeManager.instance[key] || [];
+  return (ElementTypeManager as any).instance[key] || [];
 };
 PrintElementTypeManager.getElementType = function (tid, type) {
-  if (tid) return ElementTypeManager.instance.getElementType(tid);
+  if (tid) return (ElementTypeManager as any).instance.getElementType(tid);
   PrintElementTypeCreator.createPrintElementType({ type: type });
   // Note: original returns undefined when tid is falsy (side effect only)
 };
@@ -201,7 +205,7 @@ PrintElementTypeManager.enableDrag = function ($items) {
   $items.hidraggable({
     revert: true,
     proxy: function ($el) {
-      var dpe = KuPrintlib.instance.getDragingPrintElement();
+      var dpe = KLIB.instance.getDragingPrintElement();
       var target = dpe.printElement.getProxyTarget(dpe.printElement.printElementType.getOptions());
       target.appendTo("body");
       target.css("z-index", "9999");
@@ -210,19 +214,19 @@ PrintElementTypeManager.enableDrag = function ($items) {
     moveUnit: "pt",
     minMove: 4,
     onBeforeDrag: function (e) {
-      KuPrintlib.instance.draging = true;
+      KLIB.instance.draging = true;
       var pte = PrintElementTypeManager.getElementType(
         $(e.data.target).attr("tid"),
         $(e.data.target).attr("ptype"),
       );
-      KuPrintlib.instance.setDragingPrintElement(pte.createPrintElement());
+      KLIB.instance.setDragingPrintElement(pte.createPrintElement());
       return true;
     },
     onDrag: function (e, left, top) {
-      KuPrintlib.instance.getDragingPrintElement().updatePosition(left, top);
+      KLIB.instance.getDragingPrintElement().updatePosition(left, top);
     },
     onStopDrag: function () {
-      KuPrintlib.instance.draging = false;
+      KLIB.instance.draging = false;
     },
   });
 };
@@ -259,7 +263,7 @@ var PanelEntity = function (opts) {
   this.index = opts.index;
   this.paperType = opts.paperType;
   if (this.paperType) {
-    var ps = KuPrintlib.instance[this.paperType];
+    var ps = KLIB.instance[this.paperType];
     if (opts.height) {
       this.height = opts.height;
       this.width = opts.width;
@@ -294,6 +298,9 @@ var PanelEntity = function (opts) {
 // MouseRect
 // ============================================================
 var MouseRect = (function () {
+  interface TELEMENT_TYPE_MANAGER {
+    [key: string]: any;
+  }
   function MouseRect(x, y, left, top) {
     this.startX = this.minX = x;
     this.startY = this.minY = y;

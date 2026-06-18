@@ -13,6 +13,9 @@ var PrintElementTypeEntity = function (opts) {
 };
 
 var TablePrintElementType = (function () {
+  interface TTABLE_ELEMENT_TYPE {
+    [key: string]: any;
+  }
   function TablePrintElementType(opts) {
     var self = this;
     this.text = opts.text;
@@ -54,7 +57,7 @@ var TablePrintElementType = (function () {
         self.columns.push(self.createTableColumnArray(layer));
       });
     }
-    return new TablePrintElement(this, opts);
+    return new (TablePrintElement as any)(this, opts);
   };
   TablePrintElementType.prototype.getData = function () {
     return [{}];
@@ -62,7 +65,7 @@ var TablePrintElementType = (function () {
   TablePrintElementType.prototype.createTableColumnArray = function (cols) {
     var result = [];
     cols.forEach(function (c) {
-      result.push(new TableColumnFull(c));
+      result.push(new (TableColumnFull as any)(c));
     });
     return result;
   };

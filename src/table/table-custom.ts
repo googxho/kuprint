@@ -11,15 +11,21 @@ import { TableColumnRow, TableColumnFull, PaperHtmlResult, PrintReferenceElement
 import TableExcelHelper from "./excel-helper.js";
 import { HiTale } from "./hitable.js";
 
+const KLIB = KuPrintlib as any;
+const KCFG = KuPrintConfig as any;
+
 // --- TableCustomPrintElement ---
 var TableCustomPrintElement = (function (_super) {
+  interface TTABLE_CUSTOM {
+    [key: string]: any;
+  }
   __extends(TableCustomPrintElement, _super);
-  function TableCustomPrintElement(pte, opts) {
+  function TableCustomPrintElement(this: any, pte: any, opts: any) {
     var self = _super.call(this, pte) || this;
-    self.options = new TableCustomPrintElementOption(opts);
+    self.options = new (TableCustomPrintElementOption as any)(opts);
     self.options.setDefault(
-      new TableCustomPrintElementOption(
-        KuPrintConfig.instance.tableCustom.default,
+      new (TableCustomPrintElementOption as any)(
+        KCFG.instance.tableCustom.default,
       ).getPrintElementOptionEntity(),
     );
     self.columns = self.options.columns;
@@ -55,7 +61,7 @@ var TableCustomPrintElement = (function (_super) {
     return this.designTarget;
   };
   TableCustomPrintElement.prototype.getConfigOptions = function () {
-    return KuPrintConfig.instance.tableCustom;
+    return KCFG.instance.tableCustom;
   };
   TableCustomPrintElement.prototype.createTarget = function (title, data, n) {
     var $el = $(
@@ -301,13 +307,13 @@ var TableCustomPrintElement = (function (_super) {
         self.createLineOfPosition(paper);
       },
       moveUnit: "pt",
-      minMove: KuPrintConfig.instance.movingDistance,
+      minMove: KCFG.instance.movingDistance,
       onBeforeDrag: function () {
-        KuPrintlib.instance.draging = true;
+        KLIB.instance.draging = true;
         self.createLineOfPosition(paper);
       },
       onStopDrag: function () {
-        KuPrintlib.instance.draging = false;
+        KLIB.instance.draging = false;
         self.removeLineOfPosition();
       },
     });
@@ -316,7 +322,7 @@ var TableCustomPrintElement = (function (_super) {
       showPoints: self.getReizeableShowPoints(),
       noContainer: true,
       onBeforeResize: function () {
-        KuPrintlib.instance.draging = true;
+        KLIB.instance.draging = true;
       },
       onResize: function (e, h, w, t, l) {
         self.onResize(e, h, w, t, l);
@@ -324,7 +330,7 @@ var TableCustomPrintElement = (function (_super) {
         self.createLineOfPosition(paper);
       },
       onStopResize: function () {
-        KuPrintlib.instance.draging = false;
+        KLIB.instance.draging = false;
         self.removeLineOfPosition();
       },
     });

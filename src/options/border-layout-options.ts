@@ -1,8 +1,9 @@
+import type { IOptionItem } from "./types.js";
 // ============================================================
 // options/border-layout-options.js — border layout options配置项
 // ============================================================
 
-function BorderWidthOption() {
+function BorderWidthOption(this: IOptionItem) {
   this.name = "borderWidth";
 }
 BorderWidthOption.prototype.createTarget = function () {
@@ -45,7 +46,7 @@ BorderWidthOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BorderColorOption() {
+function BorderColorOption(this: IOptionItem) {
   this.name = "borderColor";
 }
 BorderColorOption.prototype.css = function (target, value) {
@@ -78,7 +79,7 @@ BorderColorOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BorderTopOption() {
+function BorderTopOption(this: IOptionItem) {
   this.name = "borderTop";
 }
 BorderTopOption.prototype.css = function (target, value) {
@@ -113,7 +114,7 @@ BorderTopOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BorderLeftOption() {
+function BorderLeftOption(this: IOptionItem) {
   this.name = "borderLeft";
 }
 BorderLeftOption.prototype.css = function (target, value) {
@@ -148,7 +149,7 @@ BorderLeftOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BorderRightOption() {
+function BorderRightOption(this: IOptionItem) {
   this.name = "borderRight";
 }
 BorderRightOption.prototype.css = function (target, value) {
@@ -183,7 +184,7 @@ BorderRightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BorderBottomOption() {
+function BorderBottomOption(this: IOptionItem) {
   this.name = "borderBottom";
 }
 BorderBottomOption.prototype.css = function (target, value) {
@@ -218,7 +219,7 @@ BorderBottomOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ContentPaddingTopOption() {
+function ContentPaddingTopOption(this: IOptionItem) {
   this.name = "contentPaddingTop";
 }
 ContentPaddingTopOption.prototype.css = function (target, value) {
@@ -272,7 +273,7 @@ ContentPaddingTopOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ContentPaddingLeftOption() {
+function ContentPaddingLeftOption(this: IOptionItem) {
   this.name = "contentPaddingLeft";
 }
 ContentPaddingLeftOption.prototype.css = function (target, value) {
@@ -326,7 +327,7 @@ ContentPaddingLeftOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ContentPaddingRightOption() {
+function ContentPaddingRightOption(this: IOptionItem) {
   this.name = "contentPaddingRight";
 }
 ContentPaddingRightOption.prototype.css = function (target, value) {
@@ -380,7 +381,7 @@ ContentPaddingRightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ContentPaddingBottomOption() {
+function ContentPaddingBottomOption(this: IOptionItem) {
   this.name = "contentPaddingBottom";
 }
 ContentPaddingBottomOption.prototype.css = function (target, value) {
@@ -434,7 +435,7 @@ ContentPaddingBottomOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BorderStyleOption() {
+function BorderStyleOption(this: IOptionItem) {
   this.name = "borderStyle";
 }
 BorderStyleOption.prototype.css = function (target, value) {
@@ -467,7 +468,7 @@ BorderStyleOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function PaddingLeftOption() {
+function PaddingLeftOption(this: IOptionItem) {
   this.name = "paddingLeft";
 }
 PaddingLeftOption.prototype.css = function (target, value) {
@@ -520,7 +521,7 @@ PaddingLeftOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function PaddingRightOption() {
+function PaddingRightOption(this: IOptionItem) {
   this.name = "paddingRight";
 }
 PaddingRightOption.prototype.css = function (target, value) {

@@ -6,17 +6,19 @@
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "resolveJsonModule": true,
-    "types": ["node"],
-    "strict": true,
+    "types": ["node", "jquery"],
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
     "noUnusedLocals": false,
     "declaration": false,
     "noEmit": true,
-    "allowJs": true,
+    "allowJs": false,
     "checkJs": false,
     "esModuleInterop": true,
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*.js", "src/**/*.d.ts", "scripts/**/*.js"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "scripts/**/*.js"]
 }

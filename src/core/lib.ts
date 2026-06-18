@@ -7,15 +7,43 @@
 // 模板容器管理。通过 KuPrintlib.instance 访问。
 // ============================================================
 
-function DragingPrintElement(pe) {
+function DragingPrintElement(pe: any) {
   this.printElement = pe;
 }
-DragingPrintElement.prototype.updatePosition = function (left, top) {
+DragingPrintElement.prototype.updatePosition = function (left: number, top: number) {
   this.left = left;
   this.top = top;
 };
 
-function KuPrintlib() {
+interface KuPrintlibStatic {
+  new (): KuPrintlibInstance;
+  instance: KuPrintlibInstance;
+  _instance?: KuPrintlibInstance;
+}
+interface KuPrintlibInstance {
+  printTemplateContainer: Record<string, any>;
+  dragingPrintElement?: any;
+  draging?: boolean;
+  A1: { width: number; height: number };
+  A2: { width: number; height: number };
+  A3: { width: number; height: number };
+  A4: { width: number; height: number };
+  A5: { width: number; height: number };
+  A6: { width: number; height: number };
+  A7: { width: number; height: number };
+  A8: { width: number; height: number };
+  B1: { width: number; height: number };
+  B2: { width: number; height: number };
+  B3: { width: number; height: number };
+  B4: { width: number; height: number };
+  B5: { width: number; height: number };
+  B6: { width: number; height: number };
+  B7: { width: number; height: number };
+  B8: { width: number; height: number };
+  [key: string]: any;
+}
+
+var KuPrintlib = function (this: KuPrintlibInstance) {
   this.printTemplateContainer = {};
   // Paper sizes in mm
   this.A1 = { width: 841, height: 594 };
@@ -39,22 +67,24 @@ function KuPrintlib() {
     if (opts) opts = opts; // noop
     return Math.round(n / opts) * opts;
   };
-}
+};
 
 Object.defineProperty(KuPrintlib, "instance", {
   get: function () {
-    if (!this._instance) this._instance = new KuPrintlib();
-    return this._instance;
+    var self = KuPrintlib as any as KuPrintlibStatic;
+    if (!self._instance) self._instance = new (KuPrintlib as any)();
+    return self._instance;
   },
   enumerable: true,
   configurable: true,
 });
 
 KuPrintlib.prototype.getDragingPrintElement = function () {
-  return KuPrintlib.instance.dragingPrintElement;
+  return (KuPrintlib as unknown as KuPrintlibStatic).instance.dragingPrintElement;
 };
-KuPrintlib.prototype.setDragingPrintElement = function (pe) {
-  KuPrintlib.instance.dragingPrintElement = new DragingPrintElement(pe);
+KuPrintlib.prototype.setDragingPrintElement = function (pe: any) {
+  (KuPrintlib as unknown as KuPrintlibStatic).instance.dragingPrintElement =
+    new DragingPrintElement(pe);
 };
 KuPrintlib.prototype.guid = function () {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -88,14 +118,15 @@ KuPrintlib.prototype.transformImg = function ($imgs) {
     self.imageToBase64($(el));
   });
 };
-KuPrintlib.prototype.getPrintTemplateById = function (id) {
-  return KuPrintlib.instance.printTemplateContainer[id];
+KuPrintlib.prototype.getPrintTemplateById = function (id: string) {
+  return (KuPrintlib as unknown as KuPrintlibStatic).instance.printTemplateContainer[id];
 };
-KuPrintlib.prototype.setPrintTemplateById = function (id, tmpl) {
-  KuPrintlib.instance.printTemplateContainer[id] = tmpl;
+KuPrintlib.prototype.setPrintTemplateById = function (id: string, tmpl: any) {
+  (KuPrintlib as unknown as KuPrintlibStatic).instance.printTemplateContainer[id] = tmpl;
 };
 
 // ============================================================
 // Exports
 // ============================================================
 export { DragingPrintElement, KuPrintlib };
+export type { KuPrintlibStatic, KuPrintlibInstance };

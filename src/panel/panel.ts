@@ -14,7 +14,13 @@ import {
 } from "../manager/element-type-manager.js";
 import { PrintReferenceElement } from "../table/row.js";
 
+const KLIB = KuPrintlib as any;
+const KCFG = KuPrintConfig as any;
+
 var PrintPanel = (function () {
+  interface TPANEL {
+    [key: string]: any;
+  }
   function PrintPanel(entity, templateId) {
     this.templateId = templateId;
     this.index = entity.index;
@@ -255,7 +261,7 @@ var PrintPanel = (function () {
     paper.getTarget().hidroppable({
       accept: ".ep-draggable-item",
       onDrop: function () {
-        var dpe = KuPrintlib.instance.getDragingPrintElement();
+        var dpe = KLIB.instance.getDragingPrintElement();
         var pe = dpe.printElement;
         pe.updateSizeAndPositionOptions(
           self.mathroundToporleft(dpe.left - hinnn.px.toPt(self.target.offset().left)),
@@ -277,7 +283,7 @@ var PrintPanel = (function () {
         var pte;
         if (el.printElementType)
           pte = PrintElementTypeCreator.createPrintElementType(el.printElementType);
-        else pte = ElementTypeManager.instance.getElementType(el.tid);
+        else pte = (ElementTypeManager as any).instance.getElementType(el.tid);
         if (pte) {
           var pe = pte.createPrintElement(el.options);
           pe.setTemplateId(self.templateId);
@@ -290,7 +296,7 @@ var PrintPanel = (function () {
     }
   };
   PrintPanel.prototype.mathroundToporleft = function (v) {
-    var d = KuPrintConfig.instance.movingDistance;
+    var d = KCFG.instance.movingDistance;
     return Math.round(v / d) * d;
   };
   PrintPanel.prototype.appendDesignPrintElement = function (paper, pe, initSize) {
@@ -410,7 +416,7 @@ var PrintPanel = (function () {
   };
   PrintPanel.prototype.getPrintElementTypeByEntity = function (entity) {
     var pte;
-    if (entity.tid) pte = ElementTypeManager.instance.getElementType(entity.tid);
+    if (entity.tid) pte = (ElementTypeManager as any).instance.getElementType(entity.tid);
     else pte = PrintElementTypeCreator.createPrintElementType(entity.printElementType);
     if (!pte) console.log("miss " + JSON.stringify(entity));
     return pte;
@@ -471,25 +477,25 @@ var PrintPanel = (function () {
     this.designPaper
       .getTarget()
       .on("mousemove", function (e) {
-        if (!KuPrintlib.instance.draging && e.buttons === 1 && self.mouseRect) {
+        if (!KLIB.instance.draging && e.buttons === 1 && self.mouseRect) {
           self.mouseRect.updateRect(e.pageX, e.pageY);
           self.updateRectPanel(self.mouseRect);
         }
       })
       .on("mousedown", function (e) {
-        if (!KuPrintlib.instance.draging) {
+        if (!KLIB.instance.draging) {
           if (self.mouseRect && self.mouseRect.target) self.mouseRect.target.remove();
           if (e.buttons === 1) {
             self.mouseRect = new MouseRect(
               e.pageX,
               e.pageY,
-              KuPrintlib.instance.dragLengthCNum(
+              KLIB.instance.dragLengthCNum(
                 e.pageX - self.designPaper.getTarget().offset().left,
-                KuPrintConfig.instance.movingDistance,
+                KCFG.instance.movingDistance,
               ),
-              KuPrintlib.instance.dragLengthCNum(
+              KLIB.instance.dragLengthCNum(
                 e.pageY - self.designPaper.getTarget().offset().top,
-                KuPrintConfig.instance.movingDistance,
+                KCFG.instance.movingDistance,
               ),
             );
           }
@@ -527,15 +533,15 @@ var PrintPanel = (function () {
           self.mouseRect.lastTop = top;
         },
         moveUnit: "pt",
-        minMove: KuPrintConfig.instance.movingDistance,
+        minMove: KCFG.instance.movingDistance,
         onBeforeDrag: function () {
           self.mouseRect.target.focus();
-          KuPrintlib.instance.draging = true;
+          KLIB.instance.draging = true;
           if (!self.mouseRect.mouseRectSelectedElement)
             self.mouseRect.mouseRectSelectedElement = self.getElementInRect(self.mouseRect);
         },
         onStopDrag: function () {
-          KuPrintlib.instance.draging = false;
+          KLIB.instance.draging = false;
         },
       });
     }
@@ -555,30 +561,30 @@ var PrintPanel = (function () {
       var selected = self.mouseRect.mouseRectSelectedElement || [];
       switch (e.keyCode) {
         case 37:
-          self.mouseRect.updatePositionByMultipleSelect(-KuPrintConfig.instance.movingDistance, 0);
+          self.mouseRect.updatePositionByMultipleSelect(-KCFG.instance.movingDistance, 0);
           selected.forEach(function (pe) {
-            pe.updatePositionByMultipleSelect(-KuPrintConfig.instance.movingDistance, 0);
+            pe.updatePositionByMultipleSelect(-KCFG.instance.movingDistance, 0);
           });
           e.preventDefault();
           break;
         case 38:
-          self.mouseRect.updatePositionByMultipleSelect(0, -KuPrintConfig.instance.movingDistance);
+          self.mouseRect.updatePositionByMultipleSelect(0, -KCFG.instance.movingDistance);
           selected.forEach(function (pe) {
-            pe.updatePositionByMultipleSelect(0, -KuPrintConfig.instance.movingDistance);
+            pe.updatePositionByMultipleSelect(0, -KCFG.instance.movingDistance);
           });
           e.preventDefault();
           break;
         case 39:
-          self.mouseRect.updatePositionByMultipleSelect(KuPrintConfig.instance.movingDistance, 0);
+          self.mouseRect.updatePositionByMultipleSelect(KCFG.instance.movingDistance, 0);
           selected.forEach(function (pe) {
-            pe.updatePositionByMultipleSelect(KuPrintConfig.instance.movingDistance, 0);
+            pe.updatePositionByMultipleSelect(KCFG.instance.movingDistance, 0);
           });
           e.preventDefault();
           break;
         case 40:
-          self.mouseRect.updatePositionByMultipleSelect(0, KuPrintConfig.instance.movingDistance);
+          self.mouseRect.updatePositionByMultipleSelect(0, KCFG.instance.movingDistance);
           selected.forEach(function (pe) {
-            pe.updatePositionByMultipleSelect(0, KuPrintConfig.instance.movingDistance);
+            pe.updatePositionByMultipleSelect(0, KCFG.instance.movingDistance);
           });
           e.preventDefault();
           break;
@@ -618,9 +624,9 @@ function kuprint_getHtml(opts) {
 }
 
 function kuprint_init(opts) {
-  KuPrintConfig.instance.init(opts);
-  KuPrintConfig.instance.providers.forEach(function (provider) {
-    provider.addElementTypes(ElementTypeManager.instance);
+  KCFG.instance.init(opts);
+  KCFG.instance.providers.forEach(function (provider) {
+    provider.addElementTypes((ElementTypeManager as any).instance);
   });
 }
 

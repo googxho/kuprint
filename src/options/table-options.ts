@@ -1,8 +1,11 @@
+import type { IOptionItem } from "./types.js";
 // ============================================================
 // options/table-options.js — table options配置项
 // ============================================================
 
-function TableBorderOption() {
+import { TableColumn } from "../table/column.js";
+
+function TableBorderOption(this: IOptionItem) {
   this.name = "tableBorder";
 }
 TableBorderOption.prototype.css = function (target, value) {
@@ -40,7 +43,7 @@ TableBorderOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableHeaderBorderOption() {
+function TableHeaderBorderOption(this: IOptionItem) {
   this.name = "tableHeaderBorder";
 }
 TableHeaderBorderOption.prototype.css = function (target, value) {
@@ -92,7 +95,7 @@ TableHeaderBorderOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableHeaderCellBorderOption() {
+function TableHeaderCellBorderOption(this: IOptionItem) {
   this.name = "tableHeaderCellBorder";
 }
 TableHeaderCellBorderOption.prototype.css = function (target, value) {
@@ -132,7 +135,7 @@ TableHeaderCellBorderOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableHeaderRowHeightOption() {
+function TableHeaderRowHeightOption(this: IOptionItem) {
   this.name = "tableHeaderRowHeight";
 }
 TableHeaderRowHeightOption.prototype.css = function (target, value) {
@@ -187,7 +190,7 @@ TableHeaderRowHeightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableHeaderFontSizeOption() {
+function TableHeaderFontSizeOption(this: IOptionItem) {
   this.name = "tableHeaderFontSize";
 }
 TableHeaderFontSizeOption.prototype.css = function (target, value) {
@@ -235,7 +238,7 @@ TableHeaderFontSizeOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableHeaderFontWeightOption() {
+function TableHeaderFontWeightOption(this: IOptionItem) {
   this.name = "tableHeaderFontWeight";
 }
 TableHeaderFontWeightOption.prototype.css = function (target, value) {
@@ -281,7 +284,7 @@ TableHeaderFontWeightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableBodyCellBorderOption() {
+function TableBodyCellBorderOption(this: IOptionItem) {
   this.name = "tableBodyCellBorder";
 }
 TableBodyCellBorderOption.prototype.css = function (target, value) {
@@ -321,7 +324,7 @@ TableBodyCellBorderOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableBodyRowHeightOption() {
+function TableBodyRowHeightOption(this: IOptionItem) {
   this.name = "tableBodyRowHeight";
 }
 TableBodyRowHeightOption.prototype.css = function (target, value) {
@@ -376,7 +379,7 @@ TableBodyRowHeightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableHeaderBackgroundOption() {
+function TableHeaderBackgroundOption(this: IOptionItem) {
   this.name = "tableHeaderBackground";
 }
 TableHeaderBackgroundOption.prototype.css = function (target, value) {
@@ -411,7 +414,7 @@ TableHeaderBackgroundOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableBodyRowBorderOption() {
+function TableBodyRowBorderOption(this: IOptionItem) {
   this.name = "tableBodyRowBorder";
 }
 TableBodyRowBorderOption.prototype.css = function (target, value) {
@@ -461,7 +464,7 @@ TableBodyRowBorderOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ColumnsOption() {
+function ColumnsOption(this: IOptionItem) {
   this.name = "columns";
 }
 ColumnsOption.prototype.createTarget = function () {
@@ -489,7 +492,7 @@ ColumnsOption.prototype.setValue = function (value, options, printElementType) {
       );
     })
     .map(function (col) {
-      var c = new TableColumn(col);
+      var c = new (TableColumn as any)(col);
       c.checked = false;
       return c;
     });
@@ -559,7 +562,7 @@ ColumnsOption.prototype.buildData = function () {
     } else {
       var col = self.printElementType.getColumnByColumnId(columnId);
       if (col) {
-        var c = new TableColumn(col);
+        var c = new (TableColumn as any)(col);
         c.checked = true;
         result.push(c);
       }
@@ -572,7 +575,7 @@ ColumnsOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function GridColumnsOption() {
+function GridColumnsOption(this: IOptionItem) {
   this.name = "gridColumns";
 }
 GridColumnsOption.prototype.createTarget = function () {
@@ -602,7 +605,7 @@ GridColumnsOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function GridColumnsGutterOption() {
+function GridColumnsGutterOption(this: IOptionItem) {
   this.name = "gridColumnsGutter";
 }
 GridColumnsGutterOption.prototype.createTarget = function () {
@@ -660,7 +663,7 @@ GridColumnsGutterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TableFooterRepeatOption() {
+function TableFooterRepeatOption(this: IOptionItem) {
   this.name = "tableFooterRepeat";
 }
 TableFooterRepeatOption.prototype.createTarget = function () {

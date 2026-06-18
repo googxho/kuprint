@@ -8,12 +8,27 @@ import { KuPrintConfig } from "../core/config.js";
 import { BasePrintElement } from "../core/base-print-element.js";
 import { PrintElementOption } from "../core/print-element-option.js";
 
+const _BasePE = BasePrintElement as any;
+const KCFG = KuPrintConfig as any;
+
+// ============================================================
+// Types
+// ============================================================
+interface TLinePrintElement {
+  options: any;
+  designTarget: JQuery | undefined;
+  getData(data?: Record<string, any>): any;
+  getConfigOptions(): any;
+  getHtml2(paper: any, data?: Record<string, any>, n?: number): any[];
+  css($el: JQuery, data?: any): void;
+}
+
 // --- VlinePrintElement ---
-function VlinePrintElement(pte, opts) {
-  var self = BasePrintElement.call(this, pte) || this;
-  self.options = new PrintElementOption(opts);
+function VlinePrintElement(this: TLinePrintElement, pte: any, opts: any) {
+  var self = _BasePE.call(this, pte) || this;
+  self.options = new (PrintElementOption as any)(opts);
   self.options.setDefault(
-    new PrintElementOption(KuPrintConfig.instance.vline.default).getPrintElementOptionEntity(),
+    new (PrintElementOption as any)(KCFG.instance.vline.default).getPrintElementOptionEntity(),
   );
   return self;
 }
@@ -21,8 +36,8 @@ __extends(VlinePrintElement, BasePrintElement);
 VlinePrintElement.prototype.updateDesignViewFromOptions = function () {
   if (this.designTarget) this.css(this.designTarget, this.getData());
 };
-VlinePrintElement.prototype.getConfigOptions = function () {
-  return KuPrintConfig.instance.hline;
+VlinePrintElement.prototype.getConfigOptions = function (this: any) {
+  return KCFG.instance.hline;
 };
 VlinePrintElement.prototype.createTarget = function () {
   return $(
@@ -37,11 +52,11 @@ VlinePrintElement.prototype.getHtml = function (paper, data, n) {
 };
 
 // --- HlinePrintElement ---
-function HlinePrintElement(pte, opts) {
-  var self = BasePrintElement.call(this, pte) || this;
-  self.options = new PrintElementOption(opts);
+function HlinePrintElement(this: TLinePrintElement, pte: any, opts: any) {
+  var self = _BasePE.call(this, pte) || this;
+  self.options = new (PrintElementOption as any)(opts);
   self.options.setDefault(
-    new PrintElementOption(KuPrintConfig.instance.hline.default).getPrintElementOptionEntity(),
+    new (PrintElementOption as any)(KCFG.instance.hline.default).getPrintElementOptionEntity(),
   );
   return self;
 }
@@ -49,8 +64,8 @@ __extends(HlinePrintElement, BasePrintElement);
 HlinePrintElement.prototype.updateDesignViewFromOptions = function () {
   if (this.designTarget) this.css(this.designTarget, this.getData());
 };
-HlinePrintElement.prototype.getConfigOptions = function () {
-  return KuPrintConfig.instance.hline;
+HlinePrintElement.prototype.getConfigOptions = function (this: any) {
+  return KCFG.instance.hline;
 };
 HlinePrintElement.prototype.createTarget = function () {
   return $(
@@ -62,11 +77,11 @@ HlinePrintElement.prototype.getReizeableShowPoints = function () {
 };
 
 // --- RectPrintElement ---
-function RectPrintElement(pte, opts) {
-  var self = BasePrintElement.call(this, pte) || this;
-  self.options = new PrintElementOption(opts);
+function RectPrintElement(this: TLinePrintElement, pte: any, opts: any) {
+  var self = _BasePE.call(this, pte) || this;
+  self.options = new (PrintElementOption as any)(opts);
   self.options.setDefault(
-    new PrintElementOption(KuPrintConfig.instance.rect.default).getPrintElementOptionEntity(),
+    new (PrintElementOption as any)(KCFG.instance.rect.default).getPrintElementOptionEntity(),
   );
   return self;
 }
@@ -74,8 +89,8 @@ __extends(RectPrintElement, BasePrintElement);
 RectPrintElement.prototype.updateDesignViewFromOptions = function () {
   if (this.designTarget) this.css(this.designTarget, this.getData());
 };
-RectPrintElement.prototype.getConfigOptions = function () {
-  return KuPrintConfig.instance.hline;
+RectPrintElement.prototype.getConfigOptions = function (this: any) {
+  return KCFG.instance.hline;
 };
 RectPrintElement.prototype.createTarget = function () {
   return $(
@@ -87,11 +102,11 @@ RectPrintElement.prototype.getHtml = function (paper, data, n) {
 };
 
 // --- OvalPrintElement ---
-function OvalPrintElement(pte, opts) {
-  var self = BasePrintElement.call(this, pte) || this;
-  self.options = new PrintElementOption(opts);
+function OvalPrintElement(this: TLinePrintElement, pte: any, opts: any) {
+  var self = _BasePE.call(this, pte) || this;
+  self.options = new (PrintElementOption as any)(opts);
   self.options.setDefault(
-    new PrintElementOption(KuPrintConfig.instance.oval.default).getPrintElementOptionEntity(),
+    new (PrintElementOption as any)(KCFG.instance.oval.default).getPrintElementOptionEntity(),
   );
   return self;
 }
@@ -99,8 +114,8 @@ __extends(OvalPrintElement, BasePrintElement);
 OvalPrintElement.prototype.updateDesignViewFromOptions = function () {
   if (this.designTarget) this.css(this.designTarget, this.getData());
 };
-OvalPrintElement.prototype.getConfigOptions = function () {
-  return KuPrintConfig.instance.hline;
+OvalPrintElement.prototype.getConfigOptions = function (this: any) {
+  return KCFG.instance.hline;
 };
 OvalPrintElement.prototype.createTarget = function () {
   return $(

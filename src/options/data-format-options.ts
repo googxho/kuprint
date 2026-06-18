@@ -1,8 +1,9 @@
+import type { IOptionItem } from "./types.js";
 // ============================================================
 // options/data-format-options.js — data format options配置项
 // ============================================================
 
-function BarcodeModeOption() {
+function BarcodeModeOption(this: IOptionItem) {
   this.name = "barcodeMode";
 }
 BarcodeModeOption.prototype.createTarget = function () {
@@ -34,7 +35,7 @@ BarcodeModeOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ColorOption() {
+function ColorOption(this: IOptionItem) {
   this.name = "color";
 }
 ColorOption.prototype.css = function (target, value) {
@@ -67,7 +68,7 @@ ColorOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TextDecorationOption() {
+function TextDecorationOption(this: IOptionItem) {
   this.name = "textDecoration";
 }
 TextDecorationOption.prototype.createTarget = function () {
@@ -107,7 +108,7 @@ TextDecorationOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FieldOption() {
+function FieldOption(this: IOptionItem) {
   this.name = "field";
 }
 FieldOption.prototype.createTarget = function (printElement) {
@@ -157,7 +158,7 @@ FieldOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TitleOption() {
+function TitleOption(this: IOptionItem) {
   this.name = "title";
 }
 TitleOption.prototype.createTarget = function () {
@@ -180,7 +181,7 @@ TitleOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TestDataOption() {
+function TestDataOption(this: IOptionItem) {
   this.name = "testData";
 }
 TestDataOption.prototype.createTarget = function () {
@@ -203,7 +204,7 @@ TestDataOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function SrcOption() {
+function SrcOption(this: IOptionItem) {
   this.name = "src";
 }
 SrcOption.prototype.createTarget = function () {
@@ -226,7 +227,7 @@ SrcOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TransformOption() {
+function TransformOption(this: IOptionItem) {
   this.name = "transform";
 }
 TransformOption.prototype.css = function (target, value) {
@@ -262,7 +263,7 @@ TransformOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function OptionsGroupOption() {
+function OptionsGroupOption(this: IOptionItem) {
   this.name = "optionsGroup";
 }
 OptionsGroupOption.prototype.createTarget = function () {
@@ -278,7 +279,7 @@ OptionsGroupOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function BackgroundColorOption() {
+function BackgroundColorOption(this: IOptionItem) {
   this.name = "backgroundColor";
 }
 BackgroundColorOption.prototype.css = function (target, value) {
@@ -311,7 +312,7 @@ BackgroundColorOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function OrientOption() {
+function OrientOption(this: IOptionItem) {
   this.name = "orient";
 }
 OrientOption.prototype.createTarget = function () {
@@ -335,7 +336,7 @@ OrientOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TextContentVerticalAlignOption() {
+function TextContentVerticalAlignOption(this: IOptionItem) {
   this.name = "textContentVerticalAlign";
 }
 TextContentVerticalAlignOption.prototype.createTarget = function () {
@@ -371,7 +372,7 @@ TextContentVerticalAlignOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function DataTypeOption() {
+function DataTypeOption(this: IOptionItem) {
   this.name = "dataType";
 }
 DataTypeOption.prototype.createTarget = function () {
@@ -465,7 +466,7 @@ var DATETIME_FORMAT_OPTIONS =
   '<option value="yyyy-MM-dd H:m">yyyy-MM-dd H:m</option><option value="yyyy-MM-dd H:m:s">yyyy-MM-dd H:m:s</option>' +
   '<option value="yyyy-MM-dd HH:mm">yyyy-MM-dd HH:mm</option><option value="yyyy-MM-dd HH:mm:ss">yyyy-MM-dd HH:mm:ss</option>';
 
-function FormatterOption() {
+function FormatterOption(this: IOptionItem) {
   this.name = "formatter";
 }
 FormatterOption.prototype.createTarget = function () {
@@ -489,7 +490,7 @@ FormatterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function StylerOption() {
+function StylerOption(this: IOptionItem) {
   this.name = "styler";
 }
 StylerOption.prototype.createTarget = function () {
@@ -511,7 +512,7 @@ StylerOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FooterFormatterOption() {
+function FooterFormatterOption(this: IOptionItem) {
   this.name = "footerFormatter";
 }
 FooterFormatterOption.prototype.createTarget = function () {
@@ -533,7 +534,7 @@ FooterFormatterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function GridColumnsFooterFormatterOption() {
+function GridColumnsFooterFormatterOption(this: IOptionItem) {
   this.name = "gridColumnsFooterFormatter";
 }
 GridColumnsFooterFormatterOption.prototype.createTarget = function () {
@@ -555,7 +556,7 @@ GridColumnsFooterFormatterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function RowStylerOption() {
+function RowStylerOption(this: IOptionItem) {
   this.name = "rowStyler";
 }
 RowStylerOption.prototype.createTarget = function () {
@@ -577,7 +578,7 @@ RowStylerOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function AlignOption() {
+function AlignOption(this: IOptionItem) {
   this.name = "align";
 }
 AlignOption.prototype.createTarget = function () {
@@ -602,7 +603,7 @@ AlignOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function VAlignOption() {
+function VAlignOption(this: IOptionItem) {
   this.name = "vAlign";
 }
 VAlignOption.prototype.createTarget = function () {
@@ -627,7 +628,7 @@ VAlignOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function HAlignOption() {
+function HAlignOption(this: IOptionItem) {
   this.name = "halign";
 }
 HAlignOption.prototype.createTarget = function () {
@@ -696,7 +697,7 @@ Formatter2Option.prototype.destroy = function () {
   this.target.remove();
 };
 
-function AutoCompletionOption() {
+function AutoCompletionOption(this: IOptionItem) {
   this.name = "autoCompletion";
 }
 AutoCompletionOption.prototype.createTarget = function () {

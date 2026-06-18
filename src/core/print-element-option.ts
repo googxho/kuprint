@@ -7,9 +7,37 @@
 // IdCreator（ID 生成器）、PrintReferenceElement（参考元素）等辅助类。
 // ============================================================
 
+interface TOption {
+  left?: number;
+  top?: number;
+  topInDesign?: number;
+  height?: number;
+  width?: number;
+  defaultOptions: { width?: number; height?: number; [key: string]: any };
+  [key: string]: any;
+  init(opts: Record<string, any>): void;
+  setDefault(defaults: any): void;
+  initSize(): void;
+  initSizeByHtml(w: number, h: number): void;
+  getLeft(): number;
+  getTop(): number;
+  getTopInDesign(): number;
+  displayLeft(): string;
+  displayTop(): string;
+  displayWidth(): string;
+  displayHeight(): string;
+  setLeft(v: number): void;
+  setTop(v: number): void;
+  setHeight(v: number): void;
+  setWidth(v: number): void;
+  copyDesignTopFromTop(): void;
+  getValueFromOptionsOrDefault(key: string): any;
+  getPrintElementOptionEntity(): any;
+}
+
 var EmptyObj = function () {};
 
-function PrintElementOption(opts) {
+function PrintElementOption(this: TOption, opts: any) {
   opts = opts || {};
   this.left = opts.left;
   this.top = opts.top;
@@ -143,7 +171,7 @@ InnerElementEditor.prototype.getDisplayHtml = function () {
 };
 InnerElementEditor.prototype.beginEdit = function (cell) {
   var self = this;
-  this.editor = EditorFactory.Instance.createEditor("text");
+  this.editor = (EditorFactory as any).Instance.createEditor("text");
   cell.getTarget().html("");
   this.editor.init(cell);
   if (this.title || this.field) {
@@ -202,18 +230,25 @@ TextEditor.prototype.destroy = function () {
   this.target.remove();
 };
 
-function EditorFactory() {
-  this.text = new TextEditor();
+interface EditorFactoryStatic {
+  new (): any;
+  Instance: any;
+  _instance?: any;
 }
+
+var EditorFactory = function (this: any) {
+  this.text = new TextEditor();
+};
 Object.defineProperty(EditorFactory, "Instance", {
   get: function () {
-    return EditorFactory._instance || (EditorFactory._instance = new EditorFactory());
+    var self = EditorFactory as any as EditorFactoryStatic;
+    return self._instance || (self._instance = new (EditorFactory as any)());
   },
   enumerable: true,
   configurable: true,
 });
-EditorFactory.prototype.createEditor = function (type) {
-  return $.extend({}, EditorFactory.Instance[type]);
+EditorFactory.prototype.createEditor = function (this: any, type: string) {
+  return $.extend({}, (EditorFactory as unknown as EditorFactoryStatic).Instance[type]);
 };
 
 export { PrintElementOption, IdCreator, InnerElementEditor, EditorFactory };

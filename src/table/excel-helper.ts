@@ -8,6 +8,7 @@
 
 import { hinnn } from "../core/utils.js";
 import { ReconsitutionTableColumns } from "./row.js";
+const _RCT = ReconsitutionTableColumns as any;
 
 var TableExcelHelper = {
   createTableHead: function (columns, totalWidth) {
@@ -162,8 +163,8 @@ var TableExcelHelper = {
     });
     return total;
   },
-  reconsitutionTableColumnTree: function (columns, existing, n) {
-    var tree = existing || new ReconsitutionTableColumns();
+  reconsitutionTableColumnTree: function (columns: any, existing?: any, n?: any) {
+    var tree = existing || new _RCT();
     tree.colspan = 0;
     for (var i = 0; i < columns.length; i++) {
       tree.totalLayer = i + 1;

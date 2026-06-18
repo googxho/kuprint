@@ -91,7 +91,10 @@ var Paper = (function () {
     );
     this.paperContentTarget = this.target.find(".kuprint-printPaper-content");
     this.target.css("width", this.mmwidth + "mm");
-    this.target.css("height", this.mmheight - KuPrintConfig.instance.paperHeightTrim + "mm");
+    this.target.css(
+      "height",
+      this.mmheight - (KuPrintConfig as any).instance.paperHeightTrim + "mm",
+    );
     this.target.attr("original-height", this.mmheight);
   };
   Paper.prototype.createHeaderLine = function () {
@@ -116,7 +119,7 @@ var Paper = (function () {
     if (this.paperFooter === this.height) {
       this.footerLineTarget.css(
         "top",
-        this.mmheight - KuPrintConfig.instance.paperHeightTrim + "mm",
+        this.mmheight - (KuPrintConfig as any).instance.paperHeightTrim + "mm",
       );
       this.footerLineTarget.addClass("hidefooterLinetarget");
     }
@@ -214,12 +217,12 @@ var Paper = (function () {
         cb(x, y);
       },
       moveUnit: "pt",
-      minMove: KuPrintConfig.instance.movingDistance,
+      minMove: (KuPrintConfig as any).instance.movingDistance,
       onBeforeDrag: function () {
-        KuPrintlib.instance.draging = true;
+        (KuPrintlib as any).instance.draging = true;
       },
       onStopDrag: function () {
-        KuPrintlib.instance.draging = false;
+        (KuPrintlib as any).instance.draging = false;
         self.footerLineTarget.removeClass("hidefooterLinetarget");
         self.headerLineTarget.removeClass("hideheaderLinetarget");
       },
@@ -231,7 +234,7 @@ var Paper = (function () {
     this.mmwidth = w;
     this.mmheight = h;
     this.target.css("width", w + "mm");
-    this.target.css("height", h - KuPrintConfig.instance.paperHeightTrim + "mm");
+    this.target.css("height", h - (KuPrintConfig as any).instance.paperHeightTrim + "mm");
     this.target.attr("original-height", this.mmheight);
     this.paperFooter = this.height;
     this.footerLineTarget.css("top", this.height + "pt");
@@ -260,7 +263,7 @@ var Paper = (function () {
     );
   };
   Paper.prototype.displayHeight = function () {
-    return this.mmheight - KuPrintConfig.instance.paperHeightTrim + "mm";
+    return this.mmheight - (KuPrintConfig as any).instance.paperHeightTrim + "mm";
   };
   Paper.prototype.displayWidth = function () {
     return this.mmwidth + "mm";
@@ -430,6 +433,9 @@ var OptionSettingPanel = (function () {
 // PaginationCreator
 // ============================================================
 var PaginationCreator = (function () {
+  interface TPAPER {
+    [key: string]: any;
+  }
   function PaginationCreator(container, template) {
     this.paginationContainer = container;
     this.$container = $(this.paginationContainer);

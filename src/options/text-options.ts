@@ -1,8 +1,9 @@
+import type { IOptionItem } from "./types.js";
 // ============================================================
 // options/text-options.js — text options配置项
 // ============================================================
 
-function LineHeightOption() {
+function LineHeightOption(this: IOptionItem) {
   this.name = "lineHeight";
 }
 LineHeightOption.prototype.css = function (target, value) {
@@ -61,7 +62,7 @@ LineHeightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FontFamilyOption() {
+function FontFamilyOption(this: IOptionItem) {
   this.name = "fontFamily";
 }
 FontFamilyOption.prototype.createTarget = function () {
@@ -102,7 +103,7 @@ FontFamilyOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FontSizeOption() {
+function FontSizeOption(this: IOptionItem) {
   this.name = "fontSize";
 }
 FontSizeOption.prototype.css = function (target, value) {
@@ -152,7 +153,7 @@ FontSizeOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FontWeightOption() {
+function FontWeightOption(this: IOptionItem) {
   this.name = "fontWeight";
 }
 FontWeightOption.prototype.css = function (target, value) {
@@ -197,7 +198,7 @@ FontWeightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function LetterSpacingOption() {
+function LetterSpacingOption(this: IOptionItem) {
   this.name = "letterSpacing";
 }
 LetterSpacingOption.prototype.css = function (target, value) {
@@ -244,7 +245,7 @@ LetterSpacingOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TextAlignOption() {
+function TextAlignOption(this: IOptionItem) {
   this.name = "textAlign";
 }
 TextAlignOption.prototype.css = function (target, value) {
@@ -288,7 +289,7 @@ TextAlignOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function HideTitleOption() {
+function HideTitleOption(this: IOptionItem) {
   this.name = "hideTitle";
 }
 HideTitleOption.prototype.createTarget = function () {
@@ -311,7 +312,7 @@ HideTitleOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TextTypeOption() {
+function TextTypeOption(this: IOptionItem) {
   this.name = "textType";
 }
 TextTypeOption.prototype.createTarget = function () {

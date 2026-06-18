@@ -9,12 +9,60 @@ import { PrintPanel } from "../panel/panel.js";
 import { Paper, TemplateEntity, OptionSettingPanel, PaginationCreator } from "../paper/paper.js";
 import { PanelEntity } from "../manager/element-type-manager.js";
 
+const KLIB = KuPrintlib as any;
+const KCFG = KuPrintConfig as any;
+
+// ============================================================
+// Types
+// ============================================================
+interface TPrintTemplate {
+  id: string;
+  printPanels: any[];
+  editingPanel: any;
+  container: JQuery;
+  fields?: string[];
+  tempImageBase64: Record<string, string>;
+  printPaginationCreator?: any;
+  autoSave?: boolean;
+  autoSaveKey?: string;
+  autoSaveMode?: 0 | 1;
+
+  design(container: any, opts?: any): void;
+  getHtml(data?: Record<string, any> | Record<string, any>[], opts?: Record<string, any>): JQuery;
+  getSimpleHtml(
+    data?: Record<string, any> | Record<string, any>[],
+    opts?: Record<string, any>,
+  ): JQuery;
+  getPanel(idx?: number): any;
+  getPaneltotal(): number;
+  getJson(): any;
+  getJsonTid(): any;
+  getFields(): string[] | undefined;
+  getFieldsInPanel(): string[];
+  createDefaultPanel(): any;
+  createContainer(container: any): void;
+  createTempContainer(): void;
+  removeTempContainer(): void;
+  getTempContainer(): JQuery;
+  selectPanel(idx: number): void;
+  deletePanel(idx: number): void;
+  deletePrintElement(pe: any): void;
+  transformImg($imgs: JQuery): void;
+  imageToBase64($img: JQuery): void;
+  svg2canvas($el: JQuery): void;
+  clientIsOpened(): boolean;
+  getOrient(idx?: number): number;
+  sentToClient(css: string, data: any, opts: any): void;
+  xhrLoadImage($img?: JQuery): void;
+  initAutoSave(): void;
+}
+
 var PrintTemplate = (function () {
-  function PrintTemplate(opts) {
+  function PrintTemplate(this: TPrintTemplate, opts?: any) {
     var self = this;
     this.tempImageBase64 = {};
-    this.id = KuPrintlib.instance.guid();
-    KuPrintlib.instance.setPrintTemplateById(this.id, this);
+    this.id = KLIB.instance.guid();
+    KLIB.instance.setPrintTemplateById(this.id, this);
     var cfg = opts || {};
     this.printPanels = [];
     var tmpl = new TemplateEntity(cfg.template || []);
@@ -81,7 +129,7 @@ var PrintTemplate = (function () {
     if (/^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/.test(type)) {
       this.editingPanel.resize(undefined, parseFloat(type), parseFloat(height), false);
     } else {
-      var ps = KuPrintlib.instance[type];
+      var ps = KLIB.instance[type];
       if (!ps) throw new Error("not found pagetype:" + (type || ""));
       this.editingPanel.resize(type, ps.width, ps.height, false);
     }
@@ -240,10 +288,10 @@ var PrintTemplate = (function () {
     var merged = $.extend({}, opts || {});
     merged.imgToBase64 = true;
     var html = css + this.getHtml(data, merged)[0].outerHTML;
-    merged.id = KuPrintlib.instance.guid();
+    merged.id = KLIB.instance.guid();
     merged.html = html;
     merged.templateId = this.id;
-    hiwebSocket.send(merged);
+    (window as any).hiwebSocket.send(merged);
   };
   PrintTemplate.prototype.printByHtml = function ($html) {
     $($html).hiwprint();
@@ -270,10 +318,10 @@ var PrintTemplate = (function () {
               }
               var html = css + $($html)[0].outerHTML;
               var pkg = $.extend({}, opts || {});
-              pkg.id = KuPrintlib.instance.guid();
+              pkg.id = KLIB.instance.guid();
               pkg.html = html;
               pkg.templateId = self.id;
-              hiwebSocket.send(pkg);
+              (window as any).hiwebSocket.send(pkg);
             }
           }
         };
@@ -303,7 +351,7 @@ var PrintTemplate = (function () {
       { scale: 2, width: hinnn.pt.toPx(pw), x: 0, y: 0, useCORS: true },
       opts || {},
     );
-    var pdf = new jsPDF({
+    var pdf = new (window as any).jsPDF({
       orientation: this.getOrient(0) === 1 ? "portrait" : "landscape",
       unit: "pt",
       format: this.printPanels[0].paperType
@@ -317,7 +365,7 @@ var PrintTemplate = (function () {
     tempContainer.html($html[0]);
     var pageCount = tempContainer.find(".kuprint-printPanel .kuprint-printPaper").length;
     $($html).css("position:fixed");
-    html2canvas($html[0], html2canvasOpts).then(function (canvas) {
+    (window as any).html2canvas($html[0], html2canvasOpts).then(function (canvas) {
       var ctx = canvas.getContext("2d");
       ctx.mozImageSmoothingEnabled = false;
       ctx.webkitImageSmoothingEnabled = false;
@@ -352,7 +400,7 @@ var PrintTemplate = (function () {
       var parent = svg.parentNode;
       var canvas = document.createElement("canvas");
       var svgStr = new XMLSerializer().serializeToString(svg);
-      canvg(canvas, svgStr);
+      (window as any).canvg(canvas, svgStr);
       $(svg).before(canvas);
       parent.removeChild(svg);
       $(canvas).css("width", "100%").css("height", "100%");
@@ -362,10 +410,10 @@ var PrintTemplate = (function () {
     hinnn.event.on(event + "_" + this.id, fn);
   };
   PrintTemplate.prototype.clientIsOpened = function () {
-    return hiwebSocket.opened;
+    return (window as any).hiwebSocket.opened;
   };
   PrintTemplate.prototype.getPrinterList = function () {
-    return hiwebSocket.getPrinterList() || [];
+    return (window as any).hiwebSocket.getPrinterList() || [];
   };
   PrintTemplate.prototype.getElementByTid = function (tid, panelIdx) {
     if (panelIdx == null) panelIdx = 0;
@@ -418,7 +466,7 @@ var PrintTemplate = (function () {
     var self = this;
     if (this.autoSave) {
       hinnn.event.on("kuprintTemplateDataChanged_" + this.id, function () {
-        hiLocalStorage.saveLocalData(
+        (window as any).hiLocalStorage.saveLocalData(
           self.autoSaveKey || "kuprintAutoSave",
           JSON.stringify(self.autoSaveMode === 1 ? self.getJson() : self.getJsonTid()),
         );

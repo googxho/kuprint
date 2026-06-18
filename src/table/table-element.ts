@@ -36,6 +36,9 @@ import {
 import TableExcelHelper from "./excel-helper.js";
 import { HiTale } from "./hitable.js";
 
+const KLIB = KuPrintlib as any;
+const KCFG = KuPrintConfig as any;
+
 // ============================================================
 // Module 18: TablePrintElementOption
 // ============================================================
@@ -69,16 +72,16 @@ var TablePrintElementOption = (function (_super) {
           layer.forEach(function (c) {
             var entity = new TableColumnOptionEntity(c);
             var existing = pte.getColumnByColumnId(entity.columnId);
-            var col = existing ? $.extend(existing, entity) : new TableColumnFull(entity);
+            var col = existing ? $.extend(existing, entity) : new (TableColumnFull as any)(entity);
             col.checked = true;
             cols.push(col);
           });
-          self.columns.push(new TableColumnRow(cols));
+          self.columns.push(new (TableColumnRow as any)(cols));
         });
       } else {
         pte.columns.forEach(function (layer) {
           self.columns.push(
-            new TableColumnRow(
+            new (TableColumnRow as any)(
               layer.filter(function (c) {
                 return c.checked;
               }),
@@ -131,15 +134,18 @@ var TablePrintElementOption = (function (_super) {
 // Module 15: TablePrintElement
 // ============================================================
 var TablePrintElement = (function (_super) {
+  interface TTABLE_ELEMENT {
+    [key: string]: any;
+  }
   __extends(TablePrintElement, _super);
   function TablePrintElement(pte, opts) {
     var self = _super.call(this, pte) || this;
     self.gridColumnsFooterCss = "kuprint-gridColumnsFooter";
     self.tableGridRowCss = "table-grid-row";
-    self.options = new TablePrintElementOption(opts, self.printElementType);
+    self.options = new (TablePrintElementOption as any)(opts, self.printElementType);
     self.options.setDefault(
-      new TablePrintElementOption(
-        KuPrintConfig.instance.table.default,
+      new (TablePrintElementOption as any)(
+        KCFG.instance.table.default,
       ).getPrintElementOptionEntity(),
     );
     return self;
@@ -182,7 +188,7 @@ var TablePrintElement = (function (_super) {
     return this.designTarget;
   };
   TablePrintElement.prototype.getConfigOptions = function () {
-    return KuPrintConfig.instance.table;
+    return KCFG.instance.table;
   };
   TablePrintElement.prototype.createTarget = function (title, data, templateData) {
     var container = $(
@@ -491,13 +497,13 @@ var TablePrintElement = (function (_super) {
         self.createLineOfPosition(paper);
       },
       moveUnit: "pt",
-      minMove: KuPrintConfig.instance.movingDistance,
+      minMove: KCFG.instance.movingDistance,
       onBeforeDrag: function () {
-        KuPrintlib.instance.draging = true;
+        KLIB.instance.draging = true;
         self.createLineOfPosition(paper);
       },
       onStopDrag: function () {
-        KuPrintlib.instance.draging = false;
+        KLIB.instance.draging = false;
         self.removeLineOfPosition();
       },
     });
@@ -507,7 +513,7 @@ var TablePrintElement = (function (_super) {
       showPoints: self.getReizeableShowPoints(),
       noContainer: true,
       onBeforeResize: function () {
-        KuPrintlib.instance.draging = true;
+        KLIB.instance.draging = true;
       },
       onResize: function (e, h, w, t, l) {
         self.onResize(e, h, w, t, l);
@@ -515,7 +521,7 @@ var TablePrintElement = (function (_super) {
         self.createLineOfPosition(paper);
       },
       onStopResize: function () {
-        KuPrintlib.instance.draging = false;
+        KLIB.instance.draging = false;
         self.removeLineOfPosition();
       },
     });

@@ -22,17 +22,129 @@
 
 import { hinnn } from "./utils.js";
 import { KuPrintlib } from "./lib.js";
+import type { KuPrintlibStatic } from "./lib.js";
 import { KuPrintConfig } from "./config.js";
+import type { KuPrintConfigStatic } from "./config.js";
 import PrintElementOptionItemManager from "../options/manager.js";
 import { PrintReferenceElement, PaperHtmlResult } from "../table/row.js";
 
-function BasePrintElement(printElementType) {
-  this.printElementType = printElementType;
-  this.id = KuPrintlib.instance.guid();
+const KLIB = KuPrintlib as any as KuPrintlibStatic;
+const KCFG = KuPrintConfig as any as KuPrintConfigStatic;
+
+// ============================================================
+// Types
+// ============================================================
+interface TBasePrintElement {
+  printElementType: {
+    title?: string;
+    field?: string;
+    tid?: string;
+    type?: string;
+    formatter?: any;
+    styler?: any;
+    onRendered?: any;
+    getFields(): string[] | undefined;
+    getData(): any;
+    getText(forProxy?: boolean): string;
+    getPrintElementTypeEntity(): any;
+    createPrintElement(opts?: any): any;
+    [key: string]: any;
+  };
+  options: {
+    showInPage?: string;
+    unShowInPage?: string;
+    field?: string;
+    axis?: string;
+    fixed?: boolean;
+    formatter?: string;
+    styler?: string;
+    getLeft(): number;
+    getTop(): number;
+    getHeight(): number;
+    getWidth(): number;
+    getTopInDesign(): number;
+    setLeft(v: number): void;
+    setTop(v: number): void;
+    setWidth(v: number): void;
+    setHeight(v: number): void;
+    displayLeft(): string;
+    displayTop(): string;
+    displayWidth(): string;
+    displayHeight(): string;
+    copyDesignTopFromTop(): void;
+    initSizeByHtml(w: number, h: number): void;
+    getValueFromOptionsOrDefault(key: string): any;
+    getPrintElementOptionEntity(): any;
+    [key: string]: any;
+  };
+  id: string;
+  templateId: string;
+  designTarget: JQuery | undefined;
+  designPaper: any;
+  panel: { paperHeader: number; paperFooter: number; [key: string]: any };
+  _currenttemplateData: any;
+  _printElementOptionItems?: any[];
+
+  setProxyTargetOption: any;
+  SetProxyTargetOption: (opts: any) => void;
+  getConfigOptionsByName(name: string): any;
+  getProxyTarget(overrideOpts?: any): JQuery;
+  showInPage(pageIdx: number, totalPages: number): boolean;
+  setTemplateId(id: string): void;
+  setPanel(panel: any): void;
+  getField(): string | undefined;
+  getTitle(): string;
+  updateSizeAndPositionOptions(left?: number, top?: number, width?: number, height?: number): void;
+  initSizeByHtml($el: JQuery): void;
+  updateTargetSize($el: JQuery): void;
+  updateTargetWidth($el: JQuery): void;
+  getDesignTarget(paper: any): JQuery;
+  getPrintElementSelectEventKey(): string;
+  design(opts?: any, paper?: any): void;
+  getPrintElementEntity(withTid?: boolean): any;
+  submitOption(): void;
+  getReizeableShowPoints(): string[];
+  onResize(e: any, h: number, w: number, t: number, l: number): void;
+  getOrderIndex(): number;
+  getHtml(paper: any, data?: Record<string, any>, n?: number): any[];
+  getHtml2(paper: any, data?: Record<string, any>, n?: number): any[];
+  getBeginPrintTopInPaperByReferenceElement(paper: any): number;
+  css($el: JQuery, data?: any): void;
+  stylerCss($el: JQuery, data: any): void;
+  getData(data?: Record<string, any>): any;
+  getPrintElementOptionItems(): any[];
+  getPrintElementOptionItemsByName(name: string): any[];
+  filterOptionItems(items: any[]): any[];
+  createTempContainer(): void;
+  removeTempContainer(): void;
+  getTempContainer(): JQuery;
+  isHeaderOrFooter(): boolean;
+  delete(): void;
+  setCurrenttemplateData(data: any): void;
+  isFixed(): boolean;
+  onRendered(paper: any, target: JQuery): void;
+  createLineOfPosition(paper: any): void;
+  removeLineOfPosition(): void;
+  getFields(): string[] | undefined;
+  bingCopyEvent($el?: JQuery): void;
+  getFormatter(): ((...args: any[]) => any) | undefined;
+  getStyler(): ((...args: any[]) => Record<string, string>) | undefined;
+  bingKeyboardMoveEvent($el: JQuery, paper: any): void;
+  inRect(rect: { minX: number; minY: number; maxX: number; maxY: number }): boolean;
+  multipleSelect(on: boolean): void;
+  updatePositionByMultipleSelect(dx: number, dy: number): void;
+  getConfigOptions(): any;
+  updateDesignViewFromOptions(): void;
+  createTarget(title: string, data: any, n?: number): JQuery;
 }
 
-BasePrintElement.prototype.getConfigOptionsByName = function (name) {
-  return KuPrintConfig.instance[name];
+function BasePrintElement(this: TBasePrintElement, printElementType: any) {
+  this.printElementType = printElementType;
+  this.id = KLIB.instance.guid();
+}
+
+BasePrintElement.prototype.getConfigOptionsByName = function (this: any, name: string) {
+  return KCFG.instance[name];
 };
 BasePrintElement.prototype.getProxyTarget = function (overrideOpts) {
   if (overrideOpts) this.SetProxyTargetOption(overrideOpts);
@@ -118,28 +230,28 @@ BasePrintElement.prototype.design = function (opts, paper) {
       self.createLineOfPosition(paper);
     },
     moveUnit: "pt",
-    minMove: KuPrintConfig.instance.movingDistance,
+    minMove: KCFG.instance.movingDistance,
     onBeforeDrag: function () {
-      KuPrintlib.instance.draging = true;
+      KLIB.instance.draging = true;
       self.designTarget.focus();
       self.createLineOfPosition(paper);
     },
     onStopDrag: function () {
-      KuPrintlib.instance.draging = false;
+      KLIB.instance.draging = false;
       self.removeLineOfPosition();
     },
   });
   this.designTarget.hireizeable({
     showPoints: self.getReizeableShowPoints(),
     onBeforeResize: function () {
-      KuPrintlib.instance.draging = true;
+      KLIB.instance.draging = true;
     },
     onResize: function (e, h, w, t, l) {
       self.onResize(e, h, w, t, l);
       self.createLineOfPosition(paper);
     },
     onStopResize: function () {
-      KuPrintlib.instance.draging = false;
+      KLIB.instance.draging = false;
       self.removeLineOfPosition();
     },
   });
@@ -157,6 +269,7 @@ BasePrintElement.prototype.getPrintElementEntity = function (withTid) {
   return new PrintElementEntity(
     this.printElementType.tid,
     this.options.getPrintElementOptionEntity(),
+    undefined,
   );
 };
 BasePrintElement.prototype.submitOption = function () {
@@ -437,7 +550,7 @@ BasePrintElement.prototype.removeLineOfPosition = function () {
 BasePrintElement.prototype.getFields = function () {
   var fields = this.printElementType.getFields();
   if (!fields) {
-    fields = KuPrintlib.instance.getPrintTemplateById(this.templateId).getFields();
+    fields = KLIB.instance.getPrintTemplateById(this.templateId).getFields();
   }
   return fields;
 };
@@ -474,28 +587,28 @@ BasePrintElement.prototype.bingKeyboardMoveEvent = function ($el, paper) {
     switch (e.keyCode) {
       case 37:
         left = self.options.getLeft();
-        self.updateSizeAndPositionOptions(left - KuPrintConfig.instance.movingDistance);
+        self.updateSizeAndPositionOptions(left - KCFG.instance.movingDistance);
         $el.css("left", self.options.displayLeft());
         self.createLineOfPosition(paper);
         e.preventDefault();
         break;
       case 38:
         top = self.options.getTop();
-        self.updateSizeAndPositionOptions(undefined, top - KuPrintConfig.instance.movingDistance);
+        self.updateSizeAndPositionOptions(undefined, top - KCFG.instance.movingDistance);
         $el.css("top", self.options.displayTop());
         self.createLineOfPosition(paper);
         e.preventDefault();
         break;
       case 39:
         left = self.options.getLeft();
-        self.updateSizeAndPositionOptions(left + KuPrintConfig.instance.movingDistance);
+        self.updateSizeAndPositionOptions(left + KCFG.instance.movingDistance);
         $el.css("left", self.options.displayLeft());
         self.createLineOfPosition(paper);
         e.preventDefault();
         break;
       case 40:
         top = self.options.getTop();
-        self.updateSizeAndPositionOptions(undefined, top + KuPrintConfig.instance.movingDistance);
+        self.updateSizeAndPositionOptions(undefined, top + KCFG.instance.movingDistance);
         $el.css("top", self.options.displayTop());
         self.createLineOfPosition(paper);
         e.preventDefault();

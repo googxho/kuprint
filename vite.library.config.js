@@ -21,7 +21,7 @@ export default {
     outDir: "dist",
     emptyOutDir: false,
     lib: {
-      entry: resolve(__dirname, "src/index.js"),
+      entry: resolve(__dirname, "src/index.ts"),
       name: "kuprint",
       formats: ["umd", "es"],
       fileName: (format) => (format === "es" ? "kuprint.esm.js" : "kuprint.umd.js"),

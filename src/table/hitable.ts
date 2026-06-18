@@ -154,7 +154,7 @@ var HiTresizer = (function () {
             moveUnit: "pt",
             minMove: 1,
             onBeforeDrag: function () {
-              KuPrintlib.instance.draging = true;
+              (KuPrintlib as any).instance.draging = true;
               if (!gripObj.nextGrip) return false;
               self.dragingGrip = gripObj;
               self.dragingGrip.left = parseFloat(
@@ -163,7 +163,7 @@ var HiTresizer = (function () {
               gripObj.target.addClass("columngripDraging");
             },
             onStopDrag: function () {
-              KuPrintlib.instance.draging = false;
+              (KuPrintlib as any).instance.draging = false;
               var newLeft = parseFloat(self.dragingGrip.target.css("left").replace("px", ""));
               var delta = hinnn.px.toPt(newLeft - self.dragingGrip.left);
               gripObj.cell.width = gripObj.cell.width + delta;
@@ -259,6 +259,9 @@ var NoopResizer = {
 };
 
 var HiTale = (function () {
+  interface THITABLE {
+    [key: string]: any;
+  }
   function HiTale(opts) {
     this.id = IdCreator.createId();
     this.optionsCoat = new HiTaleOptionsCoat(opts);
@@ -599,7 +602,7 @@ var HiTale = (function () {
   HiTale.prototype.initContext = function () {
     var self = this;
     if (!this.optionsCoat.options.isEnableContextMenu) return false;
-    $(this.handle).hicontextMenu({
+    ($(this.handle) as any).hicontextMenu({
       menus: [
         {
           text: "在上方插入行",

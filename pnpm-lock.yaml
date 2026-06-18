@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/jquery':
+        specifier: ^4.0.1
+        version: 4.0.1
       '@types/node':
         specifier: ^25.6.2
         version: 25.9.3
@@ -667,6 +670,9 @@ packages:
 
   '@types/deep-eql@4.0.2':
     resolution: {integrity: sha512-c9h9dVVMigMPc4bwTvC5dxqtqJZwQPePsWjPlpSOnojbor6pGqdk541lfA7AqFQr5pB1BRdq0juY9db81BwyFw==, tarball: https://registry.npmjs.org/@types/deep-eql/-/deep-eql-4.0.2.tgz}
+
+  '@types/jquery@4.0.1':
+    resolution: {integrity: sha512-9a59A/tycXgYuPABcp6/3spSShn0NT2UOM4EfHvMumjYi4lJWTsK5SZWjhx3yRm9IHGCeWXdV2YfNsrWrft/CA==, tarball: https://registry.npmjs.org/@types/jquery/-/jquery-4.0.1.tgz}
 
   '@types/node@25.9.3':
     resolution: {integrity: sha512-603BddQMv3pUcr4U2dhujk83N2tTDVr/34wII2B6bJy6g+8WD6yUb11jszNs0gdi4PesVWl7ABt8nYMVpnLUcg==, tarball: https://registry.npmjs.org/@types/node/-/node-25.9.3.tgz}
@@ -1642,6 +1648,8 @@ snapshots:
       assertion-error: 2.0.1
 
   '@types/deep-eql@4.0.2': {}
+
+  '@types/jquery@4.0.1': {}
 
   '@types/node@25.9.3':
     dependencies:

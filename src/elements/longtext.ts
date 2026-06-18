@@ -9,14 +9,65 @@ import { BasePrintElement } from "../core/base-print-element.js";
 import { PrintElementOption } from "../core/print-element-option.js";
 import { LongTextPrintElementOption } from "./text-option.js";
 import { PaperHtmlResult, PrintReferenceElement } from "../table/row.js";
+import { Paper } from "../paper/paper.js";
+
+const _BasePE = BasePrintElement as any;
+const KCFG = KuPrintConfig as any;
+
+// ============================================================
+// Types
+// ============================================================
+interface TLongTextPrintElement {
+  printElementType: { title?: string; getText(forProxy?: boolean): string };
+  options: {
+    title?: string;
+    field?: string;
+    testData?: string;
+    longTextIndent?: number;
+    leftSpaceRemoved?: boolean;
+    lHeight?: number;
+    getHideTitle(): boolean;
+    getTop(): number;
+    getLeft(): number;
+    getHeight(): number;
+    getWidth(): number;
+    displayLeft(): string;
+    displayTop(): string;
+    [key: string]: any;
+  };
+  designTarget: JQuery | undefined;
+  designPaper: any;
+  _currenttemplateData: any;
+  getField(): string | undefined;
+  getTitle(): string;
+  getData(data?: Record<string, any>): any;
+  getFormatter(): any;
+  getHtml(paper: any, data?: Record<string, any>): any;
+  createTarget(title: string, data: any): JQuery;
+  updateTargetWidth($el: JQuery): void;
+  updateTargetSize($el: JQuery): void;
+  updateTargetText($el: JQuery, title: string, data: any): void;
+  css($el: JQuery, data?: any): void;
+  SetProxyTargetOption(override: any): void;
+  getConfigOptions(): any;
+  setCurrenttemplateData(data: any): void;
+  createTempContainer(): void;
+  removeTempContainer(): void;
+  getTempContainer(): JQuery;
+  isHeaderOrFooter(): boolean;
+  isFixed(): boolean;
+  getPaperHtmlResult(paper: any, data?: any, n?: any): any[];
+  getBeginPrintTopInPaperByReferenceElement(paper: any): number;
+  updateDesignViewFromOptions(): void;
+}
 
 // --- LongTextPrintElement ---
-function LongTextPrintElement(pte, opts) {
-  var self = BasePrintElement.call(this, pte) || this;
-  self.options = new LongTextPrintElementOption(opts);
+function LongTextPrintElement(this: TLongTextPrintElement, pte: any, opts: any) {
+  var self = _BasePE.call(this, pte) || this;
+  self.options = new (LongTextPrintElementOption as any)(opts);
   self.options.setDefault(
-    new LongTextPrintElementOption(
-      KuPrintConfig.instance.longText.default,
+    new (LongTextPrintElementOption as any)(
+      KCFG.instance.longText.default,
     ).getPrintElementOptionEntity(),
   );
   return self;
@@ -45,8 +96,8 @@ LongTextPrintElement.prototype.updateDesignViewFromOptions = function () {
     this.css(this.designTarget, data);
   }
 };
-LongTextPrintElement.prototype.getConfigOptions = function () {
-  return KuPrintConfig.instance.longText;
+LongTextPrintElement.prototype.getConfigOptions = function (this: any) {
+  return KCFG.instance.longText;
 };
 LongTextPrintElement.prototype.getTitle = function () {
   return this.options.title || this.printElementType.title;

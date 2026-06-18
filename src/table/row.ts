@@ -259,11 +259,11 @@ function TableColumnRow(opts) {
   self.columns = [];
   if (opts && opts.constructor === Array) {
     (opts || []).forEach(function (c) {
-      self.columns.push(new TableColumnFull(c));
+      self.columns.push(new (TableColumnFull as any)(c));
     });
   } else if (opts && opts.columns) {
     (opts.columns || []).forEach(function (c) {
-      self.columns.push(new TableColumnFull(c));
+      self.columns.push(new (TableColumnFull as any)(c));
     });
   }
   return self;
@@ -278,6 +278,9 @@ TableColumnRow.prototype.getPrintElementOptionEntity = function () {
 __extends(TableColumnRow, TableRowBase);
 
 var ReconsitutionTableColumns = function () {
+  interface TROW {
+    [key: string]: any;
+  }
   this.rowColumns = [];
 };
 

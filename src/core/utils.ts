@@ -23,7 +23,8 @@
 // ============================================================
 // Polyfill helpers
 // ============================================================
-function _typeof(obj) {
+let _typeof: (obj: any) => string;
+_typeof = function (obj) {
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -39,7 +40,7 @@ function _typeof(obj) {
     };
   }
   return _typeof(obj);
-}
+};
 
 function _instanceof(left, right) {
   if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) {
@@ -51,7 +52,7 @@ function _instanceof(left, right) {
 // ============================================================
 // Helper: class inheritance
 // ============================================================
-function __extends(child, parent) {
+function __extends(this: any, child: any, parent: any) {
   for (var key in parent) {
     if (parent.hasOwnProperty(key)) child[key] = parent[key];
   }
@@ -65,7 +66,7 @@ function __extends(child, parent) {
 // ============================================================
 // Module 0: hinnn - Core utilities
 // ============================================================
-var hinnn = {};
+var hinnn: Record<string, any> = {};
 
 hinnn.event = (function () {
   var _events = {};

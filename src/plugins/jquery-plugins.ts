@@ -1,6 +1,7 @@
 // ============================================================
 // plugins/jquery-plugins.js — jQuery 插件 + WebSocket
 // ============================================================
+// @ts-nocheck
 
 import { hinnn } from "../core/utils.js";
 import { PrintElementTypeManager, PrintElementTypeGroup } from "../manager/element-type-manager.js";

@@ -1,8 +1,9 @@
+import type { IOptionItem } from "./types.js";
 // ============================================================
 // options/paper-options.js — paper options配置项
 // ============================================================
 
-function PaperNumberFormatOption() {
+function PaperNumberFormatOption(this: IOptionItem) {
   this.name = "paperNumberFormat";
 }
 PaperNumberFormatOption.prototype.createTarget = function () {
@@ -25,7 +26,7 @@ PaperNumberFormatOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function PaperNumberDisabledOption() {
+function PaperNumberDisabledOption(this: IOptionItem) {
   this.name = "paperNumberDisabled";
 }
 PaperNumberDisabledOption.prototype.createTarget = function () {
@@ -48,7 +49,7 @@ PaperNumberDisabledOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function LongTextIndentOption() {
+function LongTextIndentOption(this: IOptionItem) {
   this.name = "longTextIndent";
 }
 LongTextIndentOption.prototype.css = function (target, value) {
@@ -94,7 +95,7 @@ LongTextIndentOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function ShowInPageOption() {
+function ShowInPageOption(this: IOptionItem) {
   this.name = "showInPage";
 }
 ShowInPageOption.prototype.createTarget = function () {
@@ -119,7 +120,7 @@ ShowInPageOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function PanelPaperRuleOption() {
+function PanelPaperRuleOption(this: IOptionItem) {
   this.name = "panelPaperRule";
 }
 PanelPaperRuleOption.prototype.createTarget = function () {
@@ -143,7 +144,7 @@ PanelPaperRuleOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function LeftSpaceRemovedOption() {
+function LeftSpaceRemovedOption(this: IOptionItem) {
   this.name = "leftSpaceRemoved";
 }
 LeftSpaceRemovedOption.prototype.createTarget = function () {
@@ -166,7 +167,7 @@ LeftSpaceRemovedOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FirstPaperFooterOption() {
+function FirstPaperFooterOption(this: IOptionItem) {
   this.name = "firstPaperFooter";
 }
 FirstPaperFooterOption.prototype.createTarget = function () {
@@ -189,7 +190,7 @@ FirstPaperFooterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function LastPaperFooterOption() {
+function LastPaperFooterOption(this: IOptionItem) {
   this.name = "lastPaperFooter";
 }
 LastPaperFooterOption.prototype.createTarget = function () {
@@ -212,7 +213,7 @@ LastPaperFooterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function EvenPaperFooterOption() {
+function EvenPaperFooterOption(this: IOptionItem) {
   this.name = "evenPaperFooter";
 }
 EvenPaperFooterOption.prototype.createTarget = function () {
@@ -235,7 +236,7 @@ EvenPaperFooterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function OddPaperFooterOption() {
+function OddPaperFooterOption(this: IOptionItem) {
   this.name = "oddPaperFooter";
 }
 OddPaperFooterOption.prototype.createTarget = function () {
@@ -258,7 +259,7 @@ OddPaperFooterOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function FixedOption() {
+function FixedOption(this: IOptionItem) {
   this.name = "fixed";
 }
 FixedOption.prototype.createTarget = function () {
@@ -281,7 +282,7 @@ FixedOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function AxisOption() {
+function AxisOption(this: IOptionItem) {
   this.name = "axis";
 }
 AxisOption.prototype.createTarget = function () {
@@ -305,7 +306,7 @@ AxisOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function TopOffsetOption() {
+function TopOffsetOption(this: IOptionItem) {
   this.name = "topOffset";
 }
 TopOffsetOption.prototype.createTarget = function () {
@@ -328,7 +329,7 @@ TopOffsetOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function LeftOffsetOption() {
+function LeftOffsetOption(this: IOptionItem) {
   this.name = "leftOffset";
 }
 LeftOffsetOption.prototype.createTarget = function () {
@@ -351,7 +352,7 @@ LeftOffsetOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function LHeightOption() {
+function LHeightOption(this: IOptionItem) {
   this.name = "lHeight";
 }
 LHeightOption.prototype.createTarget = function () {
@@ -374,7 +375,7 @@ LHeightOption.prototype.destroy = function () {
   this.target.remove();
 };
 
-function UnShowInPageOption() {
+function UnShowInPageOption(this: IOptionItem) {
   this.name = "unShowInPage";
 }
 UnShowInPageOption.prototype.createTarget = function () {

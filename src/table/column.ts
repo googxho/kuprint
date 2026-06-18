@@ -11,6 +11,9 @@ import { IdCreator, InnerElementEditor, EditorFactory } from "../core/print-elem
 import { Rect, RectHelper } from "./row.js";
 
 var TableColumnEntity = function (opts) {
+  interface TCOLUMN {
+    [key: string]: any;
+  }
   this.title = opts.title;
   this.field = opts.field;
   this.width = opts.width;
@@ -45,7 +48,7 @@ TableColumn.prototype.init = function (target, tableOpts, rowId, isHead) {
 TableColumn.prototype.beginEdit = function () {
   if (!this.isEditing && this.tableOptions.isEnableEdit && this.tableOptions.onBeforEdit(this)) {
     var val = this.getValue();
-    this.editor = EditorFactory.Instance.createEditor("text");
+    this.editor = (EditorFactory as any).Instance.createEditor("text");
     this.isEditing = true;
     this.tableOptions.editingCell = this;
     this.target.html("");
