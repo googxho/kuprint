@@ -4,8 +4,8 @@
 
 kuprint 让你在浏览器中通过拖拽方式设计打印模板。支持文本、图片、条形码、二维码、表格、线条、矩形等多种元素，适用于标签打印、发票设计、报表生成等场景。
 
-[![npm](https://img.shields.io/npm/v/kuprint)](https://www.npmjs.com/package/kuprint)
-[![license](https://img.shields.io/npm/l/kuprint)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@kuki-lib/kuprint)](https://www.npmjs.com/package/@kuki-lib/kuprint)
+[![license](https://img.shields.io/npm/l/@kuki-lib/kuprint)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-✓-3178c6)](https://www.typescriptlang.org/)
 
 ---
@@ -29,28 +29,28 @@ kuprint 让你在浏览器中通过拖拽方式设计打印模板。支持文本
 <!-- jQuery 是前置依赖 -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <!-- kuprint -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/kuprint/dist/kuprint.css" />
-<script src="https://cdn.jsdelivr.net/npm/kuprint/dist/kuprint.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.css" />
+<script src="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.min.js"></script>
 ```
 
 ### npm
 
 ```bash
-npm install kuprint jquery
+npm install @kuki-lib/kuprint jquery
 ```
 
 ```js
 // ES Module
-import "kuprint";
+import "@kuki-lib/kuprint";
 
 // CommonJS
-require("kuprint");
+require("@kuki-lib/kuprint");
 ```
 
 ### TypeScript
 
 ```ts
-import "kuprint";
+import "@kuki-lib/kuprint";
 
 // 完整的类型提示，无需额外配置
 const template = new PrintTemplate({
@@ -73,7 +73,7 @@ const html: JQuery = template.getHtml(data, { imgToBase64: true });
 <div id="options"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/kuprint/dist/kuprint.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.min.js"></script>
 <script>
   // 1. 初始化
   kuprint.init();
