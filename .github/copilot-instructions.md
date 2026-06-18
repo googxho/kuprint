@@ -27,7 +27,7 @@ src/kuprint/
 ## Vite+ 工具链
 
 本项目使用 Vite+ 进行代码检查和格式化：
+
 - `vp check` — 格式化和检查
 - `vp test` — 运行测试（如有）
 - `node scripts/build.js` — 构建打包（非 vp pack）
-

@@ -2,7 +2,18 @@
   "name": "kuprint",
   "version": "2.5.4",
   "description": "A JavaScript print template designer. Design print layouts with drag-and-drop in the browser.",
-  "homepage": "https://github.com/kuprint/kuprint#readme",
+  "keywords": [
+    "browser",
+    "designer",
+    "drag-and-drop",
+    "invoice",
+    "jquery-plugin",
+    "label",
+    "print",
+    "printing",
+    "template"
+  ],
+  "homepage": "https://github.com/googxho/kuprint#readme",
   "bugs": {
     "url": "https://github.com/kuprint/kuprint/issues"
   },
@@ -10,19 +21,8 @@
   "author": "kuprint",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kuprint/kuprint.git"
+    "url": "git+https://github.com/googxho/kuprint.git"
   },
-  "keywords": [
-    "print",
-    "printing",
-    "template",
-    "designer",
-    "browser",
-    "drag-and-drop",
-    "label",
-    "invoice",
-    "jquery-plugin"
-  ],
   "files": [
     "dist"
   ],
@@ -59,6 +59,14 @@
     "jsdom": "^29.1.1",
     "typescript": "^6.0.3",
     "vite-plus": "^0.1.20"
+  },
+  "peerDependencies": {
+    "jquery": ">=1.12.0"
+  },
+  "peerDependenciesMeta": {
+    "jquery": {
+      "optional": false
+    }
   },
   "packageManager": "pnpm@11.7.0",
   "pnpm": {

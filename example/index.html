@@ -1,7 +1,6 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <title>kuprint Demo - 打印模板设计器</title>
 
@@ -10,163 +9,256 @@
     <link href="css/print-lock.css" rel="stylesheet" />
 
     <!-- Bootstrap (via CDN) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
 
     <style>
-        .hinnn-layout,
-        .hinnn-layout * { box-sizing: border-box; }
-        .hinnn-layout { display: flex; flex: auto; flex-direction: column; }
-        .hinnn-layout.hinnn-layout-has-sider { flex-direction: row; }
-        .hinnn-layout-sider { display: flex; flex-direction: row; position: relative; }
-        .hinnn-layout-content { flex: auto; }
-        .hinnn-header { position: relative; z-index: 1030; display: block; }
-        .height-100-per { height: 100%; }
+      .hinnn-layout,
+      .hinnn-layout * {
+        box-sizing: border-box;
+      }
+      .hinnn-layout {
+        display: flex;
+        flex: auto;
+        flex-direction: column;
+      }
+      .hinnn-layout.hinnn-layout-has-sider {
+        flex-direction: row;
+      }
+      .hinnn-layout-sider {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+      }
+      .hinnn-layout-content {
+        flex: auto;
+      }
+      .hinnn-header {
+        position: relative;
+        z-index: 1030;
+        display: block;
+      }
+      .height-100-per {
+        height: 100%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div class="layout hinnn-layout hinnn-layout-has-sider height-100-per" style="background:#fff;">
+  <body>
+    <div class="layout hinnn-layout hinnn-layout-has-sider height-100-per" style="background: #fff">
+      <!-- ========== 主内容区 ========== -->
+      <div class="hinnn-layout-content" style="border-left: 1px solid #e8e8e8">
+        <div class="container-fluid height-100-per print-content">
+          <!-- 使用说明 -->
+          <div class="alert alert-info" style="margin-top: 10px">
+            <strong>kuprint Demo</strong> — 从左侧拖拽元素到面板上，
+            选中元素后在右侧属性面板编辑属性。 <br />此 Demo 使用
+            <code>dist/kuprint.js</code> 构建产物。
+          </div>
 
-        <!-- ========== 主内容区 ========== -->
-        <div class="hinnn-layout-content" style="border-left:1px solid #e8e8e8;">
-            <div class="container-fluid height-100-per print-content">
-
-                <!-- 使用说明 -->
-                <div class="alert alert-info" style="margin-top:10px;">
-                    <strong>kuprint Demo</strong> — 从左侧拖拽元素到面板上，
-                    选中元素后在右侧属性面板编辑属性。
-                    <br>此 Demo 使用 <code>dist/kuprint.js</code> 构建产物。
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <!-- 左侧拖拽列表 -->
+                <div class="col-sm-3 col-md-2" style="padding-right: 0px">
+                  <div class="rect-printElement-types kuprintEpContainer">
+                    <ul class="kuprint-printElement-type">
+                      <li>
+                        <span class="title"><code>拖拽列表</code></span>
+                        <ul>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.text">
+                              <span class="glyphicon glyphicon-text-width"></span>
+                              <span class="glyphicon-class">文本</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.image">
+                              <span class="glyphicon glyphicon-picture"></span>
+                              <span class="glyphicon-class">图片</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.longText">
+                              <span class="glyphicon glyphicon-subscript"></span>
+                              <span class="glyphicon-class">长文</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.tableCustom">
+                              <span class="glyphicon glyphicon-th"></span>
+                              <span class="glyphicon-class">表格</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.html">
+                              <span class="glyphicon glyphicon-header"></span>
+                              <span class="glyphicon-class">html</span></a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <span class="title">辅助</span>
+                        <ul>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.hline">
+                              <span class="glyphicon glyphicon-resize-horizontal"></span>
+                              <span class="glyphicon-class">横线</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.vline">
+                              <span class="glyphicon glyphicon-resize-vertical"></span>
+                              <span class="glyphicon-class">竖线</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.rect">
+                              <span class="glyphicon glyphicon-unchecked"></span>
+                              <span class="glyphicon-class">矩形</span></a
+                            >
+                          </li>
+                          <li>
+                            <a class="ep-draggable-item" tid="testModule.oval">
+                              <span class="glyphicon glyphicon-record"></span>
+                              <span class="glyphicon-class">椭圆</span></a
+                            >
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <!-- 左侧拖拽列表 -->
-                            <div class="col-sm-3 col-md-2" style="padding-right:0px;">
-                                <div class="rect-printElement-types kuprintEpContainer">
-                                    <ul class="kuprint-printElement-type">
-                                        <li>
-                                            <span class="title"><code>拖拽列表</code></span>
-                                            <ul>
-                                                <li><a class="ep-draggable-item" tid="testModule.text">
-                                                    <span class="glyphicon glyphicon-text-width"></span>
-                                                    <span class="glyphicon-class">文本</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.image">
-                                                    <span class="glyphicon glyphicon-picture"></span>
-                                                    <span class="glyphicon-class">图片</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.longText">
-                                                    <span class="glyphicon glyphicon-subscript"></span>
-                                                    <span class="glyphicon-class">长文</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.tableCustom">
-                                                    <span class="glyphicon glyphicon-th"></span>
-                                                    <span class="glyphicon-class">表格</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.html">
-                                                    <span class="glyphicon glyphicon-header"></span>
-                                                    <span class="glyphicon-class">html</span></a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <span class="title">辅助</span>
-                                            <ul>
-                                                <li><a class="ep-draggable-item" tid="testModule.hline">
-                                                    <span class="glyphicon glyphicon-resize-horizontal"></span>
-                                                    <span class="glyphicon-class">横线</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.vline">
-                                                    <span class="glyphicon glyphicon-resize-vertical"></span>
-                                                    <span class="glyphicon-class">竖线</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.rect">
-                                                    <span class="glyphicon glyphicon-unchecked"></span>
-                                                    <span class="glyphicon-class">矩形</span></a></li>
-                                                <li><a class="ep-draggable-item" tid="testModule.oval">
-                                                    <span class="glyphicon glyphicon-record"></span>
-                                                    <span class="glyphicon-class">椭圆</span></a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                <!-- 打印设计区 -->
+                <div class="col-sm-9 col-md-10">
+                  <!-- 工具栏 -->
+                  <div class="kuprint-toolbar" style="margin-top: 15px">
+                    <ul>
+                      <li><a class="kuprint-toolbar-item" onclick="setPaper('A3')">A3</a></li>
+                      <li><a class="kuprint-toolbar-item" onclick="setPaper('A4')">A4</a></li>
+                      <li><a class="kuprint-toolbar-item" onclick="setPaper('A5')">A5</a></li>
+                      <li><a class="kuprint-toolbar-item" onclick="setPaper('B3')">B3</a></li>
+                      <li><a class="kuprint-toolbar-item" onclick="setPaper('B4')">B4</a></li>
+                      <li><a class="kuprint-toolbar-item" onclick="setPaper('B5')">B5</a></li>
+                      <li>
+                        <a class="kuprint-toolbar-item"
+                          ><input
+                            type="text"
+                            id="customWidth"
+                            style="width: 50px; height: 19px; border: 0"
+                            placeholder="宽/mm"
+                        /></a>
+                      </li>
+                      <li>
+                        <a class="kuprint-toolbar-item"
+                          ><input
+                            type="text"
+                            id="customHeight"
+                            style="width: 50px; height: 19px; border: 0"
+                            placeholder="高/mm"
+                        /></a>
+                      </li>
+                      <li>
+                        <a
+                          class="kuprint-toolbar-item"
+                          onclick="setPaper($('#customWidth').val(), $('#customHeight').val())"
+                          >自定义</a
+                        >
+                      </li>
+                      <li><a class="kuprint-toolbar-item" onclick="rotatePaper()">旋转</a></li>
+                      <li><a class="kuprint-toolbar-item" onclick="clearTemplate()">清空</a></li>
+                      <li>
+                        <a
+                          class="btn kuprint-toolbar-item"
+                          style="color: #fff; background: #d9534f; border-color: #d43f3a"
+                          id="A4_preview"
+                          >快速预览</a
+                        >
+                      </li>
+                      <li>
+                        <a
+                          class="btn kuprint-toolbar-item"
+                          style="color: #fff; background: #d9534f; border-color: #d43f3a"
+                          id="A4_directPrint"
+                          >打印</a
+                        >
+                      </li>
+                    </ul>
+                    <div style="clear: both"></div>
+                  </div>
 
-                            <!-- 打印设计区 -->
-                            <div class="col-sm-9 col-md-10">
-                                <!-- 工具栏 -->
-                                <div class="kuprint-toolbar" style="margin-top:15px;">
-                                    <ul>
-                                        <li><a class="kuprint-toolbar-item" onclick="setPaper('A3')">A3</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="setPaper('A4')">A4</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="setPaper('A5')">A5</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="setPaper('B3')">B3</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="setPaper('B4')">B4</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="setPaper('B5')">B5</a></li>
-                                        <li><a class="kuprint-toolbar-item"><input type="text" id="customWidth"
-                                            style="width:50px;height:19px;border:0;" placeholder="宽/mm" /></a></li>
-                                        <li><a class="kuprint-toolbar-item"><input type="text" id="customHeight"
-                                            style="width:50px;height:19px;border:0;" placeholder="高/mm" /></a></li>
-                                        <li><a class="kuprint-toolbar-item"
-                                            onclick="setPaper($('#customWidth').val(),$('#customHeight').val())">自定义</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="rotatePaper()">旋转</a></li>
-                                        <li><a class="kuprint-toolbar-item" onclick="clearTemplate()">清空</a></li>
-                                        <li><a class="btn kuprint-toolbar-item" style="color:#fff;background:#d9534f;border-color:#d43f3a;"
-                                            id="A4_preview">快速预览</a></li>
-                                        <li><a class="btn kuprint-toolbar-item" style="color:#fff;background:#d9534f;border-color:#d43f3a;"
-                                            id="A4_directPrint">打印</a></li>
-                                    </ul>
-                                    <div style="clear:both;"></div>
-                                </div>
+                  <!-- 打印设计面板 -->
+                  <div
+                    id="kuprint-printTemplate"
+                    class="kuprint-printTemplate"
+                    style="margin-top: 20px"
+                  ></div>
 
-                                <!-- 打印设计面板 -->
-                                <div id="kuprint-printTemplate" class="kuprint-printTemplate" style="margin-top:20px;"></div>
+                  <!-- JSON 输出 -->
+                  <div style="padding-top: 15px">
+                    <button type="button" class="btn btn-primary" id="getJson">导出 JSON</button>
+                  </div>
+                  <textarea
+                    class="form-control"
+                    rows="8"
+                    id="textarea_json"
+                    readonly
+                    placeholder="点击「导出 JSON」查看模板 JSON 数据"
+                  ></textarea>
 
-                                <!-- JSON 输出 -->
-                                <div style="padding-top:15px;">
-                                    <button type="button" class="btn btn-primary" id="getJson">导出 JSON</button>
-                                </div>
-                                <textarea class="form-control" rows="8" id="textarea_json" readonly
-                                    placeholder="点击「导出 JSON」查看模板 JSON 数据"></textarea>
-
-                                <!-- HTML 输出 -->
-                                <div style="padding:15px 0;">
-                                    <button type="button" class="btn btn-danger" id="getHtml">生成 HTML</button>
-                                </div>
-                                <textarea class="form-control" rows="8" id="textarea_html" readonly
-                                    placeholder="点击「生成 HTML」查看打印 HTML"></textarea>
-                            </div>
-                        </div>
-                    </div>
+                  <!-- HTML 输出 -->
+                  <div style="padding: 15px 0">
+                    <button type="button" class="btn btn-danger" id="getHtml">生成 HTML</button>
+                  </div>
+                  <textarea
+                    class="form-control"
+                    rows="8"
+                    id="textarea_html"
+                    readonly
+                    placeholder="点击「生成 HTML」查看打印 HTML"
+                  ></textarea>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        <!-- ========== 右侧属性面板 ========== -->
-        <div class="hinnn-layout-sider">
-            <div class="container height-100-per" style="width:250px;">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="PrintElementOptionSetting" style="margin-top:10px;"></div>
-                    </div>
-                </div>
+      <!-- ========== 右侧属性面板 ========== -->
+      <div class="hinnn-layout-sider">
+        <div class="container height-100-per" style="width: 250px">
+          <div class="row">
+            <div class="col-sm-12">
+              <div id="PrintElementOptionSetting" style="margin-top: 10px"></div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- ========== 预览弹窗 ========== -->
     <div class="modal fade" id="previewModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-lg" role="document" style="width:825px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">打印预览</h4>
-                </div>
-                <div class="modal-body">
-                    <button type="button" class="btn btn-danger" id="printByHtml">打印</button>
-                    <div class="prevViewDiv"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
+      <div class="modal-dialog modal-lg" role="document" style="width: 825px">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">打印预览</h4>
+          </div>
+          <div class="modal-body">
+            <button type="button" class="btn btn-danger" id="printByHtml">打印</button>
+            <div class="prevViewDiv"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- ============================================================
@@ -192,77 +284,76 @@
     <script src="custom_test/print-data.js"></script>
 
     <script>
-        // ============================================================
-        // kuprint Demo 初始化
-        // ============================================================
+      // ============================================================
+      // kuprint Demo 初始化
+      // ============================================================
 
-        var kuprintTemplate;
+      var kuprintTemplate;
 
-        $(document).ready(function () {
-            // 1. 初始化 kuprint
-            kuprint.init({
-                providers: [new customElementTypeProvider()]
-            });
-
-            // 2. 设置左侧拖拽事件
-            kuprint.PrintElementTypeManager.buildByHtml($('.ep-draggable-item'));
-
-            // 3. 创建打印模板（使用 custom_test 的测试数据，与 custom.html 一致）
-            kuprintTemplate = new kuprint.PrintTemplate({
-                template: customPrintJson,
-                settingContainer: '#PrintElementOptionSetting',
-                paginationContainer: '.kuprint-printPagination'
-            });
-
-            // 4. 渲染设计面板
-            kuprintTemplate.design('#kuprint-printTemplate');
-
-            // ---- 按钮事件 ----
-
-            // 快速预览
-            $('#A4_preview').click(function () {
-                var html = kuprintTemplate.getHtml(printData);
-                $('#previewModal .modal-body .prevViewDiv').html(html);
-                $('#previewModal').modal('show');
-            });
-
-            // 直接打印
-            $('#A4_directPrint').click(function () {
-                kuprintTemplate.print(printData);
-            });
-
-            // 弹窗中打印
-            $('#printByHtml').click(function () {
-                kuprintTemplate.printByHtml($('#previewModal .modal-body .prevViewDiv'));
-            });
-
-            // 导出 JSON
-            $('#getJson').click(function () {
-                $('#textarea_json').val(JSON.stringify(kuprintTemplate.getJson(), null, 2));
-            });
-
-            // 生成 HTML
-            $('#getHtml').click(function () {
-                var html = kuprintTemplate.getHtml(printData);
-                $('#textarea_html').val(html[0].outerHTML);
-            });
+      $(document).ready(function () {
+        // 1. 初始化 kuprint
+        kuprint.init({
+          providers: [new customElementTypeProvider()],
         });
 
-        // 调整纸张
-        function setPaper(paperTypeOrWidth, height) {
-            kuprintTemplate.setPaper(paperTypeOrWidth, height);
-        }
+        // 2. 设置左侧拖拽事件
+        kuprint.PrintElementTypeManager.buildByHtml($(".ep-draggable-item"));
 
-        // 旋转纸张
-        function rotatePaper() {
-            kuprintTemplate.rotatePaper();
-        }
+        // 3. 创建打印模板（使用 custom_test 的测试数据，与 custom.html 一致）
+        kuprintTemplate = new kuprint.PrintTemplate({
+          template: customPrintJson,
+          settingContainer: "#PrintElementOptionSetting",
+          paginationContainer: ".kuprint-printPagination",
+        });
 
-        // 清空模板
-        function clearTemplate() {
-            kuprintTemplate.clear();
-        }
+        // 4. 渲染设计面板
+        kuprintTemplate.design("#kuprint-printTemplate");
+
+        // ---- 按钮事件 ----
+
+        // 快速预览
+        $("#A4_preview").click(function () {
+          var html = kuprintTemplate.getHtml(printData);
+          $("#previewModal .modal-body .prevViewDiv").html(html);
+          $("#previewModal").modal("show");
+        });
+
+        // 直接打印
+        $("#A4_directPrint").click(function () {
+          kuprintTemplate.print(printData);
+        });
+
+        // 弹窗中打印
+        $("#printByHtml").click(function () {
+          kuprintTemplate.printByHtml($("#previewModal .modal-body .prevViewDiv"));
+        });
+
+        // 导出 JSON
+        $("#getJson").click(function () {
+          $("#textarea_json").val(JSON.stringify(kuprintTemplate.getJson(), null, 2));
+        });
+
+        // 生成 HTML
+        $("#getHtml").click(function () {
+          var html = kuprintTemplate.getHtml(printData);
+          $("#textarea_html").val(html[0].outerHTML);
+        });
+      });
+
+      // 调整纸张
+      function setPaper(paperTypeOrWidth, height) {
+        kuprintTemplate.setPaper(paperTypeOrWidth, height);
+      }
+
+      // 旋转纸张
+      function rotatePaper() {
+        kuprintTemplate.rotatePaper();
+      }
+
+      // 清空模板
+      function clearTemplate() {
+        kuprintTemplate.clear();
+      }
     </script>
-</body>
-
+  </body>
 </html>

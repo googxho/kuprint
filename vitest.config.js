@@ -2,7 +2,7 @@
 // vitest.config.js — kuprint 测试配置
 // ============================================================
 /** @type {import("@voidzero-dev/vite-plus-test/config").UserConfig} */
-module.exports = {
+export default {
   test: {
     environment: "node",
     globals: true,
