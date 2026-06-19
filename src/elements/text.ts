@@ -134,12 +134,14 @@ TextPrintElement.prototype.updateTargetText = function (
   if (textType === "text") {
     content.html(text as string);
   } else if (textType === "barcode") {
+    // 当未配置 field/testData 时，使用 text（即 title）作为条形码数据源
+    var barcodeData = data || text;
     content.html(
       '<svg width="100%" display="block" height="100%" class="hibarcode_imgcode" preserveAspectRatio="none slice"></svg><div class="hibarcode_displayValue"></div>',
     );
     try {
-      if (data) {
-        (window as any).JsBarcode(content.find(".hibarcode_imgcode")[0], data, {
+      if (barcodeData) {
+        (window as any).JsBarcode(content.find(".hibarcode_imgcode")[0], barcodeData, {
           format: this.options.getBarcodeMode(),
           width: 1,
           textMargin: -1,
@@ -149,7 +151,7 @@ TextPrintElement.prototype.updateTargetText = function (
           displayValue: false,
         });
         content.find(".hibarcode_imgcode").attr("height", "100%").attr("width", "100%");
-        if (!this.options.hideTitle) content.find(".hibarcode_displayValue").html(data);
+        if (!this.options.hideTitle) content.find(".hibarcode_displayValue").html(barcodeData);
       } else {
         content.html("");
       }
@@ -158,19 +160,19 @@ TextPrintElement.prototype.updateTargetText = function (
       content.html("此格式不支持该文本");
     }
   } else if (textType === "qrcode") {
+    // 当未配置 field/testData 时，使用 text（即 title）作为二维码数据源
+    var qrcodeData = data || text;
     content.html("");
     try {
-      if (data) {
+      if (qrcodeData) {
         var w = parseInt(hinnn.pt.toPx(this.options.getWidth() || 20));
         var h = parseInt(hinnn.pt.toPx(this.options.getHeight() || 20));
-        (window as any)
-          .QRCode(content[0], {
-            width: w,
-            height: h,
-            colorDark: this.options.color || "#000000",
-            useSVG: true,
-          })
-          .makeCode(data);
+        new (window as any).QRCode(content[0], {
+          width: w,
+          height: h,
+          colorDark: this.options.color || "#000000",
+          useSVG: true,
+        }).makeCode(qrcodeData);
       }
     } catch (e) {
       console.log(e);

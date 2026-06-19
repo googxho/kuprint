@@ -489,6 +489,8 @@ var TablePrintElement = (function (_super) {
   };
   TablePrintElement.prototype.design = function (opts, paper) {
     var self = this;
+    // 清除元素上已存在的 hidraggable 数据，避免基类或其他地方的绑定残留
+    $.removeData(this.designTarget[0], "hidraggable");
     this.designTarget.hidraggable({
       handle: this.designTarget.find(".kuprint-printElement-table-handle"),
       axis: self.options.axis && opts && opts.axisEnabled ? self.options.axis : undefined,

@@ -661,7 +661,7 @@ import {
         mouseY = e.pageY;
         startTop = parent.offset().top;
         startLeft = parent.offset().left;
-        moving = true;
+        moving = false;
       });
       $(self.options.stage)
         .on("mousemove", function (e) {
