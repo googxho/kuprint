@@ -1,6 +1,6 @@
 {
   "name": "@kuki-lib/kuprint",
-  "version": "2.5.11",
+  "version": "2.5.12",
   "description": "A JavaScript print template designer. Design print layouts with drag-and-drop in the browser.",
   "keywords": [
     "browser",
