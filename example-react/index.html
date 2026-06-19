@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kuprint React Demo - 打印模板设计器</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- jQuery 必须在 kuprint 之前加载（kuprint peer dependency） -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+
+    <!-- 插件脚本 -->
+    <script src="/plugins/jquery.hiwprint.js"></script>
+    <script src="/plugins/jquery.minicolors.min.js"></script>
+    <script src="/plugins/JsBarcode.all.min.js"></script>
+    <script src="/plugins/qrcode.js"></script>
+
+    <!-- React 应用入口 -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
