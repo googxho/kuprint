@@ -41,6 +41,8 @@
       "require": "./dist/kuprint.umd.js",
       "default": "./dist/kuprint.min.js"
     },
+    "./css": "./dist/css/kuprint.css",
+    "./css/print": "./dist/css/print-lock.css",
     "./package.json": "./package.json"
   },
   "publishConfig": {

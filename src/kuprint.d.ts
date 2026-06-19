@@ -939,6 +939,10 @@ interface JQuery {
   dragLengthCNum(val: number, opts?: { moveUnit: string; minMove?: number }): number;
 }
 
+// kuprint CSS 子路径类型声明（side-effect import）
+declare module "@kuki-lib/kuprint/css" {}
+declare module "@kuki-lib/kuprint/css/print" {}
+
 declare namespace kuprint {
   interface HidraggableOptions {
     proxy?: "clone" | ((el: HTMLElement) => JQuery) | null;

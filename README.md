@@ -23,13 +23,12 @@ kuprint 让你在浏览器中通过拖拽方式设计打印模板。支持文本
 
 ## 📦 安装
 
-### CDN（最简单）
+### CDN
 
 ```html
-<!-- jQuery 是前置依赖 -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<!-- kuprint -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.css" />
+<!-- kuprint 核心 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/css/kuprint.css" />
 <script src="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.min.js"></script>
 ```
 
@@ -39,13 +38,16 @@ kuprint 让你在浏览器中通过拖拽方式设计打印模板。支持文本
 npm install @kuki-lib/kuprint jquery
 ```
 
-```js
-// ES Module
+```ts
+// 核心库
 import "@kuki-lib/kuprint";
 
-// CommonJS
-require("@kuki-lib/kuprint");
+// 核心样式
+import "@kuki-lib/kuprint/css";
+import "@kuki-lib/kuprint/css/print"; // 打印锁样式
 ```
+
+> ⚠️ **jQuery 是必需的前置依赖**（`peerDependencies`）。在浏览器中使用时，请确保在 kuprint 之前加载 jQuery。
 
 ### TypeScript
 
@@ -53,84 +55,125 @@ require("@kuki-lib/kuprint");
 import "@kuki-lib/kuprint";
 
 // 完整的类型提示，无需额外配置
-const template = new PrintTemplate({
+const template = new kuprint.PrintTemplate({
   settingContainer: "#options",
   paginationContainer: "#pagination",
 });
 
 template.design("#designer");
 
-// getHtml / getJson / print / toPdf 等所有方法都有类型
+// getHtml / getJson / print 等所有方法都有类型
 const html: JQuery = template.getHtml(data, { imgToBase64: true });
 ```
 
-> ⚠️ **jQuery 是必需的前置依赖**（`peerDependencies`）。请确保在 kuprint 之前加载 jQuery。
+## 📦 包入口一览
+
+| 入口                          | 说明       |
+| ----------------------------- | ---------- |
+| `@kuki-lib/kuprint`           | 核心库     |
+| `@kuki-lib/kuprint/css`       | 核心样式   |
+| `@kuki-lib/kuprint/css/print` | 打印锁样式 |
 
 ## 🚀 快速开始
 
+### 浏览器（CDN）
+
 ```html
-<div id="designer"></div>
-<div id="options"></div>
+<!doctype html>
+<html>
+  <head>
+    <title>kuprint 快速开始</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/css/kuprint.css"
+    />
+  </head>
+  <body>
+    <div id="designer"></div>
+    <div id="options"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.min.js"></script>
-<script>
-  // 1. 初始化
-  kuprint.init();
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint/dist/kuprint.min.js"></script>
+    <script>
+      kuprint.init();
+      var template = new kuprint.PrintTemplate({
+        settingContainer: "#options",
+      });
+      template.design("#designer");
 
-  // 2. 注册自定义元素类型（可选）
-  kuprint.PrintElementTypeManager.build("#element-panel", "my-module");
-
-  // 3. 创建模板
-  var template = new kuprint.PrintTemplate({
-    settingContainer: "#options", // 右侧属性面板
-    paginationContainer: "#pagination", // 底部分页器
-  });
-
-  // 4. 渲染设计面板
-  template.design("#designer");
-
-  // 5. 获取打印 HTML
-  var html = template.getHtml({ field1: "值1", field2: "值2" });
-
-  // 6. 打印
-  template.print({ field1: "值1" });
-
-  // 7. 导出 PDF
-  template.toPdf(data, "output.pdf");
-
-  // 8. 导出 / 导入 JSON
-  var json = template.getJson(); // 完整 JSON
-  var tidJson = template.getJsonTid(); // 带 TID 的 JSON
-  var restored = new kuprint.PrintTemplate({ template: json });
-</script>
+      // 获取打印 HTML
+      var html = template.getHtml({ field1: "值1" });
+      // 打印
+      template.print({ field1: "值1" });
+      // 导出模板 JSON
+      var json = template.getJson();
+    </script>
+  </body>
+</html>
 ```
+
+### Vue 3 项目
+
+参见 [`example-vue/`](./example-vue) 目录的完整 Vue 3 + Pinia + TypeScript 实现。
+
+```ts
+// main.ts
+import "@kuki-lib/kuprint";
+import "@kuki-lib/kuprint/css";
+import "@kuki-lib/kuprint/css/print";
+```
+
+## 📁 Demo 项目
+
+| 项目           | 技术栈                         | 位置                            |
+| -------------- | ------------------------------ | ------------------------------- |
+| 原生 HTML Demo | jQuery + Bootstrap             | [`example/`](./example)         |
+| Vue 3 Demo     | **Vue 3.5 + Pinia 3 + Vite 8** | [`example-vue/`](./example-vue) |
+
+> 💡 Vue Demo 启动：
+>
+> ```bash
+> cd example-vue
+> pnpm install
+> pnpm dev
+> ```
 
 ## 🏗️ 项目结构
 
 ```
+
 kuprint/
 ├── src/
-│   ├── index.ts                  ← 构建入口
-│   ├── kuprint.d.ts             ← TypeScript 类型声明
-│   ├── core/                     ← 核心模块
-│   │   ├── utils.ts              ← 工具函数（事件、单位转换等）
-│   │   ├── config.ts             ← 全局配置 KuPrintConfig
-│   │   ├── lib.ts                ← 纸张尺寸、GUID、图片转换
-│   │   ├── print-element-option.ts ← 元素选项属性管理
-│   │   └── base-print-element.ts ← 所有打印元素基类（35+ 方法）
-│   ├── options/                  ← 25+ 个可配置选项（字体/边框/数据/纸张）
-│   ├── elements/                 ← 元素实现（text/image/longtext/html/lines）
-│   ├── table/                    ← 表格组件（行列定义、渲染、编辑）
-│   ├── manager/                  ← 元素类型注册与创建
-│   ├── paper/                    ← 纸张管理（分页、页眉页脚、页码）
-│   ├── template/                 ← PrintTemplate 模板数据模型
-│   ├── panel/                    ← PrintPanel 可视化设计面板
-│   └── plugins/                  ← jQuery 插件 + WebSocket + 公开 API
-├── example/                      ← 完整 Demo
-├── dist/                         ← 构建产物
-├── scripts/                      ← 构建脚本
-└── tests/                        ← 单元测试
+│ ├── index.ts ← 构建入口
+│ ├── kuprint.d.ts ← TypeScript 类型声明
+│ ├── core/ ← 核心模块
+│ │ ├── utils.ts ← 工具函数（事件、单位转换等）
+│ │ ├── config.ts ← 全局配置 KuPrintConfig
+│ │ ├── lib.ts ← 纸张尺寸、GUID、图片转换
+│ │ ├── print-element-option.ts ← 元素选项属性管理
+│ │ └── base-print-element.ts ← 所有打印元素基类（35+ 方法）
+│ ├── options/ ← 25+ 个可配置选项（字体/边框/数据/纸张）
+│ ├── elements/ ← 元素实现（text/image/longtext/html/lines）
+│ ├── table/ ← 表格组件（行列定义、渲染、编辑）
+│ ├── manager/ ← 元素类型注册与创建
+│ ├── paper/ ← 纸张管理（分页、页眉页脚、页码）
+│ ├── template/ ← PrintTemplate 模板数据模型
+│ ├── panel/ ← PrintPanel 可视化设计面板
+│ └── plugins/ ← jQuery 插件 + WebSocket + 公开 API
+├── example/ ← 原生 HTML Demo（jQuery + Bootstrap）
+├── example-vue/ ← Vue 3 Demo（Vue 3.5 + Pinia 3 + Vite 8）
+├── dist/ ← 构建产物
+│ ├── kuprint.umd.js ← 核心 UMD
+│ ├── kuprint.esm.js ← 核心 ESM
+│ ├── kuprint.min.js ← 核心 min（= kuprint.umd.js）
+│ ├── kuprint.d.ts ← 类型声明
+│ └── css/
+│   ├── kuprint.css ← 核心样式
+│   ├── print-lock.css ← 打印锁样式
+│   └── image/ ← CSS 图片资源
+├── scripts/ ← 构建脚本
+└── tests/ ← 单元测试
+
 ```
 
 ## 🔧 开发
@@ -144,6 +187,9 @@ pnpm build
 
 # 类型检查
 pnpm check
+
+# 单元测试
+pnpm test
 
 # 监听模式
 pnpm dev
@@ -173,6 +219,41 @@ npm run release:beta
 ```
 
 一键完成：**版本号升级 → 类型检查 → 构建 → 发布 → Git commit → Git tag → Push**。
+
+## 🤝 贡献
+
+欢迎提交 PR 和 Issue！
+
+### Commit 规范
+
+本仓库使用 [Conventional Commits](https://www.conventionalcommits.org/) 规范：
+
+| 类型       | 说明                     |
+| ---------- | ------------------------ |
+| `feat`     | 新功能                   |
+| `fix`      | Bug 修复                 |
+| `docs`     | 文档变更                 |
+| `refactor` | 重构（不涉及功能或修复） |
+| `style`    | 代码格式（不影响功能）   |
+| `test`     | 测试相关                 |
+| `chore`    | 构建/工具/依赖变更       |
+
+提交信息示例：
+
+```
+feat: 新增水印元素支持
+fix(core): 修复长文本分页偏移量计算错误
+docs: 更新快速开始示例
+```
+
+> 项目使用 `bumpp` 管理版本号，发布时自动根据提交生成 changelog。
+
+### PR 流程
+
+1. Fork 仓库并创建特性分支
+2. 确保通过类型检查：`pnpm check`
+3. 确保测试通过：`pnpm test`
+4. 提交 PR 并描述变更内容
 
 ## 🌐 浏览器兼容性
 
