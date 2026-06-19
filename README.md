@@ -21,7 +21,34 @@ kuprint 让你在浏览器中通过拖拽方式设计打印模板。支持文本
 - **PDF 导出** — 配合 jsPDF / html2canvas
 - **TypeScript 支持** — 完整的类型声明文件
 
-## 📦 安装
+## 打印工作流
+
+```
+  ┌────────────┐    ┌───────────────┐    ┌────────────────┐
+  │  ① 初始化   │ →  │  ② 创建模板    │ →  │  ③ 设计面板     │
+  │ kuprint.init│    │ PrintTemplate │    │ template.design│
+  │ 注册元素类型  │    │ 加载模板 JSON  │    │ 拖拽/编辑属性    │
+  └────────────┘    └───────────────┘    └───────┬────────┘
+                                                 │
+  ┌────────────┐    ┌───────────────┐            │
+  │  ⑤ 打印/导出 │ ←  │  ④ 生成 HTML   │ ←────────┘
+  │ template   │    │ getHtml(data) │
+  │ .print()   │    │ 数据绑定+分页   │
+  │ .getJson() │    └───────────────┘
+  └────────────┘
+```
+
+### 核心概念
+
+| 概念                                            | 说明                                                                         |
+| ----------------------------------------------- | ---------------------------------------------------------------------------- |
+| **模板 JSON** <br/> customPrintJson.ts          | 设计器的"存档"，定义元素位置/样式/字段绑定<br/> 对应视图正中间区域           |
+| **元素类型提供者** <br/> customEtypeProvider.ts | 注册"能拖哪些元素"及默认配置（表格列、格式化函数等）<br/> 对应视图最左侧区域 |
+| **打印数据** <br/> printData.ts                 | 真实数据，按 `field` 注入模板占位符                                          |
+
+---
+
+## �📦 安装
 
 ### CDN
 
@@ -125,17 +152,20 @@ import "@kuki-lib/kuprint/css/print";
 
 ## 📁 Demo 项目
 
-| 项目           | 技术栈                         | 位置                            |
-| -------------- | ------------------------------ | ------------------------------- |
-| 原生 HTML Demo | jQuery + Bootstrap             | [`example/`](./example)         |
-| Vue 3 Demo     | **Vue 3.5 + Pinia 3 + Vite 8** | [`example-vue/`](./example-vue) |
+| 项目           | 技术栈                                             | 位置                                |
+| -------------- | -------------------------------------------------- | ----------------------------------- |
+| 原生 HTML Demo | jQuery + Bootstrap                                 | [`example/`](./example)             |
+| Vue 3 Demo     | **Vue 3.5 + Pinia 3 + Vite 8**                     | [`example-vue/`](./example-vue)     |
+| React Demo     | **React 19 + Zustand 5 + React Compiler + Vite 8** | [`example-react/`](./example-react) |
 
-> 💡 Vue Demo 启动：
+> 💡 Demo 启动：
 >
 > ```bash
-> cd example-vue
-> pnpm install
-> pnpm dev
+> # Vue
+> cd example-vue && pnpm install && pnpm dev
+>
+> # React
+> cd example-react && pnpm install && pnpm dev
 > ```
 
 ## 🏗️ 项目结构
@@ -162,6 +192,7 @@ kuprint/
 │ └── plugins/ ← jQuery 插件 + WebSocket + 公开 API
 ├── example/ ← 原生 HTML Demo（jQuery + Bootstrap）
 ├── example-vue/ ← Vue 3 Demo（Vue 3.5 + Pinia 3 + Vite 8）
+├── example-react/ ← React Demo（React 19 + Zustand 5 + React Compiler + Vite 8）
 ├── dist/ ← 构建产物
 │ ├── kuprint.umd.js ← 核心 UMD
 │ ├── kuprint.esm.js ← 核心 ESM
