@@ -45,6 +45,10 @@
       .height-100-per {
         height: 100%;
       }
+      .mono {
+        font-family: Menlo, Consolas, "Courier New", monospace;
+        font-size: 12px;
+      }
     </style>
   </head>
 
@@ -223,6 +227,20 @@
                     readonly
                     placeholder="点击「生成 HTML」查看打印 HTML"
                   ></textarea>
+
+                  <!-- 载入模板 → 映射到可视化设计器 -->
+                  <div style="padding: 15px 0">
+                    <button type="button" class="btn btn-success" id="loadTemplate">
+                      载入模板到设计器
+                    </button>
+                  </div>
+                  <textarea
+                    class="form-control mono"
+                    rows="10"
+                    id="textarea_loadtemplate"
+                    spellcheck="false"
+                    placeholder="粘贴模板对象（支持 JSON 或 JS 对象字面量，可含函数），点击上方按钮即可映射到可视化设计器。格式示例：{ panels:[...] }"
+                  ></textarea>
                 </div>
               </div>
             </div>
@@ -338,7 +356,49 @@
           var html = kuprintTemplate.getHtml(printData);
           $("#textarea_html").val(html[0].outerHTML);
         });
+
+        // 载入模板：粘贴模板对象(JSON) → 映射到可视化设计器
+        // 输入框默认填充当前模板，方便用户看到格式
+        $("#textarea_loadtemplate").val(JSON.stringify(customPrintJson));
+
+        $("#loadTemplate").click(function () {
+          loadTemplateToDesigner();
+        });
       });
+
+      // 把粘贴的模板对象映射到可视化设计器中（重新构建设计器）
+      function loadTemplateToDesigner() {
+        var raw = $("#textarea_loadtemplate").val().trim();
+        if (!raw) {
+          alert("请把模板对象粘贴到上方输入框");
+          return;
+        }
+        var obj;
+        // 先尝试 JSON.parse；失败则用 new Function 执行 JS 对象字面量（支持含函数）
+        try {
+          obj = JSON.parse(raw);
+        } catch (e1) {
+          try {
+            obj = new Function("return " + raw)();
+          } catch (e2) {
+            alert("解析失败：\nJSON: " + e1.message + "\n对象: " + e2.message);
+            return;
+          }
+        }
+        if (!obj || !Array.isArray(obj.panels)) {
+          alert("对象缺少 panels 数组，格式应为 { panels:[...] }");
+          return;
+        }
+        // 清空设计容器后，用新模板对象重建 PrintTemplate 并渲染
+        $("#kuprint-printTemplate").empty();
+        kuprintTemplate = new kuprint.PrintTemplate({
+          template: obj,
+          settingContainer: "#PrintElementOptionSetting",
+          paginationContainer: ".kuprint-printPagination",
+        });
+        kuprintTemplate.design("#kuprint-printTemplate");
+        alert("模板已载入可视化设计器");
+      }
 
       // 调整纸张
       function setPaper(paperTypeOrWidth, height) {

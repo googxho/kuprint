@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>货单打印</title>
+
+    <!-- kuprint 核心样式（从构建产物引用） -->
+    <link href="../dist/css/print-lock.css" rel="stylesheet" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+      }
+
+      body {
+        font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        background: #f0f2f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #printBtn,
+      #logHtmlBtn {
+        font-size: 20px;
+        padding: 14px 48px;
+        color: #fff;
+        border: 0;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      #printBtn {
+        background: #d9534f;
+        box-shadow: 0 4px 12px rgba(217, 83, 79, 0.4);
+      }
+
+      #printBtn:hover {
+        background: #c9302c;
+      }
+
+      #logHtmlBtn {
+        background: #337ab7;
+        box-shadow: 0 4px 12px rgba(51, 122, 183, 0.4);
+      }
+
+      #logHtmlBtn:hover {
+        background: #286090;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 页面中只有两个按钮：一个打印，一个输出完整 HTML 到控制台 -->
+    <div style="text-align: center">
+      <button id="printBtn" type="button">打印</button>
+      <button id="logHtmlBtn" type="button" style="margin-left: 12px; background: #337ab7">
+        输出 HTML
+      </button>
+    </div>
+
+    <!-- Polyfill 现代浏览器可以去掉 -->
+    <!-- <script src="polyfill.min.js"></script> -->
+    <!-- jQuery（必需前置依赖，需在 kuprint 之前加载） -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <!-- kuprint 核心库（UMD）-->
+    <script src="https://cdn.jsdelivr.net/npm/@kuki-lib/kuprint@2.5.12/dist/kuprint.umd.js"></script>
+    <!-- 打印插件 -->
+    <script src="plugins/jquery.hiwprint.js"></script>
+
+    <script>
+      // ============================================================
+      // 打印数据（从页面注释中的示例 HTML 提取，靠数据驱动模板）
+      // ============================================================
+      var printData = {
+        shopName: "我的店铺",
+        customerLine: "客户：哈哈哈哈哈哈哈哈哈哈哈    电话: 16687771200",
+        orderTimeLine: "开单: 2026-08-21 16:02",
+        goods: [
+          { id: 1, goods: "石榴", unit: "件", billQty: 1, actualQty: "", price: 50, amount: 50 },
+          { id: 2, goods: "芒果", unit: "斤", billQty: 90, actualQty: "", price: 3, amount: 270 },
+          { id: 3, goods: "菠萝", unit: "公斤", billQty: 11, actualQty: "", price: 8, amount: 88 },
+          { id: 4, goods: "香菇", unit: "件", billQty: 10, actualQty: "", price: 40, amount: 400 },
+        ],
+        basketLine: "筐押金: 110元",
+        totalLine: "总计: 918元",
+        capitalLine: "大写: 玖佰壹拾捌元整",
+        maker: "小龙虾",
+        auditor: "审核人：",
+        sender: "送货人：",
+        sign: "客户签收：",
+      };
+
+      // ============================================================
+      // kuprint 模板 JSON（面板坐标单位为 pt，panel 宽高为 mm）
+      // ============================================================
+      var orderTemplate = {
+        panels: [
+          {
+            index: 0,
+            width: 210,
+            height: 130,
+            printElements: [
+              {
+                options: {
+                  left: 18,
+                  top: 8,
+                  height: 26,
+                  width: 560,
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  textAlign: "center",
+                  title: "",
+                  field: "shopName",
+                },
+                printElementType: { title: "店名", type: "text" },
+              },
+              // 标题下横线
+              {
+                options: { left: 18, top: 34, height: 7, width: 560, borderWidth: 1 },
+                printElementType: { type: "hline" },
+              },
+              {
+                options: {
+                  left: 18,
+                  top: 42,
+                  height: 15,
+                  width: 400,
+                  fontSize: 10.5,
+                  title: "",
+                  field: "customerLine",
+                },
+                printElementType: { title: "客户行", type: "text" },
+              },
+              {
+                options: {
+                  left: 418,
+                  top: 42,
+                  height: 15,
+                  width: 160,
+                  fontSize: 10.5,
+                  textAlign: "right",
+                  title: "",
+                  field: "orderTimeLine",
+                },
+                printElementType: { title: "开单行", type: "text" },
+              },
+              {
+                options: {
+                  left: 18,
+                  top: 58,
+                  height: 120,
+                  width: 560,
+                  field: "goods",
+                  fontSize: 10.5,
+                  columns: [
+                    [
+                      {
+                        title: "序号",
+                        field: "id",
+                        width: 5,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                      {
+                        title: "货品",
+                        field: "goods",
+                        width: 30,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                      {
+                        title: "单位",
+                        field: "unit",
+                        width: 8,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                      {
+                        title: "开单量",
+                        field: "billQty",
+                        width: 12,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                      {
+                        title: "实收量",
+                        field: "actualQty",
+                        width: 12,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                      {
+                        title: "单价",
+                        field: "price",
+                        width: 16,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                      {
+                        title: "货款",
+                        field: "amount",
+                        width: 17,
+                        colspan: 1,
+                        rowspan: 1,
+                        align: "center",
+                      },
+                    ],
+                  ],
+                },
+                printElementType: {
+                  title: "明细表",
+                  type: "tableCustom",
+                  footerFormatter: function (options, data, templateData, rows) {
+                    rows = rows || data || [];
+                    var totalAmount = 0,
+                      qty = {};
+                    rows.forEach(function (r) {
+                      totalAmount += parseFloat(r.amount) || 0;
+                      var q = parseFloat(r.billQty) || 0;
+                      qty[r.unit] = (qty[r.unit] || 0) + q;
+                    });
+                    var qtyText = Object.keys(qty)
+                      .map(function (u) {
+                        return qty[u] + u;
+                      })
+                      .join(" ");
+                    return (
+                      "<tr>" +
+                      "<td>合计</td>" +
+                      '<td colspan="3" style="text-align:right">' +
+                      qtyText +
+                      "</td>" +
+                      '<td colspan="3" style="text-align:right">' +
+                      totalAmount +
+                      "元</td>" +
+                      "</tr>"
+                    );
+                  },
+                },
+              },
+              {
+                options: {
+                  left: 18,
+                  top: 160,
+                  height: 13,
+                  width: 280,
+                  fontSize: 10.5,
+                  title: "",
+                  field: "basketLine",
+                },
+                printElementType: { title: "筐押金", type: "text" },
+              },
+              {
+                options: {
+                  left: 300,
+                  top: 160,
+                  height: 13,
+                  width: 278,
+                  fontSize: 10.5,
+                  textAlign: "right",
+                  title: "",
+                  field: "capitalLine",
+                },
+                printElementType: { title: "大写", type: "text" },
+              },
+              {
+                options: {
+                  left: 18,
+                  top: 176,
+                  height: 13,
+                  width: 280,
+                  fontSize: 10.5,
+                  title: "",
+                  field: "totalLine",
+                },
+                printElementType: { title: "总计", type: "text" },
+              },
+              {
+                options: {
+                  left: 18,
+                  top: 192,
+                  height: 13,
+                  width: 280,
+                  fontSize: 10.5,
+                  title: "制单人",
+                  field: "maker",
+                },
+                printElementType: { title: "制单人", type: "text" },
+              },
+              {
+                options: {
+                  left: 300,
+                  top: 192,
+                  height: 13,
+                  width: 278,
+                  fontSize: 10.5,
+                  textAlign: "right",
+                  title: "审核人：",
+                },
+                printElementType: { title: "审核人：", type: "text" },
+              },
+              {
+                options: {
+                  left: 18,
+                  top: 208,
+                  height: 13,
+                  width: 280,
+                  fontSize: 10.5,
+                  title: "送货人：",
+                },
+                printElementType: { title: "送货人：", type: "text" },
+              },
+              {
+                options: {
+                  left: 300,
+                  top: 208,
+                  height: 13,
+                  width: 278,
+                  fontSize: 10.5,
+                  textAlign: "right",
+                  title: "客户签收：",
+                },
+                printElementType: { title: "客户签收：", type: "text" },
+              },
+            ],
+          },
+        ],
+      };
+      // console.log("[nk] ~ orderTemplate:", JSON.stringify(orderTemplate))
+
+      // 打印所需的附加样式（随打印 HTML 一起输出，保证表格边框与行高）
+      var printStyleHtml =
+        "<style>" +
+        '.kuprint-printPanel{font-family:SimSun,"宋体",serif;}' +
+        ".kuprint-printElement-tableTarget{border-collapse:collapse;}" +
+        ".kuprint-printElement-tableTarget thead td{border:1px solid #000;padding:3px;height:18px;}" +
+        ".kuprint-printElement-tableTarget tbody td{border:1px solid #000;padding:3px;height:22px;text-align:center;}" +
+        ".kuprint-printElement-tableTarget tfoot td{border:1px solid #000;padding:3px;height:18px;}" +
+        "</style>";
+
+      $(document).ready(function () {
+        // 1. 初始化 kuprint（内置元素类型即可，无需设计面板拖拽）
+        kuprint.init();
+
+        // 2. 创建打印模板对象（数据驱动模板）
+        var template = new kuprint.PrintTemplate({ template: orderTemplate });
+
+        // 3. 生成完整打印 HTML（含打印样式）
+        var buildHtml = function () {
+          var html = template.getHtml(printData);
+          html.append(printStyleHtml);
+          return html;
+        };
+
+        // 4. 打印按钮 -> 生成 HTML 并打印
+        $("#printBtn").click(function () {
+          buildHtml().hiwprint(); // 通过 hiwprint 插件直接触发浏览器打印
+        });
+
+        // 5. 输出按钮 -> 将完整 HTML 打印到控制台
+        $("#logHtmlBtn").click(function () {
+          var html = buildHtml()[0].outerHTML;
+          console.log(html);
+          $("body").append(
+            "<pre id='htmlOut' style='white-space:pre-wrap;width:100%;max-height:70vh;overflow:auto;position:fixed;top:0;left:0;z-index:9999;background:#fff;font-size:12px;box-sizing:border-box;padding:12px'></pre>",
+          );
+          $("#htmlOut").text(html);
+        });
+      });
+    </script>
+  </body>
+</html>

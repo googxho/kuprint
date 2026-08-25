@@ -8,8 +8,12 @@
 import { execSync } from "child_process";
 import { copyFileSync, mkdirSync, rmSync, existsSync } from "fs";
 import { resolve } from "path";
+import { fileURLToPath } from "url";
 
-const root = new URL("..", import.meta.url).pathname;
+// 使用 fileURLToPath 而非 .pathname：.pathname 在 Windows 上会得到
+// 带前导斜杠的 "/D:/xxx" 路径，作为 cwd 传给 spawn/execSync 时会导致
+// "spawnSync C:\windows\system32\cmd.exe ENOENT"。
+const root = fileURLToPath(new URL("..", import.meta.url));
 const dist = resolve(root, "dist");
 const watch = process.argv.includes("--watch") || process.argv.includes("-w");
 
