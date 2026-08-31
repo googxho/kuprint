@@ -249,8 +249,13 @@ import {
       if (!dropped && !o.revert) cleanup();
       return dropped;
     }
-    o.onStopDrag.call(e.data.target, e);
-    $(document).unbind(".hidraggable");
+    try {
+      o.onStopDrag.call(e.data.target, e);
+    } finally {
+      // 无论 onStopDrag 内部是否抛错，都必须解绑文档级拖拽事件，
+      // 否则会导致元素一直跟随鼠标、无法释放。
+      $(document).unbind(".hidraggable");
+    }
     setTimeout(function () {
       $("body").css("cursor", "");
     }, 100);
@@ -324,10 +329,11 @@ import {
             parent: $(e.data.target).parent()[0],
           };
           $.extend(e.data, data);
-          if (
-            $.data(e.data.target, "hidraggable").options.onBeforeDrag.call(e.data.target, e) === 0
-          )
-            return;
+          var beforeResult = $.data(e.data.target, "hidraggable").options.onBeforeDrag.call(
+            e.data.target,
+            e,
+          );
+          if (beforeResult === 0 || beforeResult === false) return;
           $(document).bind("mousedown.hidraggable", e.data, startDrag);
           $(document).bind("mousemove.hidraggable", e.data, doDrag);
           $(document).bind("mouseup.hidraggable", e.data, stopDrag);

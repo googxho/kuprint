@@ -637,6 +637,72 @@ font-weight: normal;*/
   border-top: 1px dotted black;
 }
 
+.hicontextmenu {
+  position: absolute;
+  display: inline-block;
+  width: 215px;
+  padding: 0 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: 13px;
+  list-style-type: none;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #bebebe;
+  border-radius: 2px;
+}
+
+.hicontextmenuroot .hicontextmenuitem {
+  position: relative;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  padding: 0.2em 12px;
+  color: #2f2f2f;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-decoration: none;
+  background-color: #fff;
+}
+
+.hicontextmenuroot > .hicontextmenuitem:hover,
+.hicontextmenuroot .hicontextmenuitem > a:hover {
+  background-color: #f3f3f3;
+}
+
+.hicontextmenuroot .hicontextmenuitem > a {
+  text-decoration: none;
+  color: #363636;
+  line-height: 22px;
+}
+
+.hicontextmenuroot .hicontextsubmenu > ul {
+  display: none;
+  position: absolute;
+}
+
+.hicontextmenuroot .hicontextsubmenu:hover > ul {
+  display: block;
+  left: 100%;
+  top: -1px;
+  margin-left: 0px;
+}
+
+.hicontextmenuroot .borderBottom {
+  border-bottom: 1px solid #efe6e6;
+}
+
+.hicontextmenuroot .disable > a {
+  color: #ccc;
+}
+
+.hicontextmenuroot > .disable:hover,
+.hicontextmenuroot .disable > a:hover {
+  background-color: #fff;
+}
+
 .hitable .hitable-editor-text {
   border: 1px solid;
   width: 95%;

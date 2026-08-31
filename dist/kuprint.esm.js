@@ -448,7 +448,7 @@ Xt.prototype.destroy = function () {
 };
 var gi = [new tt(), new et(), new it(), new nt(), new ot(), new rt(), new jt(), new Xt()],
   mi = function () {};
-function b(t) {
+function T(t) {
   ((t = t || {}),
     (this.left = t.left),
     (this.top = t.top),
@@ -457,62 +457,62 @@ function b(t) {
     (this.width = t.width),
     this.init(t));
 }
-b.prototype.setDefault = function (t) {
+T.prototype.setDefault = function (t) {
   ((this.defaultOptions = t), this.initSize());
 };
-b.prototype.initSize = function () {
+T.prototype.initSize = function () {
   (this.width || this.setWidth(this.defaultOptions.width),
     this.height || this.setHeight(this.defaultOptions.height));
 };
-b.prototype.initSizeByHtml = function (t, e) {
+T.prototype.initSizeByHtml = function (t, e) {
   (this.width || this.setWidth(t), this.height || this.setHeight(e));
 };
-b.prototype.getLeft = function () {
+T.prototype.getLeft = function () {
   return this.left;
 };
-b.prototype.displayLeft = function () {
+T.prototype.displayLeft = function () {
   return this.left + "pt";
 };
-b.prototype.setLeft = function (t) {
+T.prototype.setLeft = function (t) {
   t != null && (this.left = t);
 };
-b.prototype.getTop = function () {
+T.prototype.getTop = function () {
   return this.top;
 };
-b.prototype.getTopInDesign = function () {
+T.prototype.getTopInDesign = function () {
   return this.topInDesign;
 };
-b.prototype.displayTop = function () {
+T.prototype.displayTop = function () {
   return this.top + "pt";
 };
-b.prototype.setTop = function (t) {
+T.prototype.setTop = function (t) {
   t != null && (this.top = t);
 };
-b.prototype.copyDesignTopFromTop = function () {
+T.prototype.copyDesignTopFromTop = function () {
   this.topInDesign = this.top;
 };
-b.prototype.getHeight = function () {
+T.prototype.getHeight = function () {
   return this.height;
 };
-b.prototype.displayHeight = function () {
+T.prototype.displayHeight = function () {
   return this.height + "pt";
 };
-b.prototype.setHeight = function (t) {
+T.prototype.setHeight = function (t) {
   t != null && (this.height = t);
 };
-b.prototype.getWidth = function () {
+T.prototype.getWidth = function () {
   return this.width;
 };
-b.prototype.displayWidth = function () {
+T.prototype.displayWidth = function () {
   return this.width + "pt";
 };
-b.prototype.setWidth = function (t) {
+T.prototype.setWidth = function (t) {
   t != null && (this.width = t);
 };
-b.prototype.getValueFromOptionsOrDefault = function (t) {
+T.prototype.getValueFromOptionsOrDefault = function (t) {
   return this[t] == null ? this.defaultOptions[t] : this[t];
 };
-b.prototype.getPrintElementOptionEntity = function () {
+T.prototype.getPrintElementOptionEntity = function () {
   var t = new mi(),
     e = this;
   return (
@@ -537,7 +537,7 @@ b.prototype.getPrintElementOptionEntity = function () {
     t
   );
 };
-b.prototype.init = function (t) {
+T.prototype.init = function (t) {
   var e = this;
   t &&
     Object.keys(t).forEach(function (i) {
@@ -631,7 +631,7 @@ Y.prototype.createEditor = function (t) {
   return $.extend({}, Y.Instance[t]);
 };
 function W(t) {
-  var e = C.call(this) || this;
+  var e = k.call(this) || this;
   return (
     (t = t || {}),
     (e.width = t.width ? parseFloat(t.width.toString()) : 100),
@@ -655,7 +655,7 @@ function W(t) {
   );
 }
 W.prototype.css = function () {};
-I(W, C);
+I(W, k);
 var je = function (t) {
     ((this.x = t.x), (this.y = t.y), (this.height = t.height), (this.width = t.width));
   },
@@ -744,7 +744,7 @@ var ei = {
       };
     },
   },
-  M = function (t) {
+  z = function (t) {
     ((this.printLine = t.printLine),
       (this.target = t.target),
       (this.referenceElement = t.referenceElement));
@@ -782,7 +782,7 @@ D.prototype.initCells = function (t) {
       })
     : ((this.columns = []),
       this.target.find("td").each(function (i, n) {
-        var o = new C();
+        var o = new k();
         (o.init($(n), e.tableOptions, e.id, e.isHead), e.columns.push(o));
       }));
 };
@@ -791,7 +791,7 @@ D.prototype.removeCell = function (t) {
   (this.columns[e].getTarget().remove(), this.columns.splice(e, 1));
 };
 D.prototype.createTableCell = function (t, e) {
-  var i = new C();
+  var i = new k();
   return (
     i.init($("<td></td>"), this.tableOptions, this.id, this.isHead),
     t > 1 && (i.getTarget().attr("rowspan", t), (i.rowspan = t)),
@@ -871,10 +871,10 @@ var bi = function (t) {
     (this.formatter2 = t.formatter2),
     (this.styler2 = t.styler2));
 };
-function C() {
+function k() {
   this.id = Ge.createId();
 }
-C.prototype.init = function (t, e, i, n) {
+k.prototype.init = function (t, e, i, n) {
   ((this.isHead = n), (this.rowId = i), (this.isEditing = !1));
   var o = /^[0-9]*$/;
   ((this.target = t), (this.tableOptions = e));
@@ -885,7 +885,7 @@ C.prototype.init = function (t, e, i, n) {
     this.initEvent(),
     this.isHead && this.initInnerElement());
 };
-C.prototype.beginEdit = function () {
+k.prototype.beginEdit = function () {
   if (!this.isEditing && this.tableOptions.isEnableEdit && this.tableOptions.onBeforEdit(this)) {
     var t = this.getValue();
     ((this.editor = Y.Instance.createEditor("text")),
@@ -896,23 +896,23 @@ C.prototype.beginEdit = function () {
       this.editor.setValue(t));
   }
 };
-C.prototype.endEdit = function () {
+k.prototype.endEdit = function () {
   this.isEditing = !1;
   var t = this.editor.getValue();
   (this.editor.destroy(), this.target.html(t));
 };
-C.prototype.getTarget = function () {
+k.prototype.getTarget = function () {
   return this.target;
 };
-C.prototype.getValue = function () {
+k.prototype.getValue = function () {
   return this.target.html();
 };
-C.prototype.setValue = function () {};
-C.prototype.initInnerElement = function () {
+k.prototype.setValue = function () {};
+k.prototype.initInnerElement = function () {
   ((this.innerElement = new Yt()), this.innerElement.init(this, this.tableOptions));
 };
-C.prototype.initEvent = function () {};
-C.prototype.isXYinCell = function (t, e) {
+k.prototype.initEvent = function () {};
+k.prototype.isXYinCell = function (t, e) {
   return this.isOverlap(
     new je({
       x: t,
@@ -922,7 +922,7 @@ C.prototype.isXYinCell = function (t, e) {
     }),
   );
 };
-C.prototype.getTableRect = function () {
+k.prototype.getTableRect = function () {
   var t = this.target.offset();
   return new je({
     x: t.left,
@@ -931,11 +931,11 @@ C.prototype.getTableRect = function () {
     width: this.target[0].offsetWidth,
   });
 };
-C.prototype.isOverlap = function (t) {
+k.prototype.isOverlap = function (t) {
   var e = this.getTableRect();
   return t.x + t.width > e.x && e.x + e.width > t.x && t.y + t.height > e.y && e.y + e.height > t.y;
 };
-C.prototype.isInRect = function (t) {
+k.prototype.isInRect = function (t) {
   var e = t.rect,
     i = this.getTableRect();
   if (e.x + e.width > i.x && i.x + i.width > e.x && e.y + e.height > i.y && i.y + i.height > e.y) {
@@ -944,23 +944,23 @@ C.prototype.isInRect = function (t) {
   }
   return !1;
 };
-C.prototype.isSelected = function () {
+k.prototype.isSelected = function () {
   return this.target.hasClass("selected");
 };
-C.prototype.select = function () {
+k.prototype.select = function () {
   this.target.addClass("selected");
 };
-C.prototype.isHeader = function () {
+k.prototype.isHeader = function () {
   return !1;
 };
-C.prototype.setAlign = function (t) {
+k.prototype.setAlign = function (t) {
   ((this.align = t), t ? this.target.css("text-align", t) : (this.target[0].style.textAlign = ""));
 };
-C.prototype.setVAlign = function (t) {
+k.prototype.setVAlign = function (t) {
   ((this.vAlign = t),
     t ? this.target.css("vertical-align", t) : (this.target[0].style.verticalAlign = ""));
 };
-C.prototype.getEntity = function () {
+k.prototype.getEntity = function () {
   return new bi(this);
 };
 function at() {
@@ -1347,7 +1347,7 @@ mt.prototype.setValue = function (t, e, i) {
       );
     })
     .map(function (r) {
-      var a = new C(r);
+      var a = new k(r);
       return ((a.checked = !1), a);
     });
   ((this.allColumns = t[0].columns.concat(o)),
@@ -1410,7 +1410,7 @@ mt.prototype.buildData = function () {
       else {
         var a = t.printElementType.getColumnByColumnId(o);
         if (a) {
-          var p = new C(a);
+          var p = new k(a);
           ((p.checked = !0), e.push(p));
         }
       }
@@ -3743,7 +3743,7 @@ function ni(t) {
 ni.prototype.updatePosition = function (t, e) {
   ((this.left = t), (this.top = e));
 };
-var P = function () {
+var C = function () {
   ((this.printTemplateContainer = {}),
     (this.A1 = {
       width: 841,
@@ -3814,27 +3814,27 @@ var P = function () {
       return (e && (e = e), Math.round(i / e) * e);
     }));
 };
-Object.defineProperty(P, "instance", {
+Object.defineProperty(C, "instance", {
   get: function () {
-    var t = P;
-    return (t._instance || (t._instance = new P()), t._instance);
+    var t = C;
+    return (t._instance || (t._instance = new C()), t._instance);
   },
   enumerable: !0,
   configurable: !0,
 });
-P.prototype.getDragingPrintElement = function () {
-  return P.instance.dragingPrintElement;
+C.prototype.getDragingPrintElement = function () {
+  return C.instance.dragingPrintElement;
 };
-P.prototype.setDragingPrintElement = function (t) {
-  P.instance.dragingPrintElement = new ni(t);
+C.prototype.setDragingPrintElement = function (t) {
+  C.instance.dragingPrintElement = new ni(t);
 };
-P.prototype.guid = function () {
+C.prototype.guid = function () {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
     var e = (Math.random() * 16) | 0;
     return (t === "x" ? e : (e & 3) | 8).toString(16);
   });
 };
-P.prototype.imageToBase64 = function (t) {
+C.prototype.imageToBase64 = function (t) {
   if (t.attr("src").indexOf("base64") === -1)
     try {
       var e = document.createElement("canvas"),
@@ -3852,26 +3852,26 @@ P.prototype.imageToBase64 = function (t) {
       }
     }
 };
-P.prototype.xhrLoadImage = function () {};
-P.prototype.transformImg = function (t) {
+C.prototype.xhrLoadImage = function () {};
+C.prototype.transformImg = function (t) {
   var e = this;
   t.each(function (i, n) {
     e.imageToBase64($(n));
   });
 };
-P.prototype.getPrintTemplateById = function (t) {
-  return P.instance.printTemplateContainer[t];
+C.prototype.getPrintTemplateById = function (t) {
+  return C.instance.printTemplateContainer[t];
 };
-P.prototype.setPrintTemplateById = function (t, e) {
-  P.instance.printTemplateContainer[t] = e;
+C.prototype.setPrintTemplateById = function (t, e) {
+  C.instance.printTemplateContainer[t] = e;
 };
 var Ci = yi,
-  w = {
+  P = {
     createTableHead: function (t, e) {
       for (
-        var i = w.reconsitutionTableColumnTree(t),
+        var i = P.reconsitutionTableColumnTree(t),
           n = $("<thead></thead>"),
-          o = w.getColumnsWidth(i, e),
+          o = P.getColumnsWidth(i, e),
           r = 0;
         r < i.totalLayer;
         r++
@@ -3896,15 +3896,15 @@ var Ci = yi,
         }),
           n.append(a));
       }
-      return (w.syncTargetWidthToOption(t), n);
+      return (P.syncTargetWidthToOption(t), n);
     },
     createTableFooter: function (t, e, i, n, o, r) {
       var a = $("<tfoot></tfoot>"),
-        p = w.getFooterFormatter(i, n);
+        p = P.getFooterFormatter(i, n);
       return (p && a.append(p(i, e, o, r)), a);
     },
     createTableRow: function (t, e, i, n) {
-      var o = w.reconsitutionTableColumnTree(t),
+      var o = P.reconsitutionTableColumnTree(t),
         r = $("<tbody></tbody>"),
         a = e || [];
       return (
@@ -3926,7 +3926,7 @@ var Ci = yi,
                 }
                 if (
                   (p.rows.forEach(function (u) {
-                    r.append(w.createRowTarget(o, u, i, n));
+                    r.append(P.createRowTarget(o, u, i, n));
                   }),
                   n.groupFooterFormatter)
                 ) {
@@ -3935,7 +3935,7 @@ var Ci = yi,
                 }
               })
           : a.forEach(function (p) {
-              r.append(w.createRowTarget(o, p, i, n));
+              r.append(P.createRowTarget(o, p, i, n));
             }),
         r
       );
@@ -3948,10 +3948,10 @@ var Ci = yi,
           (p.field && l.attr("field", p.field),
             p.align && l.css("text-align", p.align),
             p.vAlign && l.css("vertical-align", p.vAlign));
-          var u = w.getColumnFormatter(p),
+          var u = P.getColumnFormatter(p),
             h = u ? u(e[p.field], e, s, i) : e[p.field];
           l.html(h);
-          var d = w.getColumnStyler(p);
+          var d = P.getColumnStyler(p);
           if (d) {
             var c = d(e[p.field], e, s, i);
             c &&
@@ -3961,7 +3961,7 @@ var Ci = yi,
           }
           o.append(l);
         }));
-      var r = w.getRowStyler(i, n);
+      var r = P.getRowStyler(i, n);
       if (r) {
         var a = r(e, i);
         a &&
@@ -3972,7 +3972,7 @@ var Ci = yi,
       return o;
     },
     createEmptyRowTarget: function (t) {
-      var e = w.reconsitutionTableColumnTree(t),
+      var e = P.reconsitutionTableColumnTree(t),
         i = $("<tr></tr>");
       return (
         e.rowColumns.forEach(function (n) {
@@ -3987,8 +3987,8 @@ var Ci = yi,
     },
     getColumnsWidth: function (t, e) {
       var i = {},
-        n = w.allAutoWidth(t),
-        o = w.allFixedWidth(t);
+        n = P.allAutoWidth(t),
+        o = P.allFixedWidth(t);
       return (
         t.rowColumns.forEach(function (r) {
           if (r.fixed) i[r.id] = r.width;
@@ -4001,8 +4001,8 @@ var Ci = yi,
       );
     },
     resizeTableCellWidth: function (t, e, i) {
-      var n = w.reconsitutionTableColumnTree(e),
-        o = w.getColumnsWidth(n, i);
+      var n = P.reconsitutionTableColumnTree(e),
+        o = P.getColumnsWidth(n, i);
       t.find("thead tr td[haswidth]").each(function (r, a) {
         var p = $(a).attr("id");
         $(a).css("width", o[p] + "pt");
@@ -4036,7 +4036,7 @@ var Ci = yi,
             t[o].columns.forEach(function (r) {
               n.colspan += r.colspan;
             }));
-      return ((n.rowColumns = w.getOrderedColumns(n)), n);
+      return ((n.rowColumns = P.getOrderedColumns(n)), n);
     },
     syncTargetWidthToOption: function (t) {
       t.forEach(function (e) {
@@ -4096,7 +4096,7 @@ var Ci = yi,
       return e[t.totalLayer - 1];
     },
   },
-  Q = P,
+  Q = C,
   _ = S;
 function g(t) {
   ((this.printElementType = t), (this.id = Q.instance.guid()));
@@ -4249,7 +4249,7 @@ g.prototype.getHtml = function (t, e, i) {
     !this.isFixed() &&
     r > a &&
     (o.push(
-      new M({
+      new z({
         target: void 0,
         printLine: void 0,
       }),
@@ -4266,7 +4266,7 @@ g.prototype.getHtml = function (t, e, i) {
     s.css("left", this.options.displayLeft()),
     s.css("top", r + "pt"),
     o.push(
-      new M({
+      new z({
         target: s,
         printLine: r + this.options.getHeight(),
       }),
@@ -4284,7 +4284,7 @@ g.prototype.getHtml2 = function (t, e, i) {
     !this.isFixed() &&
     (r > a &&
       (o.push(
-        new M({
+        new z({
           target: void 0,
           printLine: void 0,
         }),
@@ -4295,7 +4295,7 @@ g.prototype.getHtml2 = function (t, e, i) {
     r <= a &&
       r + this.options.getHeight() > a &&
       (o.push(
-        new M({
+        new z({
           target: void 0,
           printLine: void 0,
         }),
@@ -4312,7 +4312,7 @@ g.prototype.getHtml2 = function (t, e, i) {
     s.css("left", this.options.displayLeft()),
     s.css("top", r + "pt"),
     o.push(
-      new M({
+      new z({
         target: s,
         printLine: r + this.options.getHeight(),
         referenceElement: new G({
@@ -4728,7 +4728,7 @@ var qe = function (t, e, i) {
                     moveUnit: "pt",
                     minMove: 1,
                     onBeforeDrag: function () {
-                      if (((P.instance.draging = !0), !s.nextGrip)) return !1;
+                      if (((C.instance.draging = !0), !s.nextGrip)) return !1;
                       ((e.dragingGrip = s),
                         (e.dragingGrip.left = parseFloat(
                           e.dragingGrip.target.css("left").replace("px", ""),
@@ -4736,7 +4736,7 @@ var qe = function (t, e, i) {
                         s.target.addClass("columngripDraging"));
                     },
                     onStopDrag: function () {
-                      P.instance.draging = !1;
+                      C.instance.draging = !1;
                       var l = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),
                         u = f.px.toPt(l - e.dragingGrip.left);
                       ((s.cell.width = s.cell.width + u),
@@ -4900,16 +4900,21 @@ var qe = function (t, e, i) {
             var d = h[0].indexInTableGridRow;
             u.forEach(function (m, y) {
               var v = m[d],
-                E = m.filter(function (L, V) {
-                  return V >= d && L.cell;
+                E = m.filter(function (V, b) {
+                  return b >= d && V.cell;
                 });
               if (v.rowLevel === 0) {
                 var x = a[y],
-                  k = x.createTableCell();
-                (n && k.getTarget().addClass(n),
-                  o != null && (k.width = o),
-                  E.length ? x.insertToTargetCellLeft(E[0].cell, k) : x.insertCellToLast(k),
-                  f.event.trigger("newCell" + r.id, k));
+                  w = x.createTableCell();
+                if ((n && w.getTarget().addClass(n), o != null && (w.width = o), x.isHead)) {
+                  if ((w.getTarget().attr("haswidth", "haswidth"), o == null)) {
+                    var B = E.length ? E[0].cell.width : void 0;
+                    o = B ?? w.width;
+                  }
+                  ((w.width = o), (w.hasWidth = !0), w.getTarget().css("width", o + "pt"));
+                }
+                (E.length ? x.insertToTargetCellLeft(E[0].cell, w) : x.insertCellToLast(w),
+                  f.event.trigger("newCell" + r.id, w));
               } else
                 v.linkType === "row" &&
                   ((v.link.colspan += 1), v.link.getTarget().attr("colspan", v.link.colspan));
@@ -4918,18 +4923,23 @@ var qe = function (t, e, i) {
             var c = h[h.length - 1].indexInTableGridRow;
             u.forEach(function (m, y) {
               var v = m[c],
-                E = m.filter(function (L, V) {
-                  return V <= c && L.cell;
+                E = m.filter(function (V, b) {
+                  return b <= c && V.cell;
                 });
               if (v.rightMost) {
                 var x = a[y],
-                  k = x.createTableCell();
-                (n && k.getTarget().addClass(n),
-                  o != null && (k.width = o),
-                  E.length
-                    ? x.insertToTargetCellRight(E[E.length - 1].cell, k)
-                    : x.insertCellToFirst(k),
-                  f.event.trigger("newCell" + r.id, k));
+                  w = x.createTableCell();
+                if ((n && w.getTarget().addClass(n), o != null && (w.width = o), x.isHead)) {
+                  if ((w.getTarget().attr("haswidth", "haswidth"), o == null)) {
+                    var B = E.length ? E[E.length - 1].cell.width : void 0;
+                    o = B ?? w.width;
+                  }
+                  ((w.width = o), (w.hasWidth = !0), w.getTarget().css("width", o + "pt"));
+                }
+                (E.length
+                  ? x.insertToTargetCellRight(E[E.length - 1].cell, w)
+                  : x.insertCellToFirst(w),
+                  f.event.trigger("newCell" + r.id, w));
               } else
                 (v.linkType === "row" &&
                   ((v.link.colspan += 1), v.link.getTarget().attr("colspan", v.link.colspan)),
@@ -5319,7 +5329,7 @@ var qe = function (t, e, i) {
       t
     );
   })(),
-  Ie = P,
+  Ie = C,
   Le = S,
   $e = function (t) {
     ((this.width = t.width),
@@ -5408,7 +5418,7 @@ var qe = function (t, e, i) {
       }),
       e
     );
-  })(b),
+  })(T),
   ai = (function (t) {
     I(e, t);
     function e(i, n) {
@@ -5521,27 +5531,25 @@ var qe = function (t, e, i) {
           ),
           p = this.options.getWidth() / this.options.getGridColumns();
         return (
-          a.append(w.createTableHead(this.getColumns(), p)),
-          a.append(w.createTableRow(this.getColumns(), i, this.options, this.printElementType)),
+          a.append(P.createTableHead(this.getColumns(), p)),
+          a.append(P.createTableRow(this.getColumns(), i, this.options, this.printElementType)),
           this.getFooterFormatter() &&
             (this.options.tableFooterRepeat === "no" ||
               (this.options.tableFooterRepeat === "last"
                 ? a
                     .find("tbody")
                     .append(
-                      w
-                        .createTableFooter(
-                          this.printElementType.columns,
-                          i,
-                          this.options,
-                          this.printElementType,
-                          n,
-                          i,
-                        )
-                        .html(),
+                      P.createTableFooter(
+                        this.printElementType.columns,
+                        i,
+                        this.options,
+                        this.printElementType,
+                        n,
+                        i,
+                      ).html(),
                     )
                 : a.append(
-                    w.createTableFooter(
+                    P.createTableFooter(
                       this.printElementType.columns,
                       i,
                       this.options,
@@ -5554,7 +5562,7 @@ var qe = function (t, e, i) {
         );
       }),
       (e.prototype.getEmptyRowTarget = function () {
-        return w.createEmptyRowTarget(this.getColumns());
+        return P.createEmptyRowTarget(this.getColumns());
       }),
       (e.prototype.getHtml = function (i, n) {
         this.createTempContainer();
@@ -5578,7 +5586,7 @@ var qe = function (t, e, i) {
             s > c &&
             ((s = s - c + i.paperHeader),
             o.push(
-              new M({
+              new z({
                 target: void 0,
                 printLine: void 0,
               }),
@@ -5608,7 +5616,7 @@ var qe = function (t, e, i) {
               : (y.target && ((h = i.paperHeader), y.target.css("top", i.paperHeader + "pt")),
                 (v = i.paperHeader + y.height)),
             o.push(
-              new M({
+              new z({
                 target: y.target,
                 printLine: v,
                 referenceElement: new G({
@@ -5672,24 +5680,22 @@ var qe = function (t, e, i) {
                 c
                   .find("tfoot")
                   .html(
-                    w
-                      .createTableFooter(
-                        this.printElementType.columns,
-                        this.getData(i),
-                        this.options,
-                        this.printElementType,
-                        i,
-                        y,
-                      )
-                      .html(),
+                    P.createTableFooter(
+                      this.printElementType.columns,
+                      this.getData(i),
+                      this.options,
+                      this.printElementType,
+                      i,
+                      y,
+                    ).html(),
                   );
               break;
             }
           }
         var x = o.find(".kuprint-printElement-tableTarget tbody tr").length,
-          k = this.getGridColumnsFooterFormatter();
+          w = this.getGridColumnsFooterFormatter();
         return (
-          k && o.find(this.gridColumnsFooterCss).html(k(this.options, this.getData(i), i, h)),
+          w && o.find(this.gridColumnsFooterCss).html(w(this.options, this.getData(i), i, h)),
           s.find("tr").length === 0
             ? x === 0 && p
               ? {
@@ -5724,7 +5730,7 @@ var qe = function (t, e, i) {
       }),
       (e.prototype.onResize = function (i, n, o, r, a) {
         (t.prototype.updateSizeAndPositionOptions.call(this, a, r, o, n),
-          w.resizeTableCellWidth(this.designTarget, this.getColumns(), this.options.getWidth()));
+          P.resizeTableCellWidth(this.designTarget, this.getColumns(), this.options.getWidth()));
       }),
       (e.prototype.getReizeableShowPoints = function () {
         return ["s", "e"];
@@ -5858,12 +5864,12 @@ var qe = function (t, e, i) {
       e
     );
   })(g),
-  Xe = b;
+  Xe = T;
 function q(t) {
   var e = Xe.call(this, t) || this;
   return (e.title && (e.title = Ze.replaceEnterAndNewlineAndTab(e.title, "")), e);
 }
-I(q, b);
+I(q, T);
 q.prototype.getHideTitle = function () {
   return this.hideTitle == null ? this.defaultOptions.hideTitle : this.hideTitle;
 };
@@ -5882,15 +5888,15 @@ function Fe(t) {
   var e = Xe.call(this, t) || this;
   return ((e.leftSpaceRemoved = t.leftSpaceRemoved), e);
 }
-I(Fe, b);
+I(Fe, T);
 Fe.prototype.getHideTitle = function () {
   return this.hideTitle == null ? this.defaultOptions.hideTitle : this.hideTitle;
 };
 function We(t) {
   return Xe.call(this, t) || this;
 }
-I(We, b);
-var Fi = b;
+I(We, T);
+var Fi = T;
 function Re(t) {
   var e = Fi.call(this, t) || this;
   return (
@@ -5907,9 +5913,9 @@ function Re(t) {
     e
   );
 }
-I(Re, b);
+I(Re, T);
 Re.prototype.getPrintElementOptionEntity = function () {
-  var t = b.prototype.getPrintElementOptionEntity.call(this);
+  var t = T.prototype.getPrintElementOptionEntity.call(this);
   return (
     (t.columns = []),
     this.columns.forEach(function (e) {
@@ -5920,7 +5926,7 @@ Re.prototype.getPrintElementOptionEntity = function () {
 };
 var Ri = g,
   si = S;
-function z(t, e) {
+function L(t, e) {
   var i = Ri.call(this, t) || this;
   return (
     (i.options = new q(e)),
@@ -5928,30 +5934,30 @@ function z(t, e) {
     i
   );
 }
-I(z, g);
-z.prototype.getDesignTarget = function (t) {
+I(L, g);
+L.prototype.getDesignTarget = function (t) {
   return g.prototype.getDesignTarget.call(this, t);
 };
-z.prototype.getProxyTarget = function (t) {
+L.prototype.getProxyTarget = function (t) {
   t && this.SetProxyTargetOption(t);
   var e = this.getData(),
     i = this.createTarget(this.printElementType.getText(!0), e);
   return (this.updateTargetSize(i), this.css(i, e), i);
 };
-z.prototype.updateDesignViewFromOptions = function () {
+L.prototype.updateDesignViewFromOptions = function () {
   if (this.designTarget) {
     var t = this.getData();
     (this.css(this.designTarget, t), this.updateTargetText(this.designTarget, this.getTitle(), t));
   }
 };
-z.prototype.getConfigOptions = function () {
+L.prototype.getConfigOptions = function () {
   return si.instance.text;
 };
-z.prototype.getTitle = function () {
+L.prototype.getTitle = function () {
   var t = this.options.title || this.printElementType.title || "";
   return (t && (t = Ze.replaceEnterAndNewlineAndTab(t, "")), t);
 };
-z.prototype.getData = function (t) {
+L.prototype.getData = function (t) {
   var e = t
     ? t[this.getField()] || ""
     : this.options.testData || this.printElementType.getData() || "";
@@ -5964,7 +5970,7 @@ z.prototype.getData = function (t) {
   }
   return e;
 };
-z.prototype.updateTargetText = function (t, e, i, n) {
+L.prototype.updateTargetText = function (t, e, i, n) {
   var o = this.getFormatter(),
     r = t.find(".kuprint-printElement-text-content"),
     a = "";
@@ -6016,18 +6022,18 @@ z.prototype.updateTargetText = function (t, e, i, n) {
     }
   }
 };
-z.prototype.onResize = function (t, e, i, n, o) {
+L.prototype.onResize = function (t, e, i, n, o) {
   (g.prototype.onResize.call(this, t, e, i, n, o),
     (this.options.getTextType() === "barcode" || this.options.getTextType() === "qrcode") &&
       this.updateTargetText(this.designTarget, this.getTitle(), this.getData()));
 };
-z.prototype.createTarget = function (t, e, i) {
+L.prototype.createTarget = function (t, e, i) {
   var n = $(
     '<div tabindex="1" class="kuprint-printElement kuprint-printElement-text" style="position:absolute;"><div class="kuprint-printElement-text-content kuprint-printElement-content" style="height:100%;width:100%"></div></div>',
   );
   return (this.updateTargetText(n, t, e, i), n);
 };
-z.prototype.getHtml = function (t, e, i) {
+L.prototype.getHtml = function (t, e, i) {
   return this.getHtml2(t, e, i);
 };
 var Di = g,
@@ -6035,8 +6041,8 @@ var Di = g,
 function N(t, e) {
   var i = Di.call(this, t) || this;
   return (
-    (i.options = new b(e)),
-    i.options.setDefault(new b(pi.instance.image.default).getPrintElementOptionEntity()),
+    (i.options = new T(e)),
+    i.options.setDefault(new T(pi.instance.image.default).getPrintElementOptionEntity()),
     i
   );
 }
@@ -6222,8 +6228,8 @@ var Me = g,
 function K(t, e) {
   var i = Me.call(this, t) || this;
   return (
-    (i.options = new b(e)),
-    i.options.setDefault(new b(j.instance.vline.default).getPrintElementOptionEntity()),
+    (i.options = new T(e)),
+    i.options.setDefault(new T(j.instance.vline.default).getPrintElementOptionEntity()),
     i
   );
 }
@@ -6248,8 +6254,8 @@ K.prototype.getHtml = function (t, e, i) {
 function Vt(t, e) {
   var i = Me.call(this, t) || this;
   return (
-    (i.options = new b(e)),
-    i.options.setDefault(new b(j.instance.hline.default).getPrintElementOptionEntity()),
+    (i.options = new T(e)),
+    i.options.setDefault(new T(j.instance.hline.default).getPrintElementOptionEntity()),
     i
   );
 }
@@ -6271,8 +6277,8 @@ Vt.prototype.getReizeableShowPoints = function () {
 function Nt(t, e) {
   var i = Me.call(this, t) || this;
   return (
-    (i.options = new b(e)),
-    i.options.setDefault(new b(j.instance.rect.default).getPrintElementOptionEntity()),
+    (i.options = new T(e)),
+    i.options.setDefault(new T(j.instance.rect.default).getPrintElementOptionEntity()),
     i
   );
 }
@@ -6294,8 +6300,8 @@ Nt.prototype.getHtml = function (t, e, i) {
 function At(t, e) {
   var i = Me.call(this, t) || this;
   return (
-    (i.options = new b(e)),
-    i.options.setDefault(new b(j.instance.oval.default).getPrintElementOptionEntity()),
+    (i.options = new T(e)),
+    i.options.setDefault(new T(j.instance.oval.default).getPrintElementOptionEntity()),
     i
   );
 }
@@ -6314,7 +6320,7 @@ At.prototype.createTarget = function () {
 At.prototype.getHtml = function (t, e, i) {
   return this.getHtml2(t, e, i);
 };
-var Se = P,
+var Se = C,
   Ve = S,
   Mi = (function (t) {
     I(e, t);
@@ -6373,27 +6379,25 @@ var Se = P,
           '<table class="kuprint-printElement-tableTarget" style="border-collapse:collapse;width:100%;"></table>',
         );
         return (
-          o.append(w.createTableHead(this.columns, this.options.getWidth())),
-          o.append(w.createTableRow(this.columns, i, this.options, this.printElementType)),
+          o.append(P.createTableHead(this.columns, this.options.getWidth())),
+          o.append(P.createTableRow(this.columns, i, this.options, this.printElementType)),
           this.printElementType.footerFormatter &&
             (this.options.tableFooterRepeat === "no" ||
               (this.options.tableFooterRepeat === "last"
                 ? o
                     .find("tbody")
                     .append(
-                      w
-                        .createTableFooter(
-                          this.printElementType.columns,
-                          i,
-                          this.options,
-                          this.printElementType,
-                          n,
-                          i,
-                        )
-                        .html(),
+                      P.createTableFooter(
+                        this.printElementType.columns,
+                        i,
+                        this.options,
+                        this.printElementType,
+                        n,
+                        i,
+                      ).html(),
                     )
                 : o.append(
-                    w.createTableFooter(
+                    P.createTableFooter(
                       this.printElementType.columns,
                       i,
                       this.options,
@@ -6427,7 +6431,7 @@ var Se = P,
             s > c &&
             ((s = s - c + i.paperHeader),
             o.push(
-              new M({
+              new z({
                 target: void 0,
                 printLine: void 0,
               }),
@@ -6451,7 +6455,7 @@ var Se = P,
               : (v.target && ((h = i.paperHeader), v.target.css("top", i.paperHeader + "pt")),
                 (E = i.paperHeader + v.height)),
             o.push(
-              new M({
+              new z({
                 target: v.target,
                 printLine: E,
                 referenceElement: new G({
@@ -6523,16 +6527,14 @@ var Se = P,
               d.target
                 .find("tfoot")
                 .html(
-                  w
-                    .createTableFooter(
-                      this.printElementType.columns,
-                      this.getData(p),
-                      this.options,
-                      this.printElementType,
-                      p,
-                      h,
-                    )
-                    .html(),
+                  P.createTableFooter(
+                    this.printElementType.columns,
+                    this.getData(p),
+                    this.options,
+                    this.printElementType,
+                    p,
+                    h,
+                  ).html(),
                 );
             break;
           }
@@ -6550,11 +6552,11 @@ var Se = P,
         a && a.remove();
       }),
       (e.prototype.getEmptyRowTarget = function () {
-        return w.createEmptyRowTarget(this.columns);
+        return P.createEmptyRowTarget(this.columns);
       }),
       (e.prototype.onResize = function (i, n, o, r, a) {
         (t.prototype.updateSizeAndPositionOptions.call(this, a, r, o, n),
-          w.resizeTableCellWidth(this.designTarget, this.columns, this.options.getWidth()));
+          P.resizeTableCellWidth(this.designTarget, this.columns, this.options.getWidth()));
       }),
       (e.prototype.getReizeableShowPoints = function () {
         return ["s", "e"];
@@ -6601,7 +6603,7 @@ var Se = P,
           resizeRow: !1,
           resizeColumn: !0,
           trs: $(this.designTarget).find("tbody tr"),
-          handle: this.designTarget.find("table thead"),
+          handle: this.designTarget.find("table"),
           columnDisplayEditable: !0,
           columnDisplayIndexEditable: !0,
           columnResizable: !0,
@@ -6623,12 +6625,12 @@ var Se = P,
       e
     );
   })(g),
-  J = P,
+  J = C,
   di = {
     createPrintElement: function (t, e) {
       switch (t.type) {
         case "text":
-          return new z(t, e);
+          return new L(t, e);
         case "image":
           return new N(t, e);
         case "longText":
@@ -6777,24 +6779,24 @@ var Se = P,
         i.printElementTypes.push(De.createPrintElementType(n));
       }));
   };
-function B() {}
-B.getElementTypeGroups = function (t) {
-  var e = B.formatterModule(t);
+function M() {}
+M.getElementTypeGroups = function (t) {
+  var e = M.formatterModule(t);
   return Gt.instance[e] || [];
 };
-B.getElementType = function (t, e) {
+M.getElementType = function (t, e) {
   if (t) return Gt.instance.getElementType(t);
   De.createPrintElementType({ type: e });
 };
-B.build = function (t, e) {
-  var i = B.formatterModule(e),
-    n = new Ni().createPrintElementTypeHtml(t, B.getElementTypeGroups(i));
-  B.enableDrag(n);
+M.build = function (t, e) {
+  var i = M.formatterModule(e),
+    n = new Ni().createPrintElementTypeHtml(t, M.getElementTypeGroups(i));
+  M.enableDrag(n);
 };
-B.buildByHtml = function (t) {
-  B.enableDrag(t);
+M.buildByHtml = function (t) {
+  M.enableDrag(t);
 };
-B.enableDrag = function (t) {
+M.enableDrag = function (t) {
   t.hidraggable({
     revert: !0,
     proxy: function (e) {
@@ -6806,7 +6808,7 @@ B.enableDrag = function (t) {
     minMove: 4,
     onBeforeDrag: function (e) {
       J.instance.draging = !0;
-      var i = B.getElementType($(e.data.target).attr("tid"), $(e.data.target).attr("ptype"));
+      var i = M.getElementType($(e.data.target).attr("tid"), $(e.data.target).attr("ptype"));
       return (J.instance.setDragingPrintElement(i.createPrintElement()), !0);
     },
     onDrag: function (e, i, n) {
@@ -6817,7 +6819,7 @@ B.enableDrag = function (t) {
     },
   });
 };
-B.formatterModule = function (t) {
+M.formatterModule = function (t) {
   return t || "_default";
 };
 var Ni = (function () {
@@ -7090,10 +7092,10 @@ var Ni = (function () {
           moveUnit: "pt",
           minMove: S.instance.movingDistance,
           onBeforeDrag: function () {
-            P.instance.draging = !0;
+            C.instance.draging = !0;
           },
           onStopDrag: function () {
-            ((P.instance.draging = !1),
+            ((C.instance.draging = !1),
               o.footerLineTarget.removeClass("hidefooterLinetarget"),
               o.headerLineTarget.removeClass("hideheaderLinetarget"));
           },
@@ -7404,9 +7406,9 @@ F.prototype.getPaperHtmlResult = function (t, e, i) {
   var l = [this.getLongTextIndent()],
     u = p.split(/\r|\n/);
   if (
-    (u.forEach(function (k, L) {
-      var V = n.options.leftSpaceRemoved !== !1 ? (k || "").toString().replace(/^\s*/, "") : k;
-      ((l = l.concat(V.split(""))), L < u.length - 1 && l.push("<br/>" + n.getLongTextIndent()));
+    (u.forEach(function (w, B) {
+      var V = n.options.leftSpaceRemoved !== !1 ? (w || "").toString().replace(/^\s*/, "") : w;
+      ((l = l.concat(V.split(""))), B < u.length - 1 && l.push("<br/>" + n.getLongTextIndent()));
     }),
     l.length === 0 && (l = [""]),
     this.isHeaderOrFooter() || this.isFixed() || !e)
@@ -7417,7 +7419,7 @@ F.prototype.getPaperHtmlResult = function (t, e, i) {
       h.target.css("top", this.options.displayTop()),
       (h.target[0].height = ""),
       o.push(
-        new M({
+        new z({
           target: h.target,
           printLine: this.options.displayTop() + h.height,
           referenceElement: new G({
@@ -7441,7 +7443,7 @@ F.prototype.getPaperHtmlResult = function (t, e, i) {
       d > m &&
       ((d = d - m + t.paperHeader),
       o.push(
-        new M({
+        new z({
           target: void 0,
           printLine: void 0,
         }),
@@ -7466,7 +7468,7 @@ F.prototype.getPaperHtmlResult = function (t, e, i) {
                 : d + v.height))
         : ((x = t.paperHeader), v.target.css("top", x + "pt"), (E = x + v.height)),
       o.push(
-        new M({
+        new z({
           target: v.target,
           printLine: E,
           referenceElement: new G({
@@ -7542,7 +7544,7 @@ F.prototype.IsPaginationIndex = function (t, e, i, n) {
               result: 1,
             };
 };
-var X = P,
+var X = C,
   R = S,
   Ae = (function () {
     function t(e, i) {
@@ -8134,7 +8136,7 @@ function Ui(t) {
       e.addElementTypes(Gt.instance);
     }));
 }
-var Wt = P,
+var Wt = C,
   Ki = (function () {
     function t(e) {
       var i = this;
@@ -8744,9 +8746,12 @@ var Wt = P,
         m
       );
     }
+    try {
+      l.onStopDrag.call(a.data.target, a);
+    } finally {
+      t(document).unbind(".hidraggable");
+    }
     return (
-      l.onStopDrag.call(a.data.target, a),
-      t(document).unbind(".hidraggable"),
       setTimeout(function () {
         t("body").css("cursor", "");
       }, 100),
@@ -8775,10 +8780,10 @@ var Wt = P,
               v = t(m).outerWidth(),
               E = t(m).outerHeight(),
               x = d.pageY - y.top,
-              k = y.left + v - d.pageX,
-              L = y.top + E - d.pageY,
+              w = y.left + v - d.pageX,
+              B = y.top + E - d.pageY,
               V = d.pageX - y.left;
-            return Math.min(x, k, L, V) > c.options.edge;
+            return Math.min(x, w, B, V) > c.options.edge;
           }
           if (
             (t.data(this, "hidraggable", {
@@ -8818,13 +8823,15 @@ var Wt = P,
                     target: d.data.target,
                     parent: t(d.data.target).parent()[0],
                   };
-                (t.extend(d.data, y),
-                  t
-                    .data(d.data.target, "hidraggable")
-                    .options.onBeforeDrag.call(d.data.target, d) !== 0 &&
-                    (t(document).bind("mousedown.hidraggable", d.data, n),
-                    t(document).bind("mousemove.hidraggable", d.data, o),
-                    t(document).bind("mouseup.hidraggable", d.data, r)));
+                t.extend(d.data, y);
+                var v = t
+                  .data(d.data.target, "hidraggable")
+                  .options.onBeforeDrag.call(d.data.target, d);
+                v === 0 ||
+                  v === !1 ||
+                  (t(document).bind("mousedown.hidraggable", d.data, n),
+                  t(document).bind("mousemove.hidraggable", d.data, o),
+                  t(document).bind("mouseup.hidraggable", d.data, r));
               }
             });
         });
@@ -9088,76 +9095,76 @@ var Wt = P,
         v = !1,
         E = !1,
         x = !1,
-        k = !1,
-        L = !1,
+        w = !1,
+        B = !1,
         V = !1;
-      (n.on("mousedown", ".e", function (T) {
-        ((a = T.pageX), (s = n.width()), (c = !0));
+      (n.on("mousedown", ".e", function (b) {
+        ((a = b.pageX), (s = n.width()), (c = !0));
       }),
-        n.on("mousedown", ".s", function (T) {
-          ((p = T.pageY), (l = n.height()), (m = !0));
+        n.on("mousedown", ".s", function (b) {
+          ((p = b.pageY), (l = n.height()), (m = !0));
         }),
-        n.on("mousedown", ".w", function (T) {
-          ((a = T.pageX), (s = n.width()), (y = !0), (u = d.offset().left));
+        n.on("mousedown", ".w", function (b) {
+          ((a = b.pageX), (s = n.width()), (y = !0), (u = d.offset().left));
         }),
-        n.on("mousedown", ".n", function (T) {
-          ((p = T.pageY), (l = n.height()), (v = !0), (h = d.offset().top));
+        n.on("mousedown", ".n", function (b) {
+          ((p = b.pageY), (l = n.height()), (v = !0), (h = d.offset().top));
         }),
-        n.on("mousedown", ".ne", function (T) {
-          ((a = T.pageX),
-            (p = T.pageY),
+        n.on("mousedown", ".ne", function (b) {
+          ((a = b.pageX),
+            (p = b.pageY),
             (s = n.width()),
             (l = n.height()),
             (E = !0),
             (h = d.offset().top));
         }),
-        n.on("mousedown", ".nw", function (T) {
-          ((a = T.pageX),
-            (p = T.pageY),
+        n.on("mousedown", ".nw", function (b) {
+          ((a = b.pageX),
+            (p = b.pageY),
             (s = n.width()),
             (l = n.height()),
             (h = d.offset().top),
             (u = d.offset().left),
             (x = !0));
         }),
-        n.on("mousedown", ".se", function (T) {
-          ((a = T.pageX), (p = T.pageY), (s = n.width()), (l = n.height()), (k = !0));
+        n.on("mousedown", ".se", function (b) {
+          ((a = b.pageX), (p = b.pageY), (s = n.width()), (l = n.height()), (w = !0));
         }),
-        n.on("mousedown", ".sw", function (T) {
-          ((a = T.pageX),
-            (p = T.pageY),
+        n.on("mousedown", ".sw", function (b) {
+          ((a = b.pageX),
+            (p = b.pageY),
             (s = n.width()),
             (l = n.height()),
-            (L = !0),
+            (B = !0),
             (u = d.offset().left));
         }),
-        n.on("mousedown", function (T) {
+        n.on("mousedown", function (b) {
           (r.options.onBeforeResize(),
-            (a = T.pageX),
-            (p = T.pageY),
+            (a = b.pageX),
+            (p = b.pageY),
             (h = d.offset().top),
             (u = d.offset().left),
             (V = !1));
         }),
         t(r.options.stage)
-          .on("mousemove", function (T) {
-            var H = T.pageX - a,
-              O = T.pageY - p;
+          .on("mousemove", function (b) {
+            var H = b.pageX - a,
+              O = b.pageY - p;
             c
               ? (n.css({ width: "100%" }),
                 d.css({ width: r.numHandlerText(s + H) }),
-                r.options.onResize(T, void 0, r.numHandler(s + H), void 0, void 0))
+                r.options.onResize(b, void 0, r.numHandler(s + H), void 0, void 0))
               : m
                 ? (n.css({ height: "100%" }),
                   d.css({ height: r.numHandlerText(l + O) }),
-                  r.options.onResize(T, r.numHandler(l + O), void 0, void 0, void 0))
+                  r.options.onResize(b, r.numHandler(l + O), void 0, void 0, void 0))
                 : y
                   ? (n.css({ width: "100%" }),
                     d.css({
                       width: r.numHandlerText(s - H),
                       left: r.numHandlerText(u + H),
                     }),
-                    r.options.onResize(T, void 0, r.numHandler(s - H), void 0, r.numHandler(u + H)))
+                    r.options.onResize(b, void 0, r.numHandler(s - H), void 0, r.numHandler(u + H)))
                   : v
                     ? (n.css({ height: "100%" }),
                       d.css({
@@ -9165,7 +9172,7 @@ var Wt = P,
                         top: r.numHandlerText(h + O),
                       }),
                       r.options.onResize(
-                        T,
+                        b,
                         r.numHandler(l - O),
                         void 0,
                         r.numHandler(h + O),
@@ -9182,7 +9189,7 @@ var Wt = P,
                           width: r.numHandlerText(s + H),
                         }),
                         r.options.onResize(
-                          T,
+                          b,
                           r.numHandler(l - O),
                           r.numHandler(s + H),
                           r.numHandler(h + O),
@@ -9200,13 +9207,13 @@ var Wt = P,
                             left: r.numHandlerText(u + H),
                           }),
                           r.options.onResize(
-                            T,
+                            b,
                             r.numHandler(l - O),
                             r.numHandler(s - H),
                             r.numHandler(h + O),
                             r.numHandler(u + H),
                           ))
-                        : k
+                        : w
                           ? (n.css({
                               width: "100%",
                               height: "100%",
@@ -9216,13 +9223,13 @@ var Wt = P,
                               height: r.numHandlerText(l + O),
                             }),
                             r.options.onResize(
-                              T,
+                              b,
                               r.numHandler(l + O),
                               r.numHandler(s + H),
                               void 0,
                               void 0,
                             ))
-                          : L
+                          : B
                             ? (n.css({
                                 width: "100%",
                                 height: "100%",
@@ -9233,7 +9240,7 @@ var Wt = P,
                                 height: r.numHandlerText(l + O),
                               }),
                               r.options.onResize(
-                                T,
+                                b,
                                 r.numHandler(l + O),
                                 r.numHandler(s - H),
                                 void 0,
@@ -9245,7 +9252,7 @@ var Wt = P,
                                 top: r.numHandlerText(h + O),
                               }),
                               r.options.onResize(
-                                T,
+                                b,
                                 void 0,
                                 void 0,
                                 r.numHandler(h + O),
@@ -9253,7 +9260,7 @@ var Wt = P,
                               ));
           })
           .on("mouseup", function () {
-            ((c = m = y = v = !1), (E = x = k = L = !1), (V = !1), r.options.onStopResize());
+            ((c = m = y = v = !1), (E = x = w = B = !1), (V = !1), r.options.onStopResize());
           }));
     },
     bindTrigger: function (n) {
@@ -9456,7 +9463,7 @@ window.hiLocalStorage = (function () {
 })();
 var Ji = {
   init: Ui,
-  PrintElementTypeManager: B,
+  PrintElementTypeManager: M,
   PrintElementTypeGroup: Vi,
   PrintTemplate: Ki,
   print: Xi,

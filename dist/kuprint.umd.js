@@ -640,7 +640,7 @@
       return $.extend({}, X.Instance[t]);
     }));
   function W(t) {
-    var e = x.call(this) || this;
+    var e = k.call(this) || this;
     return (
       (t = t || {}),
       (e.width = t.width ? parseFloat(t.width.toString()) : 100),
@@ -663,7 +663,7 @@
       e
     );
   }
-  ((W.prototype.css = function () {}), H(W, x));
+  ((W.prototype.css = function () {}), H(W, k));
   var Le = function (t) {
       ((this.x = t.x), (this.y = t.y), (this.height = t.height), (this.width = t.width));
     },
@@ -752,7 +752,7 @@
         };
       },
     },
-    M = function (t) {
+    z = function (t) {
       ((this.printLine = t.printLine),
         (this.target = t.target),
         (this.referenceElement = t.referenceElement));
@@ -790,7 +790,7 @@
           })
         : ((this.columns = []),
           this.target.find("td").each(function (i, n) {
-            var o = new x();
+            var o = new k();
             (o.init($(n), e.tableOptions, e.id, e.isHead), e.columns.push(o));
           }));
     }),
@@ -799,7 +799,7 @@
       (this.columns[e].getTarget().remove(), this.columns.splice(e, 1));
     }),
     (R.prototype.createTableCell = function (t, e) {
-      var i = new x();
+      var i = new k();
       return (
         i.init($("<td></td>"), this.tableOptions, this.id, this.isHead),
         t > 1 && (i.getTarget().attr("rowspan", t), (i.rowspan = t)),
@@ -879,10 +879,10 @@
       (this.formatter2 = t.formatter2),
       (this.styler2 = t.styler2));
   };
-  function x() {
+  function k() {
     this.id = ze.createId();
   }
-  ((x.prototype.init = function (t, e, i, n) {
+  ((k.prototype.init = function (t, e, i, n) {
     ((this.isHead = n), (this.rowId = i), (this.isEditing = !1));
     var o = /^[0-9]*$/;
     ((this.target = t), (this.tableOptions = e));
@@ -893,7 +893,7 @@
       this.initEvent(),
       this.isHead && this.initInnerElement());
   }),
-    (x.prototype.beginEdit = function () {
+    (k.prototype.beginEdit = function () {
       if (
         !this.isEditing &&
         this.tableOptions.isEnableEdit &&
@@ -908,26 +908,26 @@
           this.editor.setValue(t));
       }
     }),
-    (x.prototype.endEdit = function () {
+    (k.prototype.endEdit = function () {
       this.isEditing = !1;
       var t = this.editor.getValue();
       (this.editor.destroy(), this.target.html(t));
     }),
-    (x.prototype.getTarget = function () {
+    (k.prototype.getTarget = function () {
       return this.target;
     }),
-    (x.prototype.getValue = function () {
+    (k.prototype.getValue = function () {
       return this.target.html();
     }),
-    (x.prototype.setValue = function () {}),
-    (x.prototype.initInnerElement = function () {
+    (k.prototype.setValue = function () {}),
+    (k.prototype.initInnerElement = function () {
       ((this.innerElement = new jt()), this.innerElement.init(this, this.tableOptions));
     }),
-    (x.prototype.initEvent = function () {}),
-    (x.prototype.isXYinCell = function (t, e) {
+    (k.prototype.initEvent = function () {}),
+    (k.prototype.isXYinCell = function (t, e) {
       return this.isOverlap(new Le({ x: t, y: e, height: 0, width: 0 }));
     }),
-    (x.prototype.getTableRect = function () {
+    (k.prototype.getTableRect = function () {
       var t = this.target.offset();
       return new Le({
         x: t.left,
@@ -936,13 +936,13 @@
         width: this.target[0].offsetWidth,
       });
     }),
-    (x.prototype.isOverlap = function (t) {
+    (k.prototype.isOverlap = function (t) {
       var e = this.getTableRect();
       return (
         t.x + t.width > e.x && e.x + e.width > t.x && t.y + t.height > e.y && e.y + e.height > t.y
       );
     }),
-    (x.prototype.isInRect = function (t) {
+    (k.prototype.isInRect = function (t) {
       var e = t.rect,
         i = this.getTableRect();
       if (
@@ -956,24 +956,24 @@
       }
       return !1;
     }),
-    (x.prototype.isSelected = function () {
+    (k.prototype.isSelected = function () {
       return this.target.hasClass("selected");
     }),
-    (x.prototype.select = function () {
+    (k.prototype.select = function () {
       this.target.addClass("selected");
     }),
-    (x.prototype.isHeader = function () {
+    (k.prototype.isHeader = function () {
       return !1;
     }),
-    (x.prototype.setAlign = function (t) {
+    (k.prototype.setAlign = function (t) {
       ((this.align = t),
         t ? this.target.css("text-align", t) : (this.target[0].style.textAlign = ""));
     }),
-    (x.prototype.setVAlign = function (t) {
+    (k.prototype.setVAlign = function (t) {
       ((this.vAlign = t),
         t ? this.target.css("vertical-align", t) : (this.target[0].style.verticalAlign = ""));
     }),
-    (x.prototype.getEntity = function () {
+    (k.prototype.getEntity = function () {
       return new bi(this);
     }));
   function nt() {
@@ -1358,7 +1358,7 @@
           );
         })
         .map(function (r) {
-          var a = new x(r);
+          var a = new k(r);
           return ((a.checked = !1), a);
         });
       ((this.allColumns = t[0].columns.concat(o)),
@@ -1421,7 +1421,7 @@
           else {
             var a = t.printElementType.getColumnByColumnId(o);
             if (a) {
-              var p = new x(a);
+              var p = new k(a);
               ((p.checked = !0), e.push(p));
             }
           }
@@ -3239,7 +3239,7 @@
   Qe.prototype.updatePosition = function (t, e) {
     ((this.left = t), (this.top = e));
   };
-  var E = function () {
+  var C = function () {
     ((this.printTemplateContainer = {}),
       (this.A1 = { width: 841, height: 594 }),
       (this.A2 = { width: 420, height: 594 }),
@@ -3262,27 +3262,27 @@
         return (e && (e = e), Math.round(i / e) * e);
       }));
   };
-  (Object.defineProperty(E, "instance", {
+  (Object.defineProperty(C, "instance", {
     get: function () {
-      var t = E;
-      return (t._instance || (t._instance = new E()), t._instance);
+      var t = C;
+      return (t._instance || (t._instance = new C()), t._instance);
     },
     enumerable: !0,
     configurable: !0,
   }),
-    (E.prototype.getDragingPrintElement = function () {
-      return E.instance.dragingPrintElement;
+    (C.prototype.getDragingPrintElement = function () {
+      return C.instance.dragingPrintElement;
     }),
-    (E.prototype.setDragingPrintElement = function (t) {
-      E.instance.dragingPrintElement = new Qe(t);
+    (C.prototype.setDragingPrintElement = function (t) {
+      C.instance.dragingPrintElement = new Qe(t);
     }),
-    (E.prototype.guid = function () {
+    (C.prototype.guid = function () {
       return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (t) {
         var e = (Math.random() * 16) | 0;
         return (t === "x" ? e : (e & 3) | 8).toString(16);
       });
     }),
-    (E.prototype.imageToBase64 = function (t) {
+    (C.prototype.imageToBase64 = function (t) {
       if (t.attr("src").indexOf("base64") === -1)
         try {
           var e = document.createElement("canvas"),
@@ -3300,26 +3300,26 @@
           }
         }
     }),
-    (E.prototype.xhrLoadImage = function () {}),
-    (E.prototype.transformImg = function (t) {
+    (C.prototype.xhrLoadImage = function () {}),
+    (C.prototype.transformImg = function (t) {
       var e = this;
       t.each(function (i, n) {
         e.imageToBase64($(n));
       });
     }),
-    (E.prototype.getPrintTemplateById = function (t) {
-      return E.instance.printTemplateContainer[t];
+    (C.prototype.getPrintTemplateById = function (t) {
+      return C.instance.printTemplateContainer[t];
     }),
-    (E.prototype.setPrintTemplateById = function (t, e) {
-      E.instance.printTemplateContainer[t] = e;
+    (C.prototype.setPrintTemplateById = function (t, e) {
+      C.instance.printTemplateContainer[t] = e;
     }));
   var Ci = yi,
-    w = {
+    E = {
       createTableHead: function (t, e) {
         for (
-          var i = w.reconsitutionTableColumnTree(t),
+          var i = E.reconsitutionTableColumnTree(t),
             n = $("<thead></thead>"),
-            o = w.getColumnsWidth(i, e),
+            o = E.getColumnsWidth(i, e),
             r = 0;
           r < i.totalLayer;
           r++
@@ -3344,15 +3344,15 @@
           }),
             n.append(a));
         }
-        return (w.syncTargetWidthToOption(t), n);
+        return (E.syncTargetWidthToOption(t), n);
       },
       createTableFooter: function (t, e, i, n, o, r) {
         var a = $("<tfoot></tfoot>"),
-          p = w.getFooterFormatter(i, n);
+          p = E.getFooterFormatter(i, n);
         return (p && a.append(p(i, e, o, r)), a);
       },
       createTableRow: function (t, e, i, n) {
-        var o = w.reconsitutionTableColumnTree(t),
+        var o = E.reconsitutionTableColumnTree(t),
           r = $("<tbody></tbody>"),
           a = e || [];
         return (
@@ -3374,7 +3374,7 @@
                   }
                   if (
                     (p.rows.forEach(function (u) {
-                      r.append(w.createRowTarget(o, u, i, n));
+                      r.append(E.createRowTarget(o, u, i, n));
                     }),
                     n.groupFooterFormatter)
                   ) {
@@ -3383,7 +3383,7 @@
                   }
                 })
             : a.forEach(function (p) {
-                r.append(w.createRowTarget(o, p, i, n));
+                r.append(E.createRowTarget(o, p, i, n));
               }),
           r
         );
@@ -3396,10 +3396,10 @@
             (p.field && l.attr("field", p.field),
               p.align && l.css("text-align", p.align),
               p.vAlign && l.css("vertical-align", p.vAlign));
-            var u = w.getColumnFormatter(p),
+            var u = E.getColumnFormatter(p),
               h = u ? u(e[p.field], e, s, i) : e[p.field];
             l.html(h);
-            var d = w.getColumnStyler(p);
+            var d = E.getColumnStyler(p);
             if (d) {
               var c = d(e[p.field], e, s, i);
               c &&
@@ -3409,7 +3409,7 @@
             }
             o.append(l);
           }));
-        var r = w.getRowStyler(i, n);
+        var r = E.getRowStyler(i, n);
         if (r) {
           var a = r(e, i);
           a &&
@@ -3420,7 +3420,7 @@
         return o;
       },
       createEmptyRowTarget: function (t) {
-        var e = w.reconsitutionTableColumnTree(t),
+        var e = E.reconsitutionTableColumnTree(t),
           i = $("<tr></tr>");
         return (
           e.rowColumns.forEach(function (n) {
@@ -3435,8 +3435,8 @@
       },
       getColumnsWidth: function (t, e) {
         var i = {},
-          n = w.allAutoWidth(t),
-          o = w.allFixedWidth(t);
+          n = E.allAutoWidth(t),
+          o = E.allFixedWidth(t);
         return (
           t.rowColumns.forEach(function (r) {
             if (r.fixed) i[r.id] = r.width;
@@ -3449,8 +3449,8 @@
         );
       },
       resizeTableCellWidth: function (t, e, i) {
-        var n = w.reconsitutionTableColumnTree(e),
-          o = w.getColumnsWidth(n, i);
+        var n = E.reconsitutionTableColumnTree(e),
+          o = E.getColumnsWidth(n, i);
         t.find("thead tr td[haswidth]").each(function (r, a) {
           var p = $(a).attr("id");
           $(a).css("width", o[p] + "pt");
@@ -3484,7 +3484,7 @@
               t[o].columns.forEach(function (r) {
                 n.colspan += r.colspan;
               }));
-        return ((n.rowColumns = w.getOrderedColumns(n)), n);
+        return ((n.rowColumns = E.getOrderedColumns(n)), n);
       },
       syncTargetWidthToOption: function (t) {
         t.forEach(function (e) {
@@ -3544,7 +3544,7 @@
         return e[t.totalLayer - 1];
       },
     },
-    Mt = E,
+    Mt = C,
     zt = S;
   function g(t) {
     ((this.printElementType = t), (this.id = Mt.instance.guid()));
@@ -3696,7 +3696,7 @@
       !this.isHeaderOrFooter() &&
         !this.isFixed() &&
         r > a &&
-        (o.push(new M({ target: void 0, printLine: void 0 })),
+        (o.push(new z({ target: void 0, printLine: void 0 })),
         (r = r - a + t.paperHeader),
         n++,
         (a = t.getPaperFooter(n)));
@@ -3708,7 +3708,7 @@
         s.css("position", "absolute"),
         s.css("left", this.options.displayLeft()),
         s.css("top", r + "pt"),
-        o.push(new M({ target: s, printLine: r + this.options.getHeight() })),
+        o.push(new z({ target: s, printLine: r + this.options.getHeight() })),
         o
       );
     }),
@@ -3721,13 +3721,13 @@
       !this.isHeaderOrFooter() &&
         !this.isFixed() &&
         (r > a &&
-          (o.push(new M({ target: void 0, printLine: void 0 })),
+          (o.push(new z({ target: void 0, printLine: void 0 })),
           (r = r - a + t.paperHeader),
           n++,
           (a = t.getPaperFooter(n))),
         r <= a &&
           r + this.options.getHeight() > a &&
-          (o.push(new M({ target: void 0, printLine: void 0 })),
+          (o.push(new z({ target: void 0, printLine: void 0 })),
           (r = t.paperHeader),
           n++,
           (a = t.getPaperFooter(n))));
@@ -3740,7 +3740,7 @@
         s.css("left", this.options.displayLeft()),
         s.css("top", r + "pt"),
         o.push(
-          new M({
+          new z({
             target: s,
             printLine: r + this.options.getHeight(),
             referenceElement: new G({
@@ -4156,7 +4156,7 @@
                       moveUnit: "pt",
                       minMove: 1,
                       onBeforeDrag: function () {
-                        if (((E.instance.draging = !0), !s.nextGrip)) return !1;
+                        if (((C.instance.draging = !0), !s.nextGrip)) return !1;
                         ((e.dragingGrip = s),
                           (e.dragingGrip.left = parseFloat(
                             e.dragingGrip.target.css("left").replace("px", ""),
@@ -4164,7 +4164,7 @@
                           s.target.addClass("columngripDraging"));
                       },
                       onStopDrag: function () {
-                        E.instance.draging = !1;
+                        C.instance.draging = !1;
                         var l = parseFloat(e.dragingGrip.target.css("left").replace("px", "")),
                           u = f.px.toPt(l - e.dragingGrip.left);
                         ((s.cell.width = s.cell.width + u),
@@ -4328,16 +4328,21 @@
               var d = h[0].indexInTableGridRow;
               u.forEach(function (m, y) {
                 var v = m[d],
-                  P = m.filter(function (L, V) {
-                    return V >= d && L.cell;
+                  P = m.filter(function (V, T) {
+                    return T >= d && V.cell;
                   });
                 if (v.rowLevel === 0) {
-                  var C = a[y],
-                    k = C.createTableCell();
-                  (n && k.getTarget().addClass(n),
-                    o != null && (k.width = o),
-                    P.length ? C.insertToTargetCellLeft(P[0].cell, k) : C.insertCellToLast(k),
-                    f.event.trigger("newCell" + r.id, k));
+                  var x = a[y],
+                    w = x.createTableCell();
+                  if ((n && w.getTarget().addClass(n), o != null && (w.width = o), x.isHead)) {
+                    if ((w.getTarget().attr("haswidth", "haswidth"), o == null)) {
+                      var M = P.length ? P[0].cell.width : void 0;
+                      o = M ?? w.width;
+                    }
+                    ((w.width = o), (w.hasWidth = !0), w.getTarget().css("width", o + "pt"));
+                  }
+                  (P.length ? x.insertToTargetCellLeft(P[0].cell, w) : x.insertCellToLast(w),
+                    f.event.trigger("newCell" + r.id, w));
                 } else
                   v.linkType === "row" &&
                     ((v.link.colspan += 1), v.link.getTarget().attr("colspan", v.link.colspan));
@@ -4346,18 +4351,23 @@
               var c = h[h.length - 1].indexInTableGridRow;
               u.forEach(function (m, y) {
                 var v = m[c],
-                  P = m.filter(function (L, V) {
-                    return V <= c && L.cell;
+                  P = m.filter(function (V, T) {
+                    return T <= c && V.cell;
                   });
                 if (v.rightMost) {
-                  var C = a[y],
-                    k = C.createTableCell();
-                  (n && k.getTarget().addClass(n),
-                    o != null && (k.width = o),
-                    P.length
-                      ? C.insertToTargetCellRight(P[P.length - 1].cell, k)
-                      : C.insertCellToFirst(k),
-                    f.event.trigger("newCell" + r.id, k));
+                  var x = a[y],
+                    w = x.createTableCell();
+                  if ((n && w.getTarget().addClass(n), o != null && (w.width = o), x.isHead)) {
+                    if ((w.getTarget().attr("haswidth", "haswidth"), o == null)) {
+                      var M = P.length ? P[P.length - 1].cell.width : void 0;
+                      o = M ?? w.width;
+                    }
+                    ((w.width = o), (w.hasWidth = !0), w.getTarget().css("width", o + "pt"));
+                  }
+                  (P.length
+                    ? x.insertToTargetCellRight(P[P.length - 1].cell, w)
+                    : x.insertCellToFirst(w),
+                    f.event.trigger("newCell" + r.id, w));
                 } else
                   (v.linkType === "row" &&
                     ((v.link.colspan += 1), v.link.getTarget().attr("colspan", v.link.colspan)),
@@ -4752,7 +4762,7 @@
         t
       );
     })(),
-    Ie = E,
+    Ie = C,
     Ne = S,
     oi = function (t) {
       ((this.width = t.width),
@@ -4954,27 +4964,25 @@
             ),
             p = this.options.getWidth() / this.options.getGridColumns();
           return (
-            a.append(w.createTableHead(this.getColumns(), p)),
-            a.append(w.createTableRow(this.getColumns(), i, this.options, this.printElementType)),
+            a.append(E.createTableHead(this.getColumns(), p)),
+            a.append(E.createTableRow(this.getColumns(), i, this.options, this.printElementType)),
             this.getFooterFormatter() &&
               (this.options.tableFooterRepeat === "no" ||
                 (this.options.tableFooterRepeat === "last"
                   ? a
                       .find("tbody")
                       .append(
-                        w
-                          .createTableFooter(
-                            this.printElementType.columns,
-                            i,
-                            this.options,
-                            this.printElementType,
-                            n,
-                            i,
-                          )
-                          .html(),
+                        E.createTableFooter(
+                          this.printElementType.columns,
+                          i,
+                          this.options,
+                          this.printElementType,
+                          n,
+                          i,
+                        ).html(),
                       )
                   : a.append(
-                      w.createTableFooter(
+                      E.createTableFooter(
                         this.printElementType.columns,
                         i,
                         this.options,
@@ -4987,7 +4995,7 @@
           );
         }),
         (e.prototype.getEmptyRowTarget = function () {
-          return w.createEmptyRowTarget(this.getColumns());
+          return E.createEmptyRowTarget(this.getColumns());
         }),
         (e.prototype.getHtml = function (i, n) {
           this.createTempContainer();
@@ -5010,7 +5018,7 @@
             l === 0 &&
               s > c &&
               ((s = s - c + i.paperHeader),
-              o.push(new M({ target: void 0, printLine: void 0 })),
+              o.push(new z({ target: void 0, printLine: void 0 })),
               (d = i.getContentHeight(l) - (s - i.paperHeader)),
               l++,
               (c = i.getPaperFooter(l)));
@@ -5036,7 +5044,7 @@
                 : (y.target && ((h = i.paperHeader), y.target.css("top", i.paperHeader + "pt")),
                   (v = i.paperHeader + y.height)),
               o.push(
-                new M({
+                new z({
                   target: y.target,
                   printLine: v,
                   referenceElement: new G({
@@ -5088,29 +5096,27 @@
                   c
                     .find("tfoot")
                     .html(
-                      w
-                        .createTableFooter(
-                          this.printElementType.columns,
-                          this.getData(i),
-                          this.options,
-                          this.printElementType,
-                          i,
-                          y,
-                        )
-                        .html(),
+                      E.createTableFooter(
+                        this.printElementType.columns,
+                        this.getData(i),
+                        this.options,
+                        this.printElementType,
+                        i,
+                        y,
+                      ).html(),
                     );
                 break;
               }
             }
-          var C = o.find(".kuprint-printElement-tableTarget tbody tr").length,
-            k = this.getGridColumnsFooterFormatter();
+          var x = o.find(".kuprint-printElement-tableTarget tbody tr").length,
+            w = this.getGridColumnsFooterFormatter();
           return (
-            k && o.find(this.gridColumnsFooterCss).html(k(this.options, this.getData(i), i, h)),
+            w && o.find(this.gridColumnsFooterCss).html(w(this.options, this.getData(i), i, h)),
             s.find("tr").length === 0
-              ? C === 0 && p
+              ? x === 0 && p
                 ? { target: void 0, length: 0, height: 0, isEnd: !0 }
-                : { target: o.clone(), length: C, height: f.px.toPt(u), isEnd: !0 }
-              : { target: o.clone(), length: C, height: f.px.toPt(u), isEnd: !1 }
+                : { target: o.clone(), length: x, height: f.px.toPt(u), isEnd: !0 }
+              : { target: o.clone(), length: x, height: f.px.toPt(u), isEnd: !1 }
           );
         }),
         (e.prototype.autoCompletion = function (i, n) {
@@ -5125,7 +5131,7 @@
         }),
         (e.prototype.onResize = function (i, n, o, r, a) {
           (t.prototype.updateSizeAndPositionOptions.call(this, a, r, o, n),
-            w.resizeTableCellWidth(this.designTarget, this.getColumns(), this.options.getWidth()));
+            E.resizeTableCellWidth(this.designTarget, this.getColumns(), this.options.getWidth()));
         }),
         (e.prototype.getReizeableShowPoints = function () {
           return ["s", "e"];
@@ -5321,7 +5327,7 @@
     }));
   var Ri = g,
     si = S;
-  function z(t, e) {
+  function L(t, e) {
     var i = Ri.call(this, t) || this;
     return (
       (i.options = new Y(e)),
@@ -5329,31 +5335,31 @@
       i
     );
   }
-  (H(z, g),
-    (z.prototype.getDesignTarget = function (t) {
+  (H(L, g),
+    (L.prototype.getDesignTarget = function (t) {
       return g.prototype.getDesignTarget.call(this, t);
     }),
-    (z.prototype.getProxyTarget = function (t) {
+    (L.prototype.getProxyTarget = function (t) {
       t && this.SetProxyTargetOption(t);
       var e = this.getData(),
         i = this.createTarget(this.printElementType.getText(!0), e);
       return (this.updateTargetSize(i), this.css(i, e), i);
     }),
-    (z.prototype.updateDesignViewFromOptions = function () {
+    (L.prototype.updateDesignViewFromOptions = function () {
       if (this.designTarget) {
         var t = this.getData();
         (this.css(this.designTarget, t),
           this.updateTargetText(this.designTarget, this.getTitle(), t));
       }
     }),
-    (z.prototype.getConfigOptions = function () {
+    (L.prototype.getConfigOptions = function () {
       return si.instance.text;
     }),
-    (z.prototype.getTitle = function () {
+    (L.prototype.getTitle = function () {
       var t = this.options.title || this.printElementType.title || "";
       return (t && (t = qe.replaceEnterAndNewlineAndTab(t, "")), t);
     }),
-    (z.prototype.getData = function (t) {
+    (L.prototype.getData = function (t) {
       var e = t
         ? t[this.getField()] || ""
         : this.options.testData || this.printElementType.getData() || "";
@@ -5366,7 +5372,7 @@
       }
       return e;
     }),
-    (z.prototype.updateTargetText = function (t, e, i, n) {
+    (L.prototype.updateTargetText = function (t, e, i, n) {
       var o = this.getFormatter(),
         r = t.find(".kuprint-printElement-text-content"),
         a = "";
@@ -5418,18 +5424,18 @@
         }
       }
     }),
-    (z.prototype.onResize = function (t, e, i, n, o) {
+    (L.prototype.onResize = function (t, e, i, n, o) {
       (g.prototype.onResize.call(this, t, e, i, n, o),
         (this.options.getTextType() === "barcode" || this.options.getTextType() === "qrcode") &&
           this.updateTargetText(this.designTarget, this.getTitle(), this.getData()));
     }),
-    (z.prototype.createTarget = function (t, e, i) {
+    (L.prototype.createTarget = function (t, e, i) {
       var n = $(
         '<div tabindex="1" class="kuprint-printElement kuprint-printElement-text" style="position:absolute;"><div class="kuprint-printElement-text-content kuprint-printElement-content" style="height:100%;width:100%"></div></div>',
       );
       return (this.updateTargetText(n, t, e, i), n);
     }),
-    (z.prototype.getHtml = function (t, e, i) {
+    (L.prototype.getHtml = function (t, e, i) {
       return this.getHtml2(t, e, i);
     }));
   var Di = g,
@@ -5713,7 +5719,7 @@
     (Nt.prototype.getHtml = function (t, e, i) {
       return this.getHtml2(t, e, i);
     }));
-  var De = E,
+  var De = C,
     je = S,
     Mi = (function (t) {
       H(e, t);
@@ -5774,27 +5780,25 @@
             '<table class="kuprint-printElement-tableTarget" style="border-collapse:collapse;width:100%;"></table>',
           );
           return (
-            o.append(w.createTableHead(this.columns, this.options.getWidth())),
-            o.append(w.createTableRow(this.columns, i, this.options, this.printElementType)),
+            o.append(E.createTableHead(this.columns, this.options.getWidth())),
+            o.append(E.createTableRow(this.columns, i, this.options, this.printElementType)),
             this.printElementType.footerFormatter &&
               (this.options.tableFooterRepeat === "no" ||
                 (this.options.tableFooterRepeat === "last"
                   ? o
                       .find("tbody")
                       .append(
-                        w
-                          .createTableFooter(
-                            this.printElementType.columns,
-                            i,
-                            this.options,
-                            this.printElementType,
-                            n,
-                            i,
-                          )
-                          .html(),
+                        E.createTableFooter(
+                          this.printElementType.columns,
+                          i,
+                          this.options,
+                          this.printElementType,
+                          n,
+                          i,
+                        ).html(),
                       )
                   : o.append(
-                      w.createTableFooter(
+                      E.createTableFooter(
                         this.printElementType.columns,
                         i,
                         this.options,
@@ -5827,7 +5831,7 @@
             l === 0 &&
               s > c &&
               ((s = s - c + i.paperHeader),
-              o.push(new M({ target: void 0, printLine: void 0 })),
+              o.push(new z({ target: void 0, printLine: void 0 })),
               l++,
               (d = i.getContentHeight(l) - (s - i.paperHeader)),
               (c = i.getPaperFooter(l)));
@@ -5847,7 +5851,7 @@
                 : (v.target && ((h = i.paperHeader), v.target.css("top", i.paperHeader + "pt")),
                   (P = i.paperHeader + v.height)),
               o.push(
-                new M({
+                new z({
                   target: v.target,
                   printLine: P,
                   referenceElement: new G({
@@ -5908,16 +5912,14 @@
                 d.target
                   .find("tfoot")
                   .html(
-                    w
-                      .createTableFooter(
-                        this.printElementType.columns,
-                        this.getData(p),
-                        this.options,
-                        this.printElementType,
-                        p,
-                        h,
-                      )
-                      .html(),
+                    E.createTableFooter(
+                      this.printElementType.columns,
+                      this.getData(p),
+                      this.options,
+                      this.printElementType,
+                      p,
+                      h,
+                    ).html(),
                   );
               break;
             }
@@ -5935,11 +5937,11 @@
           a && a.remove();
         }),
         (e.prototype.getEmptyRowTarget = function () {
-          return w.createEmptyRowTarget(this.columns);
+          return E.createEmptyRowTarget(this.columns);
         }),
         (e.prototype.onResize = function (i, n, o, r, a) {
           (t.prototype.updateSizeAndPositionOptions.call(this, a, r, o, n),
-            w.resizeTableCellWidth(this.designTarget, this.columns, this.options.getWidth()));
+            E.resizeTableCellWidth(this.designTarget, this.columns, this.options.getWidth()));
         }),
         (e.prototype.getReizeableShowPoints = function () {
           return ["s", "e"];
@@ -5988,7 +5990,7 @@
             resizeRow: !1,
             resizeColumn: !0,
             trs: $(this.designTarget).find("tbody tr"),
-            handle: this.designTarget.find("table thead"),
+            handle: this.designTarget.find("table"),
             columnDisplayEditable: !0,
             columnDisplayIndexEditable: !0,
             columnResizable: !0,
@@ -6010,12 +6012,12 @@
         e
       );
     })(g),
-    At = E,
+    At = C,
     di = {
       createPrintElement: function (t, e) {
         switch (t.type) {
           case "text":
-            return new z(t, e);
+            return new L(t, e);
           case "image":
             return new N(t, e);
           case "longText":
@@ -6470,10 +6472,10 @@
             moveUnit: "pt",
             minMove: S.instance.movingDistance,
             onBeforeDrag: function () {
-              E.instance.draging = !0;
+              C.instance.draging = !0;
             },
             onStopDrag: function () {
-              ((E.instance.draging = !1),
+              ((C.instance.draging = !1),
                 o.footerLineTarget.removeClass("hidefooterLinetarget"),
                 o.headerLineTarget.removeClass("hideheaderLinetarget"));
             },
@@ -6786,10 +6788,10 @@
       var l = [this.getLongTextIndent()],
         u = p.split(/\r|\n/);
       if (
-        (u.forEach(function (k, L) {
-          var V = n.options.leftSpaceRemoved !== !1 ? (k || "").toString().replace(/^\s*/, "") : k;
+        (u.forEach(function (w, M) {
+          var V = n.options.leftSpaceRemoved !== !1 ? (w || "").toString().replace(/^\s*/, "") : w;
           ((l = l.concat(V.split(""))),
-            L < u.length - 1 && l.push("<br/>" + n.getLongTextIndent()));
+            M < u.length - 1 && l.push("<br/>" + n.getLongTextIndent()));
         }),
         l.length === 0 && (l = [""]),
         this.isHeaderOrFooter() || this.isFixed() || !e)
@@ -6800,7 +6802,7 @@
           h.target.css("top", this.options.displayTop()),
           (h.target[0].height = ""),
           o.push(
-            new M({
+            new z({
               target: h.target,
               printLine: this.options.displayTop() + h.height,
               referenceElement: new G({
@@ -6823,28 +6825,28 @@
         r === 0 &&
           d > m &&
           ((d = d - m + t.paperHeader),
-          o.push(new M({ target: void 0, printLine: void 0 })),
+          o.push(new z({ target: void 0, printLine: void 0 })),
           r++,
           (c = t.getContentHeight(r) - (d - t.paperHeader)),
           (m = t.getPaperFooter(r)));
         var y = c > 0 ? c : r === 0 ? m - d : t.getContentHeight(r),
           v = this.getStringBySpecificHeight(l, y, s);
         l.splice(0, v.length);
-        var P, C;
+        var P, x;
         (v.target.css("left", this.options.displayLeft()),
           (v.target[0].height = ""),
           r === 0 || c > 0
-            ? ((C = d),
-              v.target.css("top", C + "pt"),
+            ? ((x = d),
+              v.target.css("top", x + "pt"),
               (P =
                 l.length > 0
                   ? d + v.height
                   : this.options.lHeight != null
                     ? d + (v.height > this.options.lHeight ? v.height : this.options.lHeight)
                     : d + v.height))
-            : ((C = t.paperHeader), v.target.css("top", C + "pt"), (P = C + v.height)),
+            : ((x = t.paperHeader), v.target.css("top", x + "pt"), (P = x + v.height)),
           o.push(
-            new M({
+            new z({
               target: v.target,
               printLine: P,
               referenceElement: new G({
@@ -6854,7 +6856,7 @@
                 width: this.options.getWidth(),
                 beginPrintPaperIndex: t.index,
                 bottomInLastPaper: P,
-                printTopInPaper: C,
+                printTopInPaper: x,
               }),
             }),
           ),
@@ -6896,7 +6898,7 @@
               ? { IsPagination: !1, move: "r" }
               : { IsPagination: !0, result: 1 };
     }));
-  var K = E,
+  var K = C,
     D = S,
     Ye = (function () {
       function t(e, i) {
@@ -7490,7 +7492,7 @@
         e.addElementTypes(He.instance);
       }));
   }
-  var Oe = E,
+  var Oe = C,
     Ki = (function () {
       function t(e) {
         var i = this;
@@ -8071,9 +8073,12 @@
             m
           );
         }
+        try {
+          l.onStopDrag.call(a.data.target, a);
+        } finally {
+          t(document).unbind(".hidraggable");
+        }
         return (
-          l.onStopDrag.call(a.data.target, a),
-          t(document).unbind(".hidraggable"),
           setTimeout(function () {
             t("body").css("cursor", "");
           }, 100),
@@ -8105,11 +8110,11 @@
                   y = t(m).offset(),
                   v = t(m).outerWidth(),
                   P = t(m).outerHeight(),
-                  C = d.pageY - y.top,
-                  k = y.left + v - d.pageX,
-                  L = y.top + P - d.pageY,
+                  x = d.pageY - y.top,
+                  w = y.left + v - d.pageX,
+                  M = y.top + P - d.pageY,
                   V = d.pageX - y.left;
-                return Math.min(C, k, L, V) > c.options.edge;
+                return Math.min(x, w, M, V) > c.options.edge;
               }
               if ((t.data(this, "hidraggable", { options: l, handle: u }), l.disabled)) {
                 t(this).css("cursor", "");
@@ -8143,13 +8148,15 @@
                         target: d.data.target,
                         parent: t(d.data.target).parent()[0],
                       };
-                    (t.extend(d.data, y),
-                      t
-                        .data(d.data.target, "hidraggable")
-                        .options.onBeforeDrag.call(d.data.target, d) !== 0 &&
-                        (t(document).bind("mousedown.hidraggable", d.data, n),
-                        t(document).bind("mousemove.hidraggable", d.data, o),
-                        t(document).bind("mouseup.hidraggable", d.data, r)));
+                    t.extend(d.data, y);
+                    var v = t
+                      .data(d.data.target, "hidraggable")
+                      .options.onBeforeDrag.call(d.data.target, d);
+                    v === 0 ||
+                      v === !1 ||
+                      (t(document).bind("mousedown.hidraggable", d.data, n),
+                      t(document).bind("mousemove.hidraggable", d.data, o),
+                      t(document).bind("mouseup.hidraggable", d.data, r));
                   }
                 });
             });
@@ -8407,9 +8414,9 @@
             y = !1,
             v = !1,
             P = !1,
-            C = !1,
-            k = !1,
-            L = !1,
+            x = !1,
+            w = !1,
+            M = !1,
             V = !1;
           (n.on("mousedown", ".e", function (T) {
             ((a = T.pageX), (s = n.width()), (c = !0));
@@ -8438,17 +8445,17 @@
                 (l = n.height()),
                 (h = d.offset().top),
                 (u = d.offset().left),
-                (C = !0));
+                (x = !0));
             }),
             n.on("mousedown", ".se", function (T) {
-              ((a = T.pageX), (p = T.pageY), (s = n.width()), (l = n.height()), (k = !0));
+              ((a = T.pageX), (p = T.pageY), (s = n.width()), (l = n.height()), (w = !0));
             }),
             n.on("mousedown", ".sw", function (T) {
               ((a = T.pageX),
                 (p = T.pageY),
                 (s = n.width()),
                 (l = n.height()),
-                (L = !0),
+                (M = !0),
                 (u = d.offset().left));
             }),
             n.on("mousedown", function (T) {
@@ -8505,7 +8512,7 @@
                               r.numHandler(h + I),
                               void 0,
                             ))
-                          : C
+                          : x
                             ? (n.css({ height: "100%", width: "100%" }),
                               d.css({
                                 height: r.numHandlerText(l - I),
@@ -8520,7 +8527,7 @@
                                 r.numHandler(h + I),
                                 r.numHandler(u + O),
                               ))
-                            : k
+                            : w
                               ? (n.css({ width: "100%", height: "100%" }),
                                 d.css({
                                   width: r.numHandlerText(s + O),
@@ -8533,7 +8540,7 @@
                                   void 0,
                                   void 0,
                                 ))
-                              : L
+                              : M
                                 ? (n.css({ width: "100%", height: "100%" }),
                                   d.css({
                                     width: r.numHandlerText(s - O),
@@ -8561,7 +8568,7 @@
                                   ));
               })
               .on("mouseup", function () {
-                ((c = m = y = v = !1), (P = C = k = L = !1), (V = !1), r.options.onStopResize());
+                ((c = m = y = v = !1), (P = x = w = M = !1), (V = !1), r.options.onStopResize());
               }));
         },
         bindTrigger: function (n) {

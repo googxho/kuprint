@@ -346,7 +346,7 @@ var TableCustomPrintElement = (function (_super) {
       resizeRow: false,
       resizeColumn: true,
       trs: $(this.designTarget).find("tbody tr"),
-      handle: this.designTarget.find("table thead"),
+      handle: this.designTarget.find("table"),
       columnDisplayEditable: true,
       columnDisplayIndexEditable: true,
       columnResizable: true,

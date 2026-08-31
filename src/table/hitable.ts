@@ -347,6 +347,18 @@ var HiTale = (function () {
           var c = tr.createTableCell();
           if (cls) c.getTarget().addClass(cls);
           if (width != null) c.width = width;
+          // 表头单元格添加haswidth属性，支持列宽调整
+          if (tr.isHead) {
+            c.getTarget().attr("haswidth", "haswidth");
+            // 表头单元格需有有效宽度，列宽调整才能工作；未指定时沿用相邻单元格宽度
+            if (width == null) {
+              var refW = rightCells.length ? rightCells[0].cell.width : undefined;
+              width = refW != null ? refW : c.width;
+            }
+            c.width = width;
+            c.hasWidth = true;
+            c.getTarget().css("width", width + "pt");
+          }
           if (rightCells.length) tr.insertToTargetCellLeft(rightCells[0].cell, c);
           else tr.insertCellToLast(c);
           hinnn.event.trigger("newCell" + self.id, c);
@@ -367,6 +379,18 @@ var HiTale = (function () {
           var c = tr.createTableCell();
           if (cls) c.getTarget().addClass(cls);
           if (width != null) c.width = width;
+          // 表头单元格添加haswidth属性，支持列宽调整
+          if (tr.isHead) {
+            c.getTarget().attr("haswidth", "haswidth");
+            // 表头单元格需有有效宽度，列宽调整才能工作；未指定时沿用相邻单元格宽度
+            if (width == null) {
+              var refW = leftCells.length ? leftCells[leftCells.length - 1].cell.width : undefined;
+              width = refW != null ? refW : c.width;
+            }
+            c.width = width;
+            c.hasWidth = true;
+            c.getTarget().css("width", width + "pt");
+          }
           if (leftCells.length) tr.insertToTargetCellRight(leftCells[leftCells.length - 1].cell, c);
           else tr.insertCellToFirst(c);
           hinnn.event.trigger("newCell" + self.id, c);
@@ -544,7 +568,7 @@ var HiTale = (function () {
     allRows.forEach(function (row, rowIdx) {
       row.columns.forEach(function (col, colIdx) {
         for (var r = 0; r < col.colspan; r++) {
-          for (var c = 0, found = false; c < colStep && !found; ) {
+          for (var c = 0, found = false; c < colStep && !found;) {
             if (!grid[rowIdx]) grid[rowIdx] = [];
             if (!grid[rowIdx][c]) {
               grid[rowIdx][c] = new CellGridItem({
